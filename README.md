@@ -10,4 +10,4 @@ FERRAO Cindy
 PASQUEREAU Milan 
 ROBA Julien
 
-Copyright © Tout droits réservés.
+Copyright © Tous droits réservés.
