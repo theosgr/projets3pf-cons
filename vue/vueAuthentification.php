@@ -167,23 +167,7 @@ class vueAuthentification {
 							</div>
 							<label>N° de téléphone mobile : </label>
 							<div>
-								<input id="tel" type="tel" name="tel" placeholder="N° tel" maxlength="10" value="<?php if(isset($_POST['tel'])) { echo htmlspecialchars($_POST['tel']);}?>" />
-								<script language="Javascript">
-								function verif_nombre(tel)
-								  {
-									var chiffres = new RegExp("[0-9]");
-									var verif;
-									var points = 0;
-
-									for(x = 0; x < tel.value.length; x++)
-									{
-									    verif = chiffres.test(tel.value.charAt(x));
-									    if(tel.value.charAt(x) == "."){points++;}
-									    if(points > 1){verif = false; points = 1;}
-									    if(verif == false){tel.value = tel.value.substr(0,x) + tel.value.substr(x+1,tel.value.length-x+1); x--;}
-									}
-								  }
-								</script>
+								<input id="tel" type="tel" name="tel" placeholder="N° tel" maxlength="10" pattern="[0-9]{10}" value="<?php if(isset($_POST['tel'])) { echo htmlspecialchars($_POST['tel']);}?>" />
 							</div>
 						</div>
 						<hr>
