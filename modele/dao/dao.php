@@ -807,14 +807,23 @@
 /////////
 ///////// RECHERCHE
     /* Méthode permettant la recherche d'un spécialiste, d'une spécialité ou d'une sous-spécialité */
-    public function rechercheSpe() {
-      try {
-        $elements = explode(" ",htmlspecialchars($_POST['specialiste']));
-        $chaine = "select civilite, prenom, u.nom, mail, tel, adresse, ville, cp, location, s1.nom specialite, s2.nom sous_specialite from Utilisateurs u, Specialite s1, Sous_Specialite s2, Domaine d where type = 2 and u.specialite = s2.id and s2.sousDomaine = s1.id and s1.domaine = d.id and (specialite like :element1 or s2.nom like :element1 or u.nom like :element1 or prenom like :element1 or specialite like :element2 or s2.nom like :element2 or u.nom like :element2 or prenom like :element2) and ville like :ville";
-        $stmt = $this->connexion->prepare($chaine);
-        $stmt->bindParam(":element1", $elements[0]);
-        $stmt->bindParam(":element2", $elements[1]);
-        $stmt->bindParam(":ville", htmlspecialchars($_POST['ville']));
+    public function rechercheSpe($domaine) {
+      try { //Si la recherche n'est pas vide, on affiche les prestataires qui se rapprochent de ce que la personne recherche
+        if(!empty($_POST['specialiste']))
+        {
+          $elements = explode(" ",htmlspecialchars($_POST['specialiste']));
+          $chaine = "SELECT civilite, prenom, u.nom, mail, tel, adresse, ville, cp, location, s1.nom specialite, s2.nom sous_specialite from Utilisateurs u, Specialite s1, Sous_Specialite s2, Domaine d WHERE type = 2 AND u.specialite = s2.id AND s2.sousDomaine = s1.id AND s1.domaine = d.id AND (specialite LIKE :element1 OR s2.nom LIKE :element1 OR u.nom LIKE :element1 OR prenom LIKE :element1 OR specialite LIKE :element2 OR s2.nom LIKE :element2 OR u.nom LIKE :element2 OR prenom LIKE :element2) AND ville like :ville";
+          $stmt = $this->connexion->prepare($chaine);
+          $stmt->bindParam(":element1", $elements[0]);
+          $stmt->bindParam(":element2", $elements[1]);
+          $tmpVilleRechercheSpe= htmlspecialchars($_POST['ville']);
+          $stmt->bindParam(":ville", $tmpVilleRechercheSpe); //Variable temporaire nécéssaire
+        }
+        else { //Si la recherche est vide, on affiche tous les prestataires du domaine de la recherche
+          $chaine = "SELECT civilite, prenom, u.nom, mail, tel, adresse, ville, cp, location, s1.nom specialite, s2.nom sous_specialite from Utilisateurs u, Specialite s1, Sous_Specialite s2, Domaine d WHERE type=2 AND d.id=? AND u.specialite = s2.id AND s2.sousDomaine = s1.id AND s1.domaine = d.id";
+          $stmt=$this->connexion->prepare($chaine);
+          $stmt->bindParam(1,$domaine); //Le domaine dépend de la page de recherche
+        }
         $stmt->execute();
         return $stmt->fetchAll();
       } catch (PDOException $e) {
