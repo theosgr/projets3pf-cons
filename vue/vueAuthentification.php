@@ -140,7 +140,7 @@ class vueAuthentification {
 									<option name="civilite" value="Mme" <?php if(isset($_POST['civilite'])&& $_POST['civilite'] == "Mme") { echo "selected";}?>>Une femme</option>
 									<option name="civilite" value="Autre" <?php if(isset($_POST['civilite'])&& $_POST['civilite'] == "Autre") { echo "selected";}?>>Autre</option>
 								</select>
-								<input id="prenom" type="text" name="prenom" placeholder="Prénom" size="15" required value="<?php if(isset($_POST['prenom'])) { echo htmlspecialchars($_POST['prenom']);}?>"/>
+								<input id="prenom" type="text" name="p" placeholder="Prénom" size="15" required value="<?php if(isset($_POST['prenom'])) { echo htmlspecialchars($_POST['prenom']);}?>"/>
 								<input id="nom" type="text" name="nom" placeholder="Nom" size="15" required value="<?php if(isset($_POST['nom'])) { echo htmlspecialchars($_POST['nom']);}?>"/>
 							</div>
 						</div>
