@@ -1,0 +1,155 @@
+/* ==========================================================================
+RESET
+========================================================================== */
+* { padding: 0;  margin: 0;  text-decoration: none;  color: black;  font-family: 'Lato', sans-serif; list-style: none;}
+html, body { height: 100%; width: 100%;}
+body {display : table; }
+#content { margin-top: 25px; margin-bottom: 25px;}
+h3 { font-size: 20px; color: #4d4959; text-align: center;}
+/* ==========================================================================
+HEADER
+========================================================================== */
+header { display: flex; flex-direction: column; align-items: center; background-color: #EEEEEE; padding: 2%; font-size: 110%;}
+.nav { display: none; order: 2; }
+.nav.responsive { display:flex; text-align: center; }
+header ul li { text-transform: uppercase; }
+header ul li a { margin: 0 30px; color: #4d4959;}
+header li a:hover { opacity: 0.5; border-bottom: 2px #4d4959 solid; }
+.icon { position: absolute; right: 2%; top: 30px; font-size: 30px; }
+#msg { width: 50%; margin: auto; min-height: 25px; box-shadow: 2px 2px 5px 1px #656565; border-radius: 5px; }
+#msg p { color: white; font-weight: bold; font-variant: small-caps; }
+.ok {background: green;}
+.ko {background: red;}
+/*Responsive*/
+@media screen and (min-width: 700px) {
+  header { flex-direction: row; justify-content: center; height: 84px; padding: 0;}
+  header ul { display: flex; }
+  .nav {display: block;}
+  .nav:nth-child(1) { order: 0; }
+  .dot { margin-top: 8px; justify-content: center; width: 4px; height: 4px; background: black;}
+  .icon {display: none;}
+}
+/* ==========================================================================
+FOOTER
+========================================================================== */
+footer { display: table-row; width: 100%;  background-color: #EEEEEE; }
+.iutnantes-icon { background: url(../img/iutnantes-icon.png) center no-repeat; height: 53px; width: 99px; display: block; }
+.univnantes-icon { background: url(../img/univnantes-icon.png) center no-repeat; height: 53px; width: 99px; display: block; }
+footer li { display: inline-block; }
+footer li a:hover { opacity: 0.5; }
+.container_footer { display: flex; flex-direction: column; align-items: center; padding-top: 5px;}
+.container_footer div { padding-top: 5px;}
+footer p { font-size: 13px; }
+/*Responsive*/
+@media screen and (min-width: 700px) {
+  footer { height: 85px; padding-top: 5px; }
+  footer li { margin-right: 15px; }
+  footer p { text-align: justify;}
+  .container_footer { display: flex; flex-direction: row; justify-content: space-around; }
+}
+/* ==========================================================================
+INDEX
+========================================================================== */
+/* BUTTON */
+.submit-btn-med { background-color: #00A7E3; color: #fff; font-weight: bold; display: flex; align-items: center; justify-content: center; width:185px; height:69px; margin: 10px;}
+.submit-btn-jur { background-color: #7A1000; color: #fff; font-weight: bold; display: flex; align-items: center; justify-content: center; width:185px; height:69px; margin: 10px;}
+.submit-btn-med:hover { background-color: #EEEEEE; color: #00A7E3;}
+.submit-btn-jur:hover { background-color: #EEEEEE; color: #7A1000;}
+/* CONTAINER */
+h2.logo-header { text-align: center;  color: #848789;  font-size: 24px;  font-weight: bold; padding-top: 0;  margin: 0;  font-style: italic;}
+.flex-container { display: flex;  flex-wrap: wrap;  justify-content:center; }
+.container-index { height: 100%;}
+/*Responsive*/
+@media screen and (min-width: 700px) {
+  h2.logo-header { margin: 40px 0 40px 0; }
+}
+/* ==========================================================================
+INSCRIPTION // CONNEXION
+========================================================================== */
+input, select, label { margin: 10px; width: 100%; display: flex; justify-content: center; flex-direction: column;}
+label { font-weight: bold;}
+input { text-align: center; height: 25px;}
+p { text-align: center;}
+input[type="submit"] { height: 35px; cursor: ppi}
+.container_form { background: #EEEEEE; padding: 25px;}
+.block { margin: 10px 0 10px 0;}
+.block div { display: flex; justify-content: center; }
+.block .onglet { display: flex; justify-content: space-around; }
+.onglet_on { border-bottom: solid 2px orange;}
+.onglet a:hover { opacity: 0.5; text-decoration: none;}
+.lien_visible { text-decoration: underline orange; }
+hr { width: 50%; margin: auto; border-bottom: 2px solid #EEEEEE; color: #EEEEEE; }
+/* Responsive */
+@media screen and (min-width: 700px) {
+  .container_form { width: 50%; margin: auto;}
+}
+@media screen and (min-width: 1300px) {
+  p { display: block;}
+  .container_form { width: 35%; box-shadow: 5px 5px 5px 5px #9b9b9b; border-radius: 10px; }
+  .connexion_form div { margin: 10px; display: flex; justify-content: center; flex-direction:row; }
+}
+/* ==========================================================================
+SLIDESHOW
+========================================================================== */
+.slideshow {display: none;}
+@media screen and (min-width: 900px) {
+  .slideshow {display: inherit;}
+  .slideshow { width: 640px; height: 310px; overflow: hidden; border: 10px solid #FBFDFF; margin: auto;}
+  .slideshow ul { width: 400%; height: 200px; padding:0; margin:0; list-style: none;}
+  .slideshow li { float: left;}
+}
+/* ==========================================================================
+DOMAINE
+========================================================================== */
+.searchbar { margin: 0; padding: 0; height: 500px; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%;}
+.searchbar_med { background: url(../img/fond_medical.jpg) no-repeat center; }
+.searchbar_jur { background: url(../img/fond_juridique.jpg) no-repeat center; }
+.search_dom { padding: 2px; background: white; width: 75%; height: 50px; display: flex; align-items: center; }
+.search_dom:first-child { border-top-left-radius: 10px; border-top-right-radius: 10px; }
+.search_dom .material-icons { padding: 2px; opacity: 0.2; }
+.search_dom input { margin: 0; margin-left: 5px; border: none; padding: 0; text-align: left; height: 100%; }
+.valid_dom { background: orange; display: flex; align-items: center; height: 54px; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; width: 75%; padding: 2px; }
+.valid_dom input { background: none; border: none; color: white; font-weight: bold; text-transform: uppercase; height: 56px; width: 100%; padding: 5px; margin: 0; cursor: pointer; }
+.mini { height: 200px; background: grey; }
+.ui-autocomplete { max-height: 200px; overflow-y: auto; overflow-x: hidden; }
+/* Responsive */
+@media screen and (min-width: 700px) {
+  .mini { height: 100px; }
+  .searchbar { flex-direction: row;}
+  .search_dom { width: 300px; }
+  .search_dom:first-child { border-top-right-radius: 0px; border-bottom-left-radius: 10px;}
+  .valid_dom { border-top-right-radius: 10px; border-bottom-left-radius: 0px;  padding: 0; width: auto;}
+}
+/* ==========================================================================
+AFFICHAGE DES SPECIALISTES
+========================================================================== */
+.recherche { width: 100%; margin: auto; display: flex; justify-content: space-around; margin: 10px 0px 10px 0px; }
+.recherche .listeSpecialistes .pro { margin: 10px; background: #EEEEEE; padding: 20px; display: flex; flex-direction: column; justify-content: space-around; border-radius: 5px; border: solid #EEEEEE 2px;}
+.pro .coordonnes { display: flex; flex-direction: column; width: 100%; }
+.pro .coordonnes .adresse { display: flex; align-items: center; margin-top: 10px;}
+.pro .coordonnes .tel { display: flex; align-items: center; margin-top: 10px;}
+.pro i { color : orange; margin-right: 10px;}
+.pro .coordonnes .entete h4 { color: #4d4959; font-weight: bold;}
+.pro .coordonnes .entete p { font-style: italic; }
+.pro .dispo { border: solid red 2px; width: 100%; display: flex;justify-content: center; align-items: center;}
+.recherche .listeSpecialistes p { text-align: left;}
+@media screen and (min-width: 700px) {
+  .pro .dispo { width: 50%; }
+  .pro .coordonnes { width: 50%;}
+  .recherche .listeSpecialistes .pro { flex-direction: row;}
+  .recherche .listeSpecialistes { width: 50%;}
+  .recherche .listeSpecialistes .pro:hover { border: solid orange 2px;}
+  .recherche #map { width: 30%; height: 500px; position: fixed;}
+}
+/* ==========================================================================
+MON COMPTE
+========================================================================== */
+div.container ul {list-style: none;display: flex;justify-content:center;}
+div.container ul li:nth-child(2n+1) {margin: 10px 15px 10px 15px;}
+div.container ul li:nth-child(2n) {margin-top: 18px;}
+div.container ul li a {color: #504C5C;text-transform: uppercase;}
+#ajout {width: 100%; margin-top: 10px; }
+.active { border-bottom: 2px solid #504C5C; }
+.element { width: 75%; display: flex; flex-direction: column; margin: auto;}
+.element div {  background: white; border: solid #4d4959 1px; margin: 5px; padding: 5px;}
+.suppression { width: 100%; background: red; border: solid 1px black; padding: 2px; color: white; margin-top: 5px;}

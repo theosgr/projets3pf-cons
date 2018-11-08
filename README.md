@@ -1,13 +1,5 @@
-# projets3pf-cons
-Projet S3 - Plateforme de consultation 
-
-GitHub concernant le projet S3 sur le développement d'une plateforme de consultation.
-
-Groupe 2
-HAMELIN  Théophile
-GROLLIER Théo
-FERRAO Cindy
-PASQUEREAU Milan 
-ROBA Julien
-
-Copyright © Tous droits réservés.
+# pf-consult
+Projet de S3 et S4 :
+Ce projet à pour but de créer un site web de prise de RDV dans différents domaines (médical, juridique...).
+Ce site sera générique et proche du site "Doctolib" (www.doctolib.fr) dans sa conception.
+Cette plateforme permettra à un client ou un patient de prendre un rendez-vous téléphonique ou au cabinet, de poser une question simple, de demander une consultation juridique ou de santé sans transmission du dossier.
