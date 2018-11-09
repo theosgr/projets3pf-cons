@@ -28,8 +28,7 @@
     public function estInscrit($mail){
       try {
         $stmt = $this->connexion->prepare("SELECT * FROM Utilisateurs WHERE mail = ?;");
-        $tmpMail = strtoupper($_POST['mail']);
-        $stmt->bindParam(1,$tmpMail);
+        $stmt->bindParam(1,$mail);
         $stmt->execute();
         $result=$stmt->fetch(PDO::FETCH_ASSOC);
         if ($result["mail"] != NUll) {
@@ -48,8 +47,7 @@
       try {
         if ($this->estInscrit($mail)) {
           $stmt = $this->connexion->prepare("SELECT * FROM Utilisateurs WHERE mail = ?;");
-          $tmpMail = strtoupper($_POST['mail']);
-          $stmt->bindParam(1,$tmpMail);
+          $stmt->bindParam(1,$mail);
           $stmt->execute();
           $mdpUtilisateur = $stmt->fetch();
           $mdpUser = $mdpUtilisateur["mdp"];
@@ -70,8 +68,7 @@
       try {
         if ($this->checkMdp($_POST['login'],$_POST['mdp'])) {
           $stmt = $this->connexion->prepare('SELECT * FROM Utilisateurs WHERE mail = ?;');
-          $tmpLogin = strtoupper($_POST['login']);
-          $stmt->bindParam(1,$tmpLogin);
+          $stmt->bindParam(1,$_POST['login']);
           $stmt->execute();
           $tabResult = $stmt->fetch();
           if ($tabResult != NULL) {
@@ -423,19 +420,19 @@
         if (!$this->estInscrit($_POST['mail'])) {
           $stmt = $this->connexion->prepare('INSERT INTO Utilisateurs VALUES(NULL,?,?,?,?,?,?,?,?,?,?,?,?,?);');
           $stmt->bindParam(1,$_POST['civilite']);
-          $tmpPrenom = strtoupper($_POST['prenom']);
+          $tmpPrenom = mb_strtolower($_POST['prenom'],'UTF-8');
           $stmt->bindParam(2,$tmpPrenom);
-          $tmpNom = strtoupper($_POST['nom']);
+          $tmpNom = mb_strtolower($_POST['nom'],'UTF-8');
           $stmt->bindParam(3,$tmpNom);
           $stmt->bindParam(4,$_POST['mail']);
-          $tmpMDP = password_hash($_POST['mdp']); // password_hash est plus sécurisée que crypt
+          $tmpMDP = password_hash($_POST['mdp'], PASSWORD_DEFAULT); // password_hash est plus sécurisée que password_hash
           $stmt->bindParam(5,$tmpMDP); 
           $stmt->bindParam(6,$_POST['ddn']);
           $stmt->bindParam(7,$_POST['tel']);
-          $tmpAdresse = strtoupper($_POST['adresse']);
+          $tmpAdresse = mb_strtolower($_POST['adresse'],'UTF-8');
           $stmt->bindParam(8,$tmpAdresse);
           $stmt->bindParam(9,$_POST['cp']);
-          $tmpVille = strtoupper($_POST['ville']);
+          $tmpVille = mb_strtolower($_POST['ville'],'UTF-8');
           $stmt->bindParam(10,$tmpVille);
           $stmt->bindParam(11,$_POST['location']);
           // Utilisateur simple
@@ -486,16 +483,16 @@
           $stmt = $this->connexion->prepare('INSERT into Proche values(NULL,?,?,?,?,?,?,?,?,?,?);');
           $stmt->bindParam(1, $user['id']);
           $stmt->bindParam(2,$_POST['civiliteP']);
-          $tmpPrenomP = strtoupper($_POST['prenomP']);
+          $tmpPrenomP = mb_strtolower($_POST['prenomP'],'UTF-8');
           $stmt->bindParam(3,$prenomP);
-          $tmpNomP = strtoupper($_POST['nomP']);
+          $tmpNomP = mb_strtolower($_POST['nomP'],'UTF-8');
           $stmt->bindParam(4,$tmpNomP);
           $stmt->bindParam(5,$_POST['ddnP']);
           $stmt->bindParam(6,$_POST['telP']);
-          $tmpAdresseP = strtoupper($_POST['adresseP']);
+          $tmpAdresseP = mb_strtolower($_POST['adresseP'],'UTF-8');
           $stmt->bindParam(7,$tmpAdresseP);
           $stmt->bindParam(8,$_POST['cpP']);
-          $tmpVilleP = strtoupper($_POST['villeP']);
+          $tmpVilleP = mb_strtolower($_POST['villeP'],'UTF-8');
           $stmt->bindParam(9,$tmpVilleP);
           $stmt->bindParam(10,$_POST['locationP']);
           $stmt->execute();
@@ -620,35 +617,35 @@
 
           // modif nom
           $stmt = $this->connexion->prepare('UPDATE Utilisateurs SET nom = ? WHERE mail = ?');
-          $tmpNom = strtoupper($_POST['nom']);
+          $tmpNom = mb_strtolower($_POST['nom'],'UTF-8');
           $stmt->bindParam(1,$tmpNom);
           $stmt->bindParam(2,$_SESSION['id']);
           $stmt->execute();
 
           // nom prenom
           $stmt = $this->connexion->prepare('UPDATE Utilisateurs SET prenom = ? WHERE mail = ?');
-          $tmpPrenom = strtoupper($_POST['prenom']);
+          $tmpPrenom = mb_strtolower($_POST['prenom'],'UTF-8');
           $stmt->bindParam(1,$tmpPrenom);
           $stmt->bindParam(2,$_SESSION['id']);
           $stmt->execute();
 
           // modif ddn
           $stmt = $this->connexion->prepare('UPDATE Utilisateurs SET ddn = ? WHERE mail = ?');
-          $tmpDDN = strtoupper($_POST['ddn']);
+          $tmpDDN = mb_strtolower($_POST['ddn'],'UTF-8');
           $stmt->bindParam(1,$tmpDDN);
           $stmt->bindParam(2,$_SESSION['id']);
           $stmt->execute();
 
           // modif tel
           $stmt = $this->connexion->prepare('UPDATE Utilisateurs SET tel = ? WHERE mail = ?');
-          $tmpTelephone = strtoupper($_POST['tel']);
+          $tmpTelephone = mb_strtolower($_POST['tel'],'UTF-8');
           $stmt->bindParam(1,$tmpTelephone);
           $stmt->bindParam(2,$_SESSION['id']);
           $stmt->execute();
 
           // modif adresse
           $stmt = $this->connexion->prepare('UPDATE Utilisateurs SET adresse = ? WHERE mail = ?');
-          $tmpAdresse = strtoupper($_POST['adresse']);
+          $tmpAdresse = mb_strtolower($_POST['adresse'],'UTF-8');
           $stmt->bindParam(1,$tmpAdresse);
           $stmt->bindParam(2,$_SESSION['id']);
           $stmt->execute();
@@ -661,7 +658,7 @@
 
           // modif ville
           $stmt = $this->connexion->prepare('UPDATE Utilisateurs SET ville = ? WHERE mail = ?');
-          $tmpVille = strtoupper($_POST['ville']);
+          $tmpVille = mb_strtolower($_POST['ville'],'UTF-8');
           $stmt->bindParam(1,$tmpVille);
           $stmt->bindParam(2,$_SESSION['id']);
           $stmt->execute();
@@ -675,7 +672,7 @@
           // modif mdp si modification
           if ($mdp == 1) {
             $stmt = $this->connexion->prepare('UPDATE Utilisateurs SET mdp = ? WHERE mail = ?');
-            $tmpMDP = password_hash($_POST['mdp']);
+            $tmpMDP = password_hash($_POST['mdp'],PASSWORD_DEFAULT);
             $stmt->bindParam(1,$tmpMDP);
             $stmt->bindParam(2,$_SESSION['id']);
             $stmt->execute();
