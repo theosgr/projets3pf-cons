@@ -117,7 +117,7 @@ class vueDomaine {
 									<p class="tel"><i class="material-icons">&#xE0CD;</i><?php echo $row['tel'] ;?></p>
 								</div>
 								<div class="dispo">
-									<!-- calendrier -->
+										<input type="date" id="ddn" name="ddn" placeholder="DD/MM/YYYY"  maxlength="10" value="<?php if(isset($_POST['ddn'])) { echo htmlspecialchars($_POST['ddn']);}?>" />
 								</div>
 							</div>
 							<?php
