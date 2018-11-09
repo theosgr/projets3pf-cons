@@ -72,7 +72,8 @@
           $stmt->execute();
           $tabResult = $stmt->fetch();
           if ($tabResult != NULL) {
-            return (ucfirst(strtolower($tabResult['prenom'])) . " " . $tabResult['nom']);
+            $tmpConnexion=mb_strtolower($tabResult['prenom'],'UTF-8') . " " . $tabResult['nom'];
+            return ucfirst($tmpConnexion);
           }
         }
           return "ko";
