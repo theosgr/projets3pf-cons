@@ -25,7 +25,14 @@ function initMap() {
     })
     .done(function (data) {
       $(data).each(function(ind, item) {
-        var location = item.location.split(", ");
+        var location = {};
+        $.ajax({
+          url: "./modele/dao/recupLocationUser.php",
+          dataType: "NUMBER",
+          data: location,
+          type: 'GET'
+        });
+        location = item.location.split(", ");
         var latLng = new google.maps.LatLng(location[0], location[1]);
         // Affichage des marqueurs
         var marker = new google.maps.Marker({

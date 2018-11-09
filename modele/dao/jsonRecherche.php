@@ -26,6 +26,7 @@
   $stmt->bindParam(":element2", $elements[1]);
   $stmt->bindParam(":ville", htmlspecialchars($_GET['ville']));
 
+
 	// Récupération des données
   $stmt->execute();
 	$list = $stmt->fetchAll(PDO::FETCH_CLASS, "jsonRechercheSpecialiste");;
