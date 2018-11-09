@@ -102,7 +102,7 @@ class vueDomaine {
 							<div class="pro">
 								<div class="coordonnes">
 									<div class="entete">
-										<h4><?php echo ucwords(mb_strtolower($row['prenom'],'UTF-8')) . " " . $row['nom']; ?> :</h4>
+										<h4><?php echo ucwords(mb_strtolower($row['prenom'])) . " " . $row['nom']; ?> :</h4>
 										<p><?php echo ucwords($row['sous_specialite']) ?></p>
 									</div>
 									<div class="adresse">
@@ -110,14 +110,14 @@ class vueDomaine {
 											<h6><i class="material-icons">&#xE7F1;</i></h6>
 										</div>
 										<div>
-											<p><?php echo ucwords(mb_strtolower($row['adresse'],'UTF-8'));?></p>
+											<p><?php echo ucwords(mb_strtolower($row['adresse']));?></p>
 											<p><?php echo ucwords($row['cp'] . " " . $row['ville']); ?></p>
 										</div>
 									</div>
 									<p class="tel"><i class="material-icons">&#xE0CD;</i><?php echo $row['tel'] ;?></p>
 								</div>
 								<div class="dispo">
-									// calendrier
+									<!-- calendrier -->
 								</div>
 							</div>
 							<?php

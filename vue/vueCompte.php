@@ -36,9 +36,9 @@ class vueCompte {
 								foreach ($listeRDV as $row) {
 									?>
 									<div>
-										<h3>Vous avez rendez-vous avec <?php echo ucwords(mb_strtolower($row['prenom'],'UTF-8') . " " . $row['nom']); ?></h3>
+										<h3>Vous avez rendez-vous avec <?php echo ucwords(strtolower($row['prenom'])) . " " . $row['nom']; ?></h3>
 										<p>Le <?php echo $row['jour'] ;?> à <?php echo $row['horaire'] ;?></p>
-										<p>Ce rendez-vous concerne <?php echo ucwords(mb_strtolower($row['prenomPa'],'UTF-8') . " " . $row['nomPa']); ?></p>
+										<p>Ce rendez-vous concerne <?php echo ucwords(strtolower($row['prenomPa'])) . " " . $row['nomPa']; ?></p>
 										<a href="index.php?monCompte=3&suppr=<?php echo $row['id']?>"><button class="suppression" type="button">Supprimer</button></a>
 									</div>
 									<?php
@@ -68,8 +68,8 @@ class vueCompte {
 												<option name="civilite" <?php if (isset($mme)) echo $mme; ?> value="Mme">Mme</option>
 												<option name="civilite" <?php if (isset($other)) echo $other; ?> value="Autre">Autre</option>
 											</select>
-											<input id="prenom" type="text" name="prenom" placeholder="Prénom" size="15" required value="<?php echo ucwords(mb_strtolower($user->getPrenom(),'UTF-8'))?>" />
-											<input id="nom" type="text" name="nom" placeholder="Nom" size="15" required value="<?php echo ucwords(mb_strtolower($user->getNom(),'UTF-8'))?>" />
+											<input id="prenom" type="text" name="prenom" placeholder="Prénom" size="15" required value="<?php echo ucwords(strtolower($user->getPrenom()))?>" />
+											<input id="nom" type="text" name="nom" placeholder="Nom" size="15" required value="<?php echo ucwords(strtolower($user->getNom()))?>" />
 										</div>
 									</div>
 									<hr>
@@ -104,12 +104,12 @@ class vueCompte {
 									<div class="block">
 										<label>Adresse : </label>
 										<div>
-											<input id="adresse" type="text" name="adresse" placeholder="Adresse" required value="<?php echo ucwords(mb_strtolower($user->getAdresse(),'UTF-8'))?>"/>
+											<input id="adresse" type="text" name="adresse" placeholder="Adresse" required value="<?php echo ucwords(strtolower($user->getAdresse()))?>"/>
 										</div>
 
 										<div>
 											<input id="cp" type="text" name="cp" placeholder="Code Postal" required maxlength="5"	 value="<?php echo $user->getCp()?>"/>
-											<input id="ville" type="text" name="ville" placeholder="Ville" required value="<?php echo ucwords(mb_strtolower($user->getVille(),'UTF-8'))?>"/>
+											<input id="ville" type="text" name="ville" placeholder="Ville" required value="<?php echo ucwords(strtolower($user->getVille()))?>"/>
 										</div>
 
 										<div style="display:none">
@@ -139,10 +139,10 @@ class vueCompte {
 								foreach ($listeProches as $row) {
 									?>
 									<div>
-										<h3><?php echo ucwords(mb_strtolower($row['prenom'],'UTF-8') . " " . $row['nom']); ?> :</h3>
+										<h3><?php echo ucwords(strtolower($row['prenom'])) . " " . $row['nom']; ?> :</h3>
 										<p><?php echo $row['ddn'] ;?></p>
 										<p><?php echo $row['tel'] ;?></p>
-										<p><?php echo ucwords(mb_strtolower($row['adresse'],'UTF-8')) . " " . $row['cp'] . " " . $row['ville'];?></p> <!--La fonction strtolower ne prend pas en compte les caractères accentués -->
+										<p><?php echo ucwords(strtolower($row['adresse'])) . " " . $row['cp'] . " " . $row['ville'] ;?></p>
 										<a href="index.php?monCompte=3&suppr=<?php echo $row['id']?>"><button class="suppression" type="button">Supprimer</button></a>
 									</div>
 									<?php

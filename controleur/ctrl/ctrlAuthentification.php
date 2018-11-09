@@ -2,7 +2,7 @@
   require_once PATH_VUE."/vueAuthentification.php";
   require_once PATH_MODELE."/dao/dao.php";
 
-/* CONTROLEUR AUTHENTIFICATION : gestion de l'inscription, connexion et deonnexion */
+/* CONTROLEUR AUTHENTIFICATION : gestion de l'inscription, connexion et deconnexion */
   class ControleurAuthentification {
     private $vue;
     private $modele;
@@ -68,7 +68,7 @@
         $this->vue->genereVueAccueil();
       } else { // echec connexion
         $_SESSION['validite'] = "ko";
-        $_SESSION['message'] = "Combinaison utilisateur/mot de passe incorect";
+        $_SESSION['message'] = "Combinaison utilisateur/mot de passe incorrect";
         $this->connexion();
       }
     }

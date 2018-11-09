@@ -167,7 +167,7 @@ class vueAuthentification {
 							</div>
 							<label>N° de téléphone mobile : </label>
 							<div>
-								<input id="tel" type="number" name="tel" placeholder="N° tel" maxlength="10" value="<?php if(isset($_POST['tel'])) { echo htmlspecialchars($_POST['tel']);}?>" />
+								<input id="tel" type="tel" name="tel" placeholder="N° tel" maxlength="10" value="<?php if(isset($_POST['tel'])) { echo htmlspecialchars($_POST['tel']);}?>" />
 							</div>
 						</div>
 						<hr>
@@ -180,13 +180,13 @@ class vueAuthentification {
 							</div>
 
 							<div>
-								<input id="cp" class="ui-autocomplete-input" type="number" name="cp" placeholder="Code Postal" required maxlength="5" value="<?php if(isset($_POST['cp'])) { echo htmlspecialchars($_POST['cp']);}?>"/>
+								<input id="cp" class="ui-autocomplete-input" type="text" name="cp" placeholder="Code Postal" required maxlength="5" value="<?php if(isset($_POST['cp'])) { echo htmlspecialchars($_POST['cp']);}?>"/>
 								<ul class="ui-autocomplete ui-menu ui-widget ui-widget-content ui-corner-all" role="listbox" aria-activedescendant="ui-active-menuitem" style="z-index: 1; top: 0px; left: 0px; display: none;"></ul>
 								<input id="ville" type="text" name="ville" placeholder="Ville" required value="<?php if(isset($_POST['ville'])) { echo htmlspecialchars($_POST['ville']);}?>"/>
 							</div>
 
 							<div style="display:none">
-								<input id="location" type="text" name="location" value="" readonly="readonly">
+								<input id="location" type="text" name="location" value="" readonly>
 							</div>
 						</div>
 						<hr>
@@ -202,7 +202,7 @@ class vueAuthentification {
 										<?php
 										foreach ($listeSousSpecialite as $row) {
 											?>
-											<option value="<?php echo $row['nom']; ?>"><?php echo ucwords(mb_strtolower($row['nom'],'UTF-8')); ?></option>
+											<option value="<?php echo $row['nom']; ?>"><?php echo ucwords(strtolower($row['nom'])); ?></option>
 											<?php
 										}
 										?>
@@ -214,7 +214,7 @@ class vueAuthentification {
 										<?php
 										foreach ($listeDomaine as $row) {
 											?>
-											<option value="<?php echo $row['nom']; ?>"><?php echo ucwords(mb_strtolower($row['nom'],'UTF-8')); ?></option>
+											<option value="<?php echo $row['nom']; ?>"><?php echo ucwords(strtolower($row['nom'])); ?></option>
 											<?php
 										}
 										?>
@@ -224,7 +224,7 @@ class vueAuthentification {
 										foreach ($listeSpecialite as $row) {
 											if ($row['domaine'] == 1) {
 											?>
-											<option value="<?php echo $row['nom']; ?>"><?php echo ucwords(mb_strtolower($row['nom'],'UTF-8')); ?></option>
+											<option value="<?php echo $row['nom']; ?>"><?php echo ucwords(strtolower($row['nom'])); ?></option>
 											<?php
 											}
 										}
@@ -235,7 +235,7 @@ class vueAuthentification {
 										foreach ($listeSpecialite as $row) {
 											if ($row['domaine'] == 2) {
 											?>
-											<option value="<?php echo $row['nom']; ?>"><?php echo ucwords(mb_strtolower($row['nom'],'UTF-8')); ?></option>
+											<option value="<?php echo $row['nom']; ?>"><?php echo ucwords(strtolower($row['nom'])); ?></option>
 											<?php
 											}
 										}

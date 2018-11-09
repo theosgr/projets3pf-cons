@@ -12,10 +12,11 @@
         </ul>
       </div>
       <div class="projet">
-        <p>Quentin Jollivet Castelot</p>
-        <p>Maria Meriguet</p>
-        <p>Maureen Poissonnier</p>
-        <p>Lilian Rohou</p>
+        <p>Théo Grollier </p>
+        <p>Théophile Hamelin</p>
+        <p>Milan Pasquereau </p>
+        <p>Cindy Ferrao</p>
+        <p>Julien Roba</p>
       </div>
     </div>
 </footer>

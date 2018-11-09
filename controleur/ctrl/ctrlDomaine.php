@@ -23,5 +23,7 @@
       $listeSpecialistes = $this->modele->rechercheSpe($domaine);
       $this->vue->genereVueRecherche($domaine, $listeSpecialistes);
     }
+
+    
   }
 ?>
