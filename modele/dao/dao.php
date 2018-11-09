@@ -72,7 +72,8 @@
           $stmt->execute();
           $tabResult = $stmt->fetch();
           if ($tabResult != NULL) {
-            return (ucfirst(mb_strtolower($tabResult['prenom'],'UTF-8')) . " " . $tabResult['nom']);
+            $tmpConnexion=mb_strtolower($tabResult['prenom'],'UTF-8') . " " . $tabResult['nom'];
+            return ucfirst($tmpConnexion);
           }
         }
           return "ko";
@@ -420,15 +421,20 @@
         if (!$this->estInscrit($_POST['mail'])) {
           $stmt = $this->connexion->prepare('insert into Utilisateurs values(NULL,?,?,?,?,?,?,?,?,?,?,?,?,?);');
           $stmt->bindParam(1,$_POST['civilite']);
-          $stmt->bindParam(2,strtoupper($_POST['prenom']));
-          $stmt->bindParam(3,strtoupper($_POST['nom']));
+          $tmpPrenomAddUser=strtoupper($_POST['prenom']);
+          $stmt->bindParam(2,$tmpPrenomAddUser);
+          $tmpNomAddUser=strtoupper($_POST['nom']);
+          $stmt->bindParam(3,$tmpNomAddUser);
           $stmt->bindParam(4,$_POST['mail']);
-          $stmt->bindParam(5,crypt($_POST['mdp']));
+          $tmpMdpAddUser=password_hash($_POST['mdp'], PASSWORD_DEFAULT); //Password_hash() est plus efficace que crypt()
+          $stmt->bindParam(5,$tmpMdpAddUser);
           $stmt->bindParam(6,$_POST['ddn']);
           $stmt->bindParam(7,$_POST['tel']);
-          $stmt->bindParam(8,strtoupper($_POST['adresse']));
+          $tmpAdresseAddUser=strtoupper($_POST['adresse']);
+          $stmt->bindParam(8,$tmpAdresseAddUser);
           $stmt->bindParam(9,$_POST['cp']);
-          $stmt->bindParam(10,strtoupper($_POST['ville']));
+          $tmpVilleAddUser=strtoupper($_POST['ville']);
+          $stmt->bindParam(10,$tmpVilleAddUser);
           $stmt->bindParam(11,$_POST['location']);
           // Utilisateur simple
           if ($categorie == 1) {
@@ -668,7 +674,7 @@
           // modif mdp si modification
           if ($mdp == 1) {
             $stmt = $this->connexion->prepare('update Utilisateurs SET mdp = ? where mail = ?');
-            $stmt->bindParam(1,crypt($_POST['mdp']));
+            $stmt->bindParam(1,password_hash($_POST['mdp']),PASSWORD_DEFAULT);
             $stmt->bindParam(2,$_SESSION['id']);
             $stmt->execute();
           }

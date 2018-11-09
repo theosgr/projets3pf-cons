@@ -202,7 +202,7 @@ class vueAuthentification {
 										<?php
 										foreach ($listeSousSpecialite as $row) {
 											?>
-											<option value="<?php echo $row['nom']; ?>"><?php echo ucwords(strtolower($row['nom'])); ?></option>
+											<option value="<?php echo $row['nom']; ?>"><?php echo ucwords(mb_strtolower($row['nom'],'UTF-8')); ?></option>
 											<?php
 										}
 										?>
@@ -214,7 +214,7 @@ class vueAuthentification {
 										<?php
 										foreach ($listeDomaine as $row) {
 											?>
-											<option value="<?php echo $row['nom']; ?>"><?php echo ucwords(strtolower($row['nom'])); ?></option>
+											<option value="<?php echo $row['nom']; ?>"><?php echo ucwords(mb_strtolower($row['nom'],'UTF-8')); ?></option>
 											<?php
 										}
 										?>
@@ -224,7 +224,7 @@ class vueAuthentification {
 										foreach ($listeSpecialite as $row) {
 											if ($row['domaine'] == 1) {
 											?>
-											<option value="<?php echo $row['nom']; ?>"><?php echo ucwords(strtolower($row['nom'])); ?></option>
+											<option value="<?php echo $row['nom']; ?>"><?php echo ucwords(mb_strtolower($row['nom'],'UTF-8')); ?></option>
 											<?php
 											}
 										}
@@ -235,7 +235,7 @@ class vueAuthentification {
 										foreach ($listeSpecialite as $row) {
 											if ($row['domaine'] == 2) {
 											?>
-											<option value="<?php echo $row['nom']; ?>"><?php echo ucwords(strtolower($row['nom'])); ?></option>
+											<option value="<?php echo $row['nom']; ?>"><?php echo ucwords(mb_strtolower($row['nom'],'UTF-8')); ?></option>
 											<?php
 											}
 										}
