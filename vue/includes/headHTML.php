@@ -14,3 +14,4 @@
 <script src="vue/scripts/verificationFormulaires.js"></script>
 <script type="text/javascript" src="vue/scripts/onglet.js" ></script>
 <script type="text/javascript" src="vue/scripts/maps.js"></script>
+<script type="text/javascript" src="vue/scripts/detailsPro.js"></script>

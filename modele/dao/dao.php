@@ -815,20 +815,22 @@
     /* Méthode permettant la recherche d'un spécialiste, d'une spécialité ou d'une sous-spécialité */
     public function rechercheSpe($domaine) {
       try { 
-        $specialisteRecherche=mb_strtolower($_POST['specialiste']);
-        $villeRecherche = mb_strtolower($_POST['ville']);
+        $specialisteRecherche=mb_strtolower($_POST['specialiste']); 
+        //On met tout en minuscule pour que le casse ne soit pas prise en compte (le prénom est stocké en majuscule dass la bdd mais visiblement cela n'a pas d'importance alors qu'elle a de l'importance pour la sous spécialité etc (donc si on tapait "Chirurgie", cela ne correspondra pas à "chirurgie" (stocké comme ceci dans la bdd))
+        $villeRecherche = mb_strtolower($_POST['ville']); 
       //Si la recherche n'est pas vide, on affiche les prestataires qui se rapprochent de ce que la personne recherche
         if(!empty($specialisteRecherche) || !empty($villeRecherche))
         {
-          $elements = explode(" ",htmlspecialchars($specialisteRecherche));
+          $elements = explode(" ",htmlspecialchars($specialisteRecherche)); //On découpe la recherche en plusieurs éléments (max2)
 
           //Si le tableau d'éléments ne comporte pas plus de deux cases, alors on ne va pas chercher dans la seconde case
           if(sizeof($elements)==2)
           {
+            //On prend plusieurs informations du professionnel dont le domaine correspond au domaine de la recherche (Médical, juridique etc...), on regarde si le premier élément de la recherche correspond à un nom de professionnel, un prénom de professionnel, ou un nom de sous spécialité (Chirurgie cardiaque...) et idem pour l'élément 2 s'il existe. On a utilisé une concaténation de string car le BindValue() ou BindParam() ne fonctionnait pas.
             $chaine = "SELECT civilite, prenom, u.nom, mail, tel, adresse, ville, cp, location, s1.nom specialite, s2.nom sous_specialite from utilisateurs u, specialite s1, sous_specialite s2, domaine d WHERE d.id=? AND type = 2 AND u.specialite = s2.id AND s2.sousDomaine = s1.id AND s1.domaine = d.id AND ((s2.nom LIKE '".$elements[0]."%' OR prenom LIKE '".$elements[0]."%' OR u.nom LIKE '".$elements[0]."%') OR (s2.nom LIKE '%".$elements[1]."%' OR prenom LIKE '".$elements[1]."%' OR u.nom LIKE '".$elements[1]."%')) AND ville LIKE '".$_POST['ville']."%';";
           }
           else{
-            $chaine= "SELECT civilite, prenom, u.nom, mail, tel, adresse, ville, cp, location, s1.nom specialite, s2.nom sous_specialite from utilisateurs u, specialite s1, sous_specialite s2, domaine d WHERE d.id=? AND type = 2 AND u.specialite = s2.id AND s2.sousDomaine = s1.id AND s1.domaine = d.id AND (s2.nom LIKE '".$elements[0]."%' OR prenom LIKE '".$elements[0]."%' OR u.nom LIKE '".$elements[0]."%') AND ville LIKE '".$_POST['ville']."%';";
+            $chaine= "SELECT civilite, prenom, u.nom, mail, tel, adresse, ville, cp, location, s1.nom specialite, s2.nom sous_specialite from utilisateurs u, specialite s1, sous_specialite s2, domaine d WHERE d.id=? AND type = 2 AND u.specialite = s2.id AND s2.sousDomaine = s1.id AND s1.domaine = d.id AND (s2.nom LIKE '%".$elements[0]."%' OR prenom LIKE '".$elements[0]."%' OR u.nom LIKE '".$elements[0]."%') AND ville LIKE '".$_POST['ville']."%';";
           }
           $stmt = $this->connexion->prepare($chaine);
           $stmt->bindParam(1,$domaine); //Le domaine dépend de la page de recherche

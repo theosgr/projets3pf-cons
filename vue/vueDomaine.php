@@ -99,7 +99,7 @@ class vueDomaine {
 						<?php
 						foreach ($listeSpecialistes as $row) {
 							?>
-							<div class="pro">
+							<div class="pro" onclick="afficherDetailsPro(this);">
 								<div class="coordonnes">
 									<div class="entete">
 										<h4><?php echo ucwords(mb_strtolower($row['prenom'])) . " " . $row['nom']; ?> :</h4>
@@ -116,9 +116,9 @@ class vueDomaine {
 									</div>
 									<p class="tel"><i class="material-icons">&#xE0CD;</i><?php echo $row['tel'] ;?></p>
 								</div>
-								<div class="dispo">
+								<div class="calendrier">
 										<input type="date" id="ddn" name="ddn" placeholder="DD/MM/YYYY"  maxlength="10" value="<?php if(isset($_POST['ddn'])) { echo htmlspecialchars($_POST['ddn']);}?>" />
-								</div>
+									</div>
 							</div>
 							<?php
 						}

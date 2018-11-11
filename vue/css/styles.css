@@ -123,18 +123,18 @@ DOMAINE
 /* ==========================================================================
 AFFICHAGE DES SPECIALISTES
 ========================================================================== */
-.recherche { width: 100%; margin: auto; display: flex; justify-content: space-around; margin: 10px 0px 10px 0px; }
-.recherche .listeSpecialistes .pro { margin: 10px; background: #EEEEEE; padding: 20px; display: flex; flex-direction: column; justify-content: space-around; border-radius: 5px; border: solid #EEEEEE 2px;}
+.recherche { width: 100%; margin: auto; display: flex; justify-content: space-around; margin: 10px 0px 10px 0px;}
+.recherche .listeSpecialistes .pro { margin: 10px; background: #EEEEEE; padding: 20px; display: auto; flex-direction: unset; /*justify-content: space-around*/; border-radius: 5px; border: solid #EEEEEE 2px;}
 .pro .coordonnes { display: flex; flex-direction: column; width: 100%; }
-.pro .coordonnes .adresse { display: flex; align-items: center; margin-top: 10px;}
-.pro .coordonnes .tel { display: flex; align-items: center; margin-top: 10px;}
+.pro .coordonnes .adresse { display: inherit; display: none; align-items: center; margin-top: 10px;}
+.pro .coordonnes .tel { display: none; align-items: center; margin-top: 10px;}
 .pro i { color : orange; margin-right: 10px;}
 .pro .coordonnes .entete h4 { color: #4d4959; font-weight: bold;}
 .pro .coordonnes .entete p { font-style: italic; }
-.pro .dispo { border: solid red 2px; width: 100%; display: flex;justify-content: center; align-items: center;}
+.pro .calendrier { border: solid red 2px; width: 100%; display: none;justify-content: center; align-items: center;}
 .recherche .listeSpecialistes p { text-align: left;}
 @media screen and (min-width: 700px) {
-  .pro .dispo { width: 50%; }
+  .pro .calendrier { width: 50%; }
   .pro .coordonnes { width: 50%;}
   .recherche .listeSpecialistes .pro { flex-direction: row;}
   .recherche .listeSpecialistes { width: 50%;}
