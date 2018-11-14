@@ -20,7 +20,7 @@
 
     /* Affichage de page d'inscription. */
     public function inscription() {
-      $this->vue->genereVueInscription($this->modele->getDomaine(), $this->modele->getSpecialite(), $this->modele->getSousSpecialite());
+      $this->vue->genereVueInscription($this->modele->getSousSpecialite());
     }
 
     /* Affichage de la vue de connexion. */
@@ -64,12 +64,36 @@
       if ($_SESSION['user'] != "ko") { // connexion réussi
         $_SESSION['id'] = $_POST['login'];
         $_SESSION['validite'] = "ok";
+        $donneesUser = $this->modele->getInfosUser();
+        $_SESSION['categorie'] = $donneesUser[0]->getType();
         $_SESSION['message'] = "Bienvenue " . $_SESSION['user'];
         $this->vue->genereVueAccueil();
       } else { // echec connexion
         $_SESSION['validite'] = "ko";
         $_SESSION['message'] = "Combinaison utilisateur/mot de passe incorrect";
         $this->connexion();
+      }
+    }
+
+    /*Vérification que la personne voulant accéder à la gestion du site est admin*/
+    public function gestionAdmin() {
+      if(isset($_SESSION['categorie']))
+      {
+        if($_SESSION['categorie']==3)
+        {
+
+          $this->vue->genereVueAdmin($this->modele->getDomaine(), $this->modele->getSpecialite(), $this->modele->getSousSpecialite());
+        }
+        else
+        {
+          $_SESSION['validite'] = "ko";
+          $_SESSION['message']="Vous n'avez pas l'autorisation";
+        }
+      }
+      else
+      {
+        $_SESSION['validite'] = "ko";
+        $_SESSION['message']="Vous n'avez pas l'autorisation";
       }
     }
 

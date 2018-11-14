@@ -809,7 +809,37 @@
           $this->destroy();
           throw new PDOException("Erreur d'accès à la table Sous_Specialite");
         }
-    }
+      }
+
+        public function insertDomaine($nom)
+        {
+          try{
+            $stmt=$this->connexion->prepare('INSERT INTO domaine VALUES (NULL, ?);');
+            $stmt->bindParam(1,$nom);
+            $stmt->execute();
+          }
+          catch(PDOException $e)
+          {
+            $this->destroy();
+            throw new PDOException("Problème de connexion à la table domaine");
+          }
+        }
+
+        public function insertSpecialite($domaine, $nom)
+        {
+          try{
+            $stmt=$this->connexion->prepare('INSERT INTO specialite VALUES (NULL, ?, ?);');
+            $stmt->bindParam(1,$nom);
+            $stmt->bindParam(2,$domaine);
+            $stmt->execute();
+          }
+          catch(PDOException $e)
+          {
+            $this->destroy();
+            throw new PDOException("Problème de connexion à la table specialite");
+          }
+        }
+        
 /////////
 ///////// RECHERCHE
     /* Méthode permettant la recherche d'un spécialiste, d'une spécialité ou d'une sous-spécialité */

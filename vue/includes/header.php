@@ -53,6 +53,9 @@ function setResponsive() {
         <li><a href="?domaine=juridique">Juridique</a></li>
         <li><div class="dot"></div></li>
         <li><a href="?deconnexion">Déconnexion</a></li>
+        <?php if($_SESSION['categorie']==3)
+        echo("<li><div class=\"dot\"></div></li>
+        <li><a href=\"?admin\">Gestion du site</a></li>"); ?>
       </ul>
     </div>
     <a href="javascript:void(0);" class="icon" onclick="setResponsive()">&#9776;</a>

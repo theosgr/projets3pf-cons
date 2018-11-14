@@ -5,13 +5,15 @@
   require_once 'ctrl/ctrlMail.php';
   require_once 'ctrl/ctrlCompte.php';
   require_once 'ctrl/ctrlDomaine.php';
-
+  require_once 'ctrl/ctrlAdmin.php';
+  
 /* ROUTEUR : redirection des requêtes vers les contrôleurs */
   class Routeur {
     private $ctrlAuthentification;
     private $ctrlMail;
     private $ctrlCompte;
     private $ctrlDomaine;
+    private $ctrlAdmin;
 
 /** CONSTRUCTEUR DU ROUTEUR **/
     public function __construct() {
@@ -19,6 +21,7 @@
       $this->ctrlMail = new ControleurMail();
       $this->ctrlCompte = new ControleurCompte();
       $this->ctrlDomaine = new ControleurDomaine();
+      $this->ctrlAdmin = new ControleurAdmin();
     }
 
     public function routerRequete() {
@@ -124,6 +127,18 @@
           return;
         }
         $this->ctrlCompte->afficherReset();
+        return;
+      }
+      
+    //ACCES A L'INTERFACE DE GESTION DU SITE
+      if(isset($_GET['admin'])){
+        $this->ctrlAuthentification->gestionAdmin();
+        return;
+      }
+
+      if(isset($_POST['domaineCree']))
+      {
+        $this->ctrlAdmin->creationDomaine($_POST['domaineCree']);
         return;
       }
 

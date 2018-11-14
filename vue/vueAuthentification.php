@@ -90,7 +90,7 @@ class vueAuthentification {
 		<?php
 	}
 	/* Vue d'inscription du site */
-	public function genereVueInscription($listeDomaine, $listeSpecialite, $listeSousSpecialite){
+	public function genereVueInscription($listeSousSpecialite){
 		?>
 		<!DOCTYPE html>
 		<html lang="fr">
@@ -202,48 +202,11 @@ class vueAuthentification {
 										<?php
 										foreach ($listeSousSpecialite as $row) {
 											?>
-											<option value="<?php echo $row['nom']; ?>"><?php echo ucwords(strtolower($row['nom'])); ?></option>
-											<?php
-										}
-										?>
-										<option value="autre">Autre ...</option>
-									</select>
-								</div>
-								<div class="spe" style="display:none">
-									<select id="domaine" name="domaine">
-										<?php
-										foreach ($listeDomaine as $row) {
-											?>
-											<option value="<?php echo $row['nom']; ?>"><?php echo ucwords(strtolower($row['nom'])); ?></option>
+											<option value="<?php echo $row['nom']; ?>"><?php echo ucwords(mb_strtolower($row['nom'],'UTF-8')); ?></option>
 											<?php
 										}
 										?>
 									</select>
-									<select id="speMedecine" name="speMedecine">
-										<?php
-										foreach ($listeSpecialite as $row) {
-											if ($row['domaine'] == 1) {
-											?>
-											<option value="<?php echo $row['nom']; ?>"><?php echo ucwords(strtolower($row['nom'])); ?></option>
-											<?php
-											}
-										}
-										?>
-									</select>
-									<select  style="display:none" id="speJuridique" name="speJuridique">
-										<?php
-										foreach ($listeSpecialite as $row) {
-											if ($row['domaine'] == 2) {
-											?>
-											<option value="<?php echo $row['nom']; ?>"><?php echo ucwords(strtolower($row['nom'])); ?></option>
-											<?php
-											}
-										}
-										?>
-									</select>
-								</div>
-								<div class="spe" style="display:none">
-									<input type="text" name="newSpe" id="newSpe" placeholder="Votre spécialité">
 								</div>
 							</div>
 							<hr>
@@ -266,6 +229,78 @@ class vueAuthentification {
 
 		</body>
 		</html>
+		<?php
+	}
+
+	public function genereVueAdmin($listeDomaine, $listeSpecialite)
+	{
+		?>
+		<!DOCTYPE html>
+		<html lang="fr">
+		<head>
+			<title>Gestion du site</title>
+			<?php include 'includes/headHTML.php' ?>
+		</head>
+		<body id="gestionSite">
+			<!--  HEADER-->
+			<?php  include 'includes/header.php' ?>
+			<div class="creationSite">
+				<h3>Créer un domaine</h3>
+					<form method="post" action="index.php">
+					<input type="text" name="domaineCree" placeholder="Entrer le nom du domaine" />
+					<input type="submit" value="Confirmer" class="boutonCreation"/>
+				</form>
+			</div>
+			<div class="creationSite">
+				<h3>Créer une spécialité</h3>
+				<form method="post" action="?ajouterSpecialite=<?php if(isset($_POST['specialiteCree'])){echo $_POST['specialiteCree'];} ?>">
+					<label>Domaine : </label>
+					<select id="domaine" name="domaine">
+						<?php
+							foreach ($listeDomaine as $row) {
+						?>
+							<option value="<?php echo $row['nom']; ?>"><?php echo ucwords(mb_strtolower($row['nom'],'UTF-8')); ?></option>
+						<?php
+								}
+						?>
+					</select>
+					<label>Spécialité : </label><input type="text" name="specialiteCree" placeholder="Entrer le nom de la spécialité"/>
+					<input type="submit" value="Confirmer" class="boutonCreation"/>
+				</form>
+			</div>
+			<div class="creationSite" id="dernierDivAdmin">
+				<h3>Créer une sous-spécialité</h3>
+				<form method="post" action="?ajouterSousSpecialite=<?php if(isset($_POST['sousSpecialiteCree'])){echo $_POST['sousSpecialiteCree'];} ?>">
+					<label>Domaine : </label>
+					<select id="domaine" name="domaine">
+						<?php
+							foreach ($listeDomaine as $row) {
+						?>
+							<option value="<?php echo $row['nom']; ?>"><?php echo ucwords(mb_strtolower($row['nom'],'UTF-8')); ?></option>
+						<?php
+								}
+						?>
+					</select>
+					<label>Spécialité : </label>
+					<select id="specialite" name="specialite">
+						<?php
+							foreach ($listeSpecialite as $row) {
+						?>
+							<option value="<?php echo $row['nom']; ?>"><?php echo ucwords(mb_strtolower($row['nom'],'UTF-8')); ?></option>
+						<?php
+								}
+						?>
+					</select>
+
+					<label>Sous-spécialité : </label><input type="text" name="sousSpecialiteCree" placeholder="Entrer le nom de la sous-spécialité"/>
+					<input type="submit" value="Confirmer" class="boutonCreation"/>
+				</form>
+			</div>
+			<!-- FOOTER -->
+			<?php include 'includes/footer.php'; ?>
+		</body>
+		</html>
+
 		<?php
 	}
 }
