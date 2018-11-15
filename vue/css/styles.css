@@ -82,7 +82,7 @@ hr { width: 50%; margin: auto; border-bottom: 2px solid #EEEEEE; color: #EEEEEE;
 .boutonCreation { width:40%; background : orange; color : white; font-weight: bold; text-transform: uppercase; border:none; cursor:pointer; border-radius:5px; padding:5px; display: inline-block; text-align:center; height:55px;}
 .creationSite { padding:1%; text-align:center; border-radius: 5px; background: #EEEEEE; margin-top: 1.5%; width:60%; display:inline-block;}
 .boutonCreation:hover {color:orange; background: white;}
-.creationSite label, select, input { width:60%; display: inline-block; text-align: center; flex-direction: unset;}
+.creationSite label select input { width:60%; display: inline-block; text-align: center; flex-direction: unset;}
 #gestionSite { text-align: center; }
 #dernierDivAdmin {margin-bottom:1.5%;}
 
