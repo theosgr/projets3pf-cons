@@ -53,6 +53,7 @@
       if(!empty($domaine)) //On regarde si le domaine rentré n'est pas vide
       {
         $domaines = $this->modele->getDomaine();
+
         $domaine=$this->strToNoAccent($domaine);
         $domaine=mb_strtoupper($domaine,'UTF-8');
 
@@ -76,6 +77,53 @@
     {
       $_SESSION['validite']="ko";
       $_SESSION['message']="Le domaine est vide";
+      $this->vue->genereVueAdmin($this->modele->getDomaine(), $this->modele->getSpecialite());
+    }
+
+  }
+
+  //Méthode qui gère la création de spécialité
+  public function creationSpecialite($domaine,$specialite)
+    {
+      if(!empty($specialite)) //On regarde si la spécialité rentrée n'est pas vide
+      {
+
+        // $domaine=$this->strToNoAccent($domaine);
+        // $domaine=mb_strtoupper($domaine,'UTF-8');
+
+        $specialites = $this->modele->getSpecialite();
+
+        $specialite=$this->strToNoAccent($specialite);
+        $specialite = ucfirst($specialite);
+
+        // $specialite=mb_strtoupper($specialite,'UTF-8');
+
+        foreach($specialites as $row) //On s'assure que la spécialité n'existe pas déjà
+        {
+          if($specialite == $row['nom'])
+          {
+            $_SESSION['validite']="ko";
+            $_SESSION['message']="La spécialité existe déjà";
+            $this->vue->genereVueAdmin($this->modele->getDomaine(), $this->modele->getSpecialite());
+            return;
+          }
+        }
+
+        $id=$this->modele->getIdDomaine($domaine);
+        
+        foreach ($id as $row) {
+          $idDomaine=$row;
+        }
+
+        $this->modele->insertSpecialite($idDomaine,$specialite);
+        $_SESSION['validite']="ok";
+        $_SESSION['message']="La spécialité a bien été ajouté";
+        $this->vue->genereVueAdmin($this->modele->getDomaine(), $this->modele->getSpecialite());
+    }
+    else
+    {
+      $_SESSION['validite']="ko";
+      $_SESSION['message']="La spécialité est vide";
       $this->vue->genereVueAdmin($this->modele->getDomaine(), $this->modele->getSpecialite());
     }
 

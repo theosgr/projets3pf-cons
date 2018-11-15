@@ -142,6 +142,12 @@
         return;
       }
 
+      if(isset($_POST['specialiteCree']) && isset($_POST['domaine']))
+      {
+        $this->ctrlAdmin->creationSpecialite($_POST['domaine'], $_POST['specialiteCree']);
+        return;
+      }
+
 // DEFAULT
       $this->ctrlAuthentification->accueil();
       return;

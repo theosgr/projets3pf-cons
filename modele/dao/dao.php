@@ -748,6 +748,30 @@
       }
     }
 
+    /** Méthode permettant de récuperer les specialité d'un domaine particulier triée par nom */
+    public function getSpecialiteDomaine($domaine) {
+      try {
+        $stmt = $this->connexion->prepare("SELECT id from domaine WHERE nom=?");
+        $stmt->bindParam(1,$domaine);
+        $stmt->execute();
+        $idDomaine = $stmt->fetch();
+        
+        foreach($idDomaine as $row) 
+        {
+          $idDomaine=$row['0'];
+        }
+        // var_dump($idDomaine);
+
+        $stmt = $this->connexion->prepare('SELECT * from Specialite  WHERE domaine=? order by nom');
+        $stmt->bindParam(1,$idDomaine);
+        $stmt->execute();
+        return $stmt->fetchAll();
+      } catch (PDOException $e) {
+        $this->destroy();
+        throw new PDOException("Erreur d'accès à la table Specialite ou Domaine");
+      }
+    }
+
     /** Méthode permettant de récuperer les sous specialité triée par nom */
     public function getSousSpecialite() {
       try {
