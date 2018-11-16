@@ -82,6 +82,46 @@
 
   }
 
+  //Méthode qui gère la création de sous-spécialité
+  public function creationSousSpecialite($specialite,$sousSpecialite)
+    {
+      if(!empty($sousSpecialite)) //On regarde si la sous spécialité rentrée n'est pas vide
+      {
+        $sousSpecialites = $this->modele->getSousSpecialite();
+
+        $sousSpecialite= $this->strToNoAccent($sousSpecialite);        
+
+        foreach($sousSpecialites as $row) //On s'assure que la sous spécialité n'existe pas déjà
+        {
+          if($sousSpecialite == $this->strToNoAccent($row['nom']))
+          {
+            $_SESSION['validite']="ko";
+            $_SESSION['message']="La sous spécialité existe déjà";
+            $this->vue->genereVueAdmin($this->modele->getDomaine(), $this->modele->getSpecialite());
+            return;
+          }
+        }
+
+        $idS=$this->modele->getIdSpecialite($specialite);
+        foreach($idS as $row)
+        {
+          $idSpecialite = $row;
+        }
+
+        $this->modele->insertSousSpecialite($sousSpecialite,$idSpecialite);
+        $_SESSION['validite']="ok";
+        $_SESSION['message']="La sous spécialité a bien été ajouté";
+        $this->vue->genereVueAdmin($this->modele->getDomaine(), $this->modele->getSpecialite());
+    }
+    else
+    {
+      $_SESSION['validite']="ko";
+      $_SESSION['message']="La sous spécialité est vide";
+      $this->vue->genereVueAdmin($this->modele->getDomaine(), $this->modele->getSpecialite());
+    }
+
+  }
+
   //Méthode qui gère la création de spécialité
   public function creationSpecialite($domaine,$specialite)
     {

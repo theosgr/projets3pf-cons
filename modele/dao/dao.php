@@ -748,7 +748,7 @@
       }
     }
 
-    /** Méthode permettant de récuperer les specialité d'un domaine particulier triée par nom */
+    /** Méthode permettant de récuperer les specialité d'un domaine particulier triées par nom */
     public function getSpecialiteDomaine($domaine) {
       try {
         $stmt = $this->connexion->prepare("SELECT id from domaine WHERE nom=?");
@@ -801,7 +801,7 @@
       public function getIdSpecialite($nom) {
         try {
           $nom = ucfirst($nom);
-          $stmt = $this->connexion->prepare('select * from Specialite where nom = ?');
+          $stmt = $this->connexion->prepare('select id from Specialite where nom = ?');
           $stmt->bindParam(1, $nom);
           $stmt->execute();
           return $stmt->fetch();

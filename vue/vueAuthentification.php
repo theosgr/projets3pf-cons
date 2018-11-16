@@ -271,16 +271,6 @@ class vueAuthentification {
 			<div class="creationSite" id="dernierDivAdmin">
 				<h3>Créer une sous-spécialité</h3>
 				<form method="post" action="?ajouterSousSpecialite=<?php if(isset($_POST['sousSpecialiteCree'])){echo $_POST['sousSpecialiteCree'];} ?>">
-					<label>Domaine : </label>
-					<select id="domaine" name="domaine">
-						<?php
-							foreach ($listeDomaine as $row) {
-						?>
-							<option value="<?php echo $row['nom']; ?>"><?php echo ucwords(mb_strtolower($row['nom'],'UTF-8')); ?></option>
-						<?php
-								}
-						?>
-					</select>
 					<label>Spécialité : </label>
 					<select id="specialite" name="specialite">
 						<?php
