@@ -6,6 +6,7 @@
   require_once 'ctrl/ctrlCompte.php';
   require_once 'ctrl/ctrlDomaine.php';
   require_once 'ctrl/ctrlAdmin.php';
+  require_once 'ctrl/ctrlPlageHoraire.php';
   
 /* ROUTEUR : redirection des requêtes vers les contrôleurs */
   class Routeur {
@@ -14,6 +15,7 @@
     private $ctrlCompte;
     private $ctrlDomaine;
     private $ctrlAdmin;
+    private $ctrlPlageHoraire;
 
 /** CONSTRUCTEUR DU ROUTEUR **/
     public function __construct() {
@@ -22,6 +24,7 @@
       $this->ctrlCompte = new ControleurCompte();
       $this->ctrlDomaine = new ControleurDomaine();
       $this->ctrlAdmin = new ControleurAdmin();
+      $this->ctrlPlageHoraire = new ControleurPlageHoraire();
     }
 
     public function routerRequete() {
@@ -130,7 +133,7 @@
         return;
       }
       
-    //ACCES A L'INTERFACE DE GESTION DU SITE
+//ACCES A L'INTERFACE DE GESTION DU SITE
       if(isset($_GET['admin'])){
         $this->ctrlAuthentification->gestionAdmin();
         return;
@@ -153,6 +156,21 @@
         $this->ctrlAdmin->creationSousSpecialite($_POST['specialite'], $_POST['sousSpecialiteCree']);
         return;
       }
+
+// PLAGE HORAIRE
+      if(isset($_GET['idPro']))
+      {
+        $this->ctrlPlageHoraire->plageHoraire($_GET['idPro']);
+        return;
+      }
+
+      if (isset($_GET['horaire'])) { // vérifiction de l'horaire
+      // DISPONIBILITES        
+          $this->ctrlPlageHoraire->plageHoraire();
+          // 12 = le nombre de disponibilités dans une journée (à modifier plus tard)
+          //$this->ctrlPlageHoraire->plageHoraire(12);
+          return;
+        }
 
 // DEFAULT
       $this->ctrlAuthentification->accueil();

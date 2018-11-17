@@ -117,8 +117,10 @@ class vueDomaine {
 									<p class="tel"><i class="material-icons">&#xE0CD;</i><?php echo $row['tel'] ;?></p>
 								</div>
 								<div class="boutons">
-									<button class="boutonRdv" type="bouton" action="index.php">Prendre rendez-vous</button>
-									<button class="boutonQuestion" type="button" action="index.php">Poser une question</button>
+									<form action="index.php?idPro=<?php echo $row['id'];?>" method="post">
+										<input class="boutonRdv" type="submit" value="Prendre rendez-vous"/>
+										<input class="boutonQuestion" type="submit" value="Poser une question"/>
+									</form>
 								</div>
 								<!-- <button class="boutonDetails" type="button" onclick="alert('Hello')">Masquer les détails</button> --> <!-- Pour le javascript plus tard -->
 							</div>

@@ -143,8 +143,8 @@ AFFICHAGE DES SPECIALISTES
 .pro .boutonDetails {background:none; border:none; text-decoration: underline; color: orange; border: solid pink 2px; cursor: pointer; }
 .boutonDetails:hover {color : white;}
 .boutons { display: inline-flex; flex-direction: row; justify-content: space-around; align-items:center; }
-.pro .boutonQuestion {  width:40%; background : orange; color : white; font-weight: bold; text-transform: uppercase; border:none; cursor:pointer; border-radius:5px; padding:5px; display: inline-block; text-align:center; height:55px;}
-.pro .boutonRdv { width:40%; background : orange; color : white; font-weight: bold; text-transform: uppercase; border:none; cursor:pointer; border-radius:5px; padding:5px; display: inline-block; text-align:center; height:55px;}
+.pro .boutonQuestion {  width:60%; background : orange; color : white; font-weight: bold; text-transform: uppercase; border:none; cursor:pointer; border-radius:5px; padding:5px; display: inline-block; text-align:center; height:55px;}
+.pro .boutonRdv { width:60%; background : orange; color : white; font-weight: bold; text-transform: uppercase; border:none; cursor:pointer; border-radius:5px; padding:5px; display: inline-block; text-align:center; height:55px;}
 .boutonRdv:hover {color:orange; background: white;}
 .boutonQuestion:hover {color:orange; background: white;}
 @media screen and (min-width: 700px) {
