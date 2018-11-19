@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  ven. 09 nov. 2018 à 08:07
+-- Généré le :  lun. 19 nov. 2018 à 20:12
 -- Version du serveur :  5.7.21
 -- Version de PHP :  7.2.4
 
@@ -52735,7 +52735,7 @@ CREATE TABLE IF NOT EXISTS `domaine` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Déchargement des données de la table `domaine`
@@ -52743,7 +52743,33 @@ CREATE TABLE IF NOT EXISTS `domaine` (
 
 INSERT INTO `domaine` (`id`, `nom`) VALUES
 (1, 'MEDICAL'),
-(2, 'JURIDIQUE');
+(2, 'JURIDIQUE'),
+(12, 'RESTAURATION');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `plage_horaire`
+--
+
+DROP TABLE IF EXISTS `plage_horaire`;
+CREATE TABLE IF NOT EXISTS `plage_horaire` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `heureDebut` time NOT NULL,
+  `heureFin` time NOT NULL,
+  `date` date NOT NULL,
+  `estPrise` tinyint(1) NOT NULL DEFAULT '0',
+  `idPro` int(10) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKplage_utilisateur` (`idPro`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `plage_horaire`
+--
+
+INSERT INTO `plage_horaire` (`id`, `heureDebut`, `heureFin`, `date`, `estPrise`, `idPro`) VALUES
+(2, '08:00:00', '08:15:00', '2018-11-19', 0, 53);
 
 -- --------------------------------------------------------
 
@@ -52766,7 +52792,7 @@ CREATE TABLE IF NOT EXISTS `proche` (
   `location` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `ix_idlaisut` (`idliaisut`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `proche`
@@ -52776,8 +52802,7 @@ INSERT INTO `proche` (`id`, `idliaisut`, `civilite`, `prenom`, `nom`, `ddn`, `te
 (1, 53, 'Autre', 'MEDOR', 'DORS', '2017-11-16', '0742518634', '14 RUE DU MOULIN à VENT', 44700, 'ORVAULT', '47.27135089999999, -1.6294467999999824'),
 (4, 67, 'Mme', 'TEST3', 'TEST', '2000-01-19', '0606060606', '9 RUE SéVIGNé', 44000, 'NANTES', '47.215508, -1.5671789000000445'),
 (5, 67, 'Mme', 'TEST3', 'TEST', '2000-01-19', '0606060606', '9 RUE SéVIGNé', 44000, 'NANTES', '47.215508, -1.5671789000000445'),
-(6, 67, 'Mme', 'TEST3', 'TEST', '2000-01-19', '0606060606', '9 RUE SéVIGNé', 44000, 'NANTES', '47.215508, -1.5671789000000445'),
-(7, 67, 'Mme', 'LAURI', 'HAMELIN', '2018-11-08', '0606060606', '9 RUE SéVIGNé', 44000, 'NANTES', '47.215508, -1.5671789000000445');
+(6, 67, 'Mme', 'TEST3', 'TEST', '2000-01-19', '0606060606', '9 RUE SéVIGNé', 44000, 'NANTES', '47.215508, -1.5671789000000445');
 
 -- --------------------------------------------------------
 
@@ -52798,14 +52823,15 @@ CREATE TABLE IF NOT EXISTS `rdv` (
   UNIQUE KEY `ID` (`id`),
   KEY `ix_idpracticien` (`idpracticien`),
   KEY `ix_patient_id` (`idpatient`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `rdv`
 --
 
 INSERT INTO `rdv` (`id`, `idpracticien`, `horaire`, `jour`, `idpatient`, `nomPa`, `prenomPa`) VALUES
-(10, 53, '15:00', '2018-03-31', 53, 'MERIGUET', 'MARIA');
+(10, 53, '15:00', '2018-03-31', 53, 'MERIGUET', 'MARIA'),
+(11, 53, '08:00', '2018-11-06', 67, 'Hamelin', 'Théophile');
 
 -- --------------------------------------------------------
 
@@ -52819,7 +52845,7 @@ CREATE TABLE IF NOT EXISTS `sous_specialite` (
   `nom` varchar(100) COLLATE utf8_bin NOT NULL,
   `sousDomaine` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Déchargement des données de la table `sous_specialite`
@@ -52854,7 +52880,12 @@ INSERT INTO `sous_specialite` (`id`, `nom`, `sousDomaine`) VALUES
 (34, 'généraliste', 17),
 (35, 'endocrinologue', 8),
 (36, 'stomatologue', 17),
-(37, 'droit généraliste', 38);
+(37, 'droit généraliste', 38),
+(38, 'chirurgie maxillo-faciale', 2),
+(39, 'testtesttetsts', 2),
+(40, 'testpsychiatre', 1),
+(41, 'okokokdsok', 1),
+(42, 'Psychiatre freudien', 33);
 
 -- --------------------------------------------------------
 
@@ -52868,7 +52899,7 @@ CREATE TABLE IF NOT EXISTS `specialite` (
   `nom` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `domaine` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `specialite`
@@ -52931,7 +52962,8 @@ INSERT INTO `specialite` (`id`, `nom`, `domaine`) VALUES
 (54, 'Notaire', 2),
 (55, 'Procureur de la République', 2),
 (56, 'Substitut du procureur', 2),
-(57, 'Surveillant de l’administration', 2);
+(57, 'Surveillant de l’administration', 2),
+(74, 'Dsdssdsqsq', 12);
 
 -- --------------------------------------------------------
 
@@ -52956,7 +52988,7 @@ CREATE TABLE IF NOT EXISTS `utilisateurs` (
   `type` int(1) UNSIGNED NOT NULL,
   `specialite` int(10) UNSIGNED DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Déchargement des données de la table `utilisateurs`
@@ -52977,14 +53009,22 @@ INSERT INTO `utilisateurs` (`id`, `civilite`, `prenom`, `nom`, `mail`, `mdp`, `d
 (63, 'M.', 'YVON', 'CHOTARD', 'yvon.chotard@gmail.com', '$1$nPw1hGdG$TaenqTRbUjS540xgu4lO0.', '1984-11-23', '0755414654', '16 ALLéE DUGUAY TROUIN', 44000, 'NANTES', '47.21273590000001, -1.5568986000000677', 2, 37),
 (64, 'Mme', 'MéLANIE', 'FERREIRA', 'melanie.ferreira@gmail.com', '$1$6FNl8NTL$rw7XgnpdxQbO2PMuoP.3p/', '1973-09-05', '0745122132', '56 RUE FOURé', 44000, 'NANTES', '47.2101182, -1.5473566000000574', 2, 37),
 (65, 'M.', 'AUGUSTIN', 'MOULINAS', 'august.mouline@gmail.com', '$1$D.PqCGQX$3PS1Ccl9PgU9bv6O9oGA/.', '1975-04-16', '0754113265', '4 RUE DE L\'HôTEL DE VILLE', 44000, 'NANTES', '47.2178589, -1.5557698000000073', 2, 17),
-(66, 'Mme', 'ANNE ', 'BELLANGER', 'anne.bellanger@gmail.com', '$1$O9PWeF9v$hr6Yb5JJ9q/eJOIuJ5xMS/', '1976-07-31', '0746535432', '4 RUE DE L\'HôTEL DE VILLE', 44000, 'NANTES', '47.2178589, -1.5557698000000073', 2, 17),
+(66, 'Mme', 'ANNE ', 'BELLANGER', 'anne.bellanger@gmail.com', '$1$O9PWeF9v$hr6Yb5JJ9q/eJOIuJ5xMS/', '1976-07-31', '0746535432', '4 RUE DE L\'HôTEL DE VILLE', 75000, 'PARIS', '47.2178589, -1.5557698000000073', 2, 17),
 (67, 'M.', 'THéOPHILE', 'HAMELIN', 'test@test.com', '$1$e2hJSdYF$t2juow4Wi198YgAPztuFR/', '1999-09-07', '0606060606', '9 RUE SéVIGNé', 44000, 'NANTES', '47.215508, -1.5671789000000445', 1, NULL),
 (68, 'M.', 'THEOPHILE', 'HAMELIN', 'theophile@test.com', '$1$w7l1oP1e$O9wF/OQ8rGhTgw6lBsvz8/', '1999-09-07', '0846182673', '9 RUE SéVIGNé', 44000, 'NANTES', '47.215508, -1.5671789000000445', 1, NULL),
-(69, 'M.', 'THEOPHILE', 'HAMELIN', 'theophile2@test.com', '$2y$10$c8.xvJCSLH5OYd8CQEJgT.GYVIFIBTqH7P7QslsI1OjTtLxBK4lnG', '1999-09-07', '0846182673', '9 RUE SéVIGNé', 44000, 'NANTES', '47.215508, -1.5671789000000445', 1, NULL);
+(69, 'M.', 'THEOPHILE', 'HAMELIN', 'theophile2@test.com', '$2y$10$c8.xvJCSLH5OYd8CQEJgT.GYVIFIBTqH7P7QslsI1OjTtLxBK4lnG', '1999-09-07', '0846182673', '9 RUE SéVIGNé', 44000, 'NANTES', '47.215508, -1.5671789000000445', 1, NULL),
+(70, 'Mme', 'CHIRURGIEN', 'CARDIAQUE', 'test@chirurgienc.com', '$2y$10$EQsvrWfEus077taJFvNX3eUzaE8f/1.KWYZdHIFFNHYfrawSBFJiO', '1999-09-07', '0709157263', '9 RUE SéVIGNé', 44000, 'NANTES', '47.215508, -1.5671789000000445', 2, 1),
+(71, 'M.', 'ADMIN', 'ADMIN', 'admin@admin.com', '$2y$10$WKsAyGMVdRi6D6tE4EgG.emm5Qka6q/w6w8j5JTPyBarEwOMWZ7ze', '1999-09-07', '0634154298', '9 RUE SéVIGNé', 44000, 'NANTES', '47.215508, -1.5671789000000445', 3, NULL);
 
 --
 -- Contraintes pour les tables déchargées
 --
+
+--
+-- Contraintes pour la table `plage_horaire`
+--
+ALTER TABLE `plage_horaire`
+  ADD CONSTRAINT `FKplage_utilisateur` FOREIGN KEY (`idPro`) REFERENCES `utilisateurs` (`id`);
 
 --
 -- Contraintes pour la table `proche`
