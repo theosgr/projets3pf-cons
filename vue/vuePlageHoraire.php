@@ -17,7 +17,13 @@ class vuePlageHoraire {
 			<?php  include 'includes/header.php' ?>
 
 			<!--CONTENT-->
-
+			<div>
+				<form action="index.php" method="post">
+					<label>Rentrer la date de votre rendez-vous</label>
+					<input type="date" placeholder="jj/mm/aaaa"/>
+					<input type="submit" value="Suivant"/>
+				</form>
+			</div>
 			<!--  FOOTER -->
 			<?php  include 'includes/footer.php' ?>
 

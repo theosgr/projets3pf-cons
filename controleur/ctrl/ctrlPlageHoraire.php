@@ -16,7 +16,7 @@
     	/* Affichage de la page pour connaitre les disponibilités  */
     	public function plageHoraire($idProfessionnel) {
         
-     		$this->vue->genereVuePlageHoraire($plageHoraire, $idProfessionnel);
+     		$this->vue->genereVuePlageHoraire($idProfessionnel);
     	}
 
       /* Affichage des disponibiltés - les rdv déjà pris */
