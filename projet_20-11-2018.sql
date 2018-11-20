@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  lun. 19 nov. 2018 à 20:12
+-- Généré le :  mar. 20 nov. 2018 à 16:14
 -- Version du serveur :  5.7.21
 -- Version de PHP :  7.2.4
 
@@ -52760,6 +52760,9 @@ CREATE TABLE IF NOT EXISTS `plage_horaire` (
   `date` date NOT NULL,
   `estPrise` tinyint(1) NOT NULL DEFAULT '0',
   `idPro` int(10) UNSIGNED NOT NULL,
+  `estRemplace` tinyint(1) NOT NULL,
+  `nomRemplacant` varchar(25) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `civilite` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKplage_utilisateur` (`idPro`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
@@ -52768,8 +52771,8 @@ CREATE TABLE IF NOT EXISTS `plage_horaire` (
 -- Déchargement des données de la table `plage_horaire`
 --
 
-INSERT INTO `plage_horaire` (`id`, `heureDebut`, `heureFin`, `date`, `estPrise`, `idPro`) VALUES
-(2, '08:00:00', '08:15:00', '2018-11-19', 0, 53);
+INSERT INTO `plage_horaire` (`id`, `heureDebut`, `heureFin`, `date`, `estPrise`, `idPro`, `estRemplace`, `nomRemplacant`, `civilite`) VALUES
+(2, '08:00:00', '08:15:00', '2018-11-19', 0, 53, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -52792,7 +52795,7 @@ CREATE TABLE IF NOT EXISTS `proche` (
   `location` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `ix_idlaisut` (`idliaisut`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `proche`
@@ -52801,8 +52804,7 @@ CREATE TABLE IF NOT EXISTS `proche` (
 INSERT INTO `proche` (`id`, `idliaisut`, `civilite`, `prenom`, `nom`, `ddn`, `tel`, `adresse`, `cp`, `ville`, `location`) VALUES
 (1, 53, 'Autre', 'MEDOR', 'DORS', '2017-11-16', '0742518634', '14 RUE DU MOULIN à VENT', 44700, 'ORVAULT', '47.27135089999999, -1.6294467999999824'),
 (4, 67, 'Mme', 'TEST3', 'TEST', '2000-01-19', '0606060606', '9 RUE SéVIGNé', 44000, 'NANTES', '47.215508, -1.5671789000000445'),
-(5, 67, 'Mme', 'TEST3', 'TEST', '2000-01-19', '0606060606', '9 RUE SéVIGNé', 44000, 'NANTES', '47.215508, -1.5671789000000445'),
-(6, 67, 'Mme', 'TEST3', 'TEST', '2000-01-19', '0606060606', '9 RUE SéVIGNé', 44000, 'NANTES', '47.215508, -1.5671789000000445');
+(5, 67, 'Mme', 'TEST3', 'TEST', '2000-01-19', '0606060606', '9 RUE SéVIGNé', 44000, 'NANTES', '47.215508, -1.5671789000000445');
 
 -- --------------------------------------------------------
 
