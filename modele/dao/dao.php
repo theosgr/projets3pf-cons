@@ -721,6 +721,22 @@
       }
     }
 
+    /* Méthode retournant les plags horaires du professionnel concerné */
+    public function getPlageHoraire($id)
+    {
+      try{
+        $stmt = $this->connexion->prepare('SELECT date, heureDebut, heureFin, estRemplace, civiliteRemplacant, nomRemplacant FROM plage_horaire WHERE idPro=? ;');
+        $stmt->bindParam(1,$id);
+        $stmt->execute();
+        return $stmt->fetchAll();
+      }
+      catch(PEDOException $e)
+      {
+        $this->destroy();
+        throw new PDOException("Erreur d'accès à la table plage_horaire");
+      }
+    }
+
 
 /////////
 ///////// GESTION DOMAINE // SPECIALITE // SOUS SPECIALITE

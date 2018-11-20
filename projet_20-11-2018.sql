@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mar. 20 nov. 2018 à 16:14
+-- Généré le :  mar. 20 nov. 2018 à 16:45
 -- Version du serveur :  5.7.21
 -- Version de PHP :  7.2.4
 
@@ -52762,17 +52762,18 @@ CREATE TABLE IF NOT EXISTS `plage_horaire` (
   `idPro` int(10) UNSIGNED NOT NULL,
   `estRemplace` tinyint(1) NOT NULL,
   `nomRemplacant` varchar(25) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `civilite` int(10) DEFAULT NULL,
+  `civiliteRemplacant` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKplage_utilisateur` (`idPro`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `plage_horaire`
 --
 
-INSERT INTO `plage_horaire` (`id`, `heureDebut`, `heureFin`, `date`, `estPrise`, `idPro`, `estRemplace`, `nomRemplacant`, `civilite`) VALUES
-(2, '08:00:00', '08:15:00', '2018-11-19', 0, 53, 0, NULL, NULL);
+INSERT INTO `plage_horaire` (`id`, `heureDebut`, `heureFin`, `date`, `estPrise`, `idPro`, `estRemplace`, `nomRemplacant`, `civiliteRemplacant`) VALUES
+(2, '08:00:00', '08:15:00', '2018-11-19', 0, 53, 0, NULL, NULL),
+(3, '08:00:00', '09:00:00', '2018-11-20', 0, 70, 1, 'TOI', 'Mme.');
 
 -- --------------------------------------------------------
 
