@@ -15,15 +15,15 @@
 
     	/* Affichage de la page pour connaitre les disponibilités  */
     	public function plageHoraire($idProfessionnel) {
-        
+
      		$this->vue->genereVuePlageHoraire($idProfessionnel);
     	}
 
       /* Affichage des disponibiltés - les rdv déjà pris */
-      /*public function listeHeure () {
-        $listeHoraire = $this->modele->Dispo($plageHoraire);
-        $this->vue->genereVuePlageHoraire($plageHoraire, $listeHoraire);
-      } */ 
+      public function listeHeure ($idProfessionnel) {
+        //$listeHoraire = $this->modele->Dispo($plageHoraire);
+        $this->vue->genereVueSelectionHoraire($idProfessionnel);
+      }
 }
 
 ?>
