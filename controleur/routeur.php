@@ -7,7 +7,7 @@
   require_once 'ctrl/ctrlDomaine.php';
   require_once 'ctrl/ctrlAdmin.php';
   require_once 'ctrl/ctrlPlageHoraire.php';
-  
+
 /* ROUTEUR : redirection des requêtes vers les contrôleurs */
   class Routeur {
     private $ctrlAuthentification;
@@ -132,7 +132,7 @@
         $this->ctrlCompte->afficherReset();
         return;
       }
-      
+
 //ACCES A L'INTERFACE DE GESTION DU SITE
       if(isset($_GET['admin'])){
         $this->ctrlAuthentification->gestionAdmin();
@@ -164,13 +164,22 @@
         return;
       }
 
-      if (isset($_GET['horaire'])) { // vérifiction de l'horaire
-      // DISPONIBILITES        
+      if (isset($_GET['horaire'])) { // vérification de l'horaire
+      // DISPONIBILITES
           $this->ctrlPlageHoraire->plageHoraire();
           // 12 = le nombre de disponibilités dans une journée (à modifier plus tard)
           //$this->ctrlPlageHoraire->plageHoraire(12);
           return;
         }
+
+      if(isset($_POST['daterdv']))
+      {
+        $this->ctrlPlageHoraire->listeHeure($_POST['daterdv']);
+        return;
+      }
+
+
+
 
 // DEFAULT
       $this->ctrlAuthentification->accueil();
