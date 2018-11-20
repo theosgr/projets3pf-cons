@@ -42,6 +42,44 @@
       }
     }
 
+    /* Méthode permettant de modifier le mot de passe */
+
+	public function modifierMdp($mdp){
+  	try {
+
+  		$mdp = password_hash($mdp, PASSWORD_DEFAULT);
+  		$stmt = $this->connexion->prepare('update Utilisateurs SET mdp = ? where mail = ?');
+        $stmt->bindParam(1,$_POST['mdp']);
+        $stmt->bindParam(2,$_SESSION['id']);
+        $stmt->execute();
+
+
+  		// Test 
+    	/*if($this->estInscrit($mail) && $this->checkMdp($mail, $mdp)) {
+	      	//Création du mot de passe aléatoire
+	      	$alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
+	      	$password = array(); // Mot de passe est un tableau
+	      	$alphaLength = strlen($alphabet) - 1; //Longueur à 1
+	      	// on random les caractères de la variable alphabet
+	      	for ($i = 0; $i < 10; $i++) {
+	        	$n = rand(0, $alphaLength);
+	        	$password[] = $alphabet[$n];
+	      	}
+	    $mdp = password_hash(implode($password), PASSWORD_DEFAULT);
+	    }
+	    $stmt = $this->connexion->prepare("update Utilisateurs set mdp = ? where mail = ?;");
+	    $stmt->bindParam(1,$mdp);
+        $stmt->bindParam(2,$mail);
+        $stmt->execute();
+*/
+  	}
+  	catch(PDOException $e) {
+    	$this->destroy();
+    	throw new PDOException("Erreur d'accès à la table Utilisateurs");
+  	}
+	}
+
+
     /* Méthode permettant de vérifier le mot de passe */
     public function checkMdp($mail, $mdp) {
       try {

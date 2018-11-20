@@ -55,7 +55,7 @@
     /* Envoi un nouveau mot de passe */
     public function resetMdp() {
       if ($this->modele->estInscrit($_POST['mail'])) {
-        // Creation d'un mot de passe provisoire
+        // Creation d'un nouveau mot de passe aléatoire
         $mot_de_passe = "";
         $chaine = "abcdefghjkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ023456789+@!$%?&";
         $longeur_chaine = strlen($chaine);
@@ -63,6 +63,7 @@
             $place_aleatoire = mt_rand(0,($longeur_chaine-1));
             $mot_de_passe .= $chaine[$place_aleatoire];
         }
+       
         // Modification du mot de passe de l'utilisateur dans la bd
         $this->modele->modifierMdp($mot_de_passe);
 
