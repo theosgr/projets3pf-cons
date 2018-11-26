@@ -15,8 +15,16 @@
 
     /* Affichage de la page du compte */
     public function pageMonCompte() {
-      $user = $this->modele->getInfosUser();
-      $this->vue->afficherProfil($user[0], $this->modele->getRdv($user[0]->getId()), $this->modele->getProches($user[0]->getId()));
+      if($_SESSION['categorie'] == 1)
+      {
+        $user = $this->modele->getInfosUser();
+        $this->vue->afficherProfil($user[0], $this->modele->getRdv($user[0]->getId()), $this->modele->getProches($user[0]->getId()), 0); //0 car pas besoin de listePlageHoraire
+      }
+      else
+      {
+        $user = $this->modele->getInfosUser();
+        $this->vue->afficherProfil($user[0], $this->modele->getRdv($user[0]->getId()), $this->modele->getProches($user[0]->getId()), $this->modele->getPlageHoraire($user[0]->getId()));
+      }
     }
 
     /* Affichage de la page de reset du mot de passe */
@@ -47,7 +55,7 @@
     /* Envoi un nouveau mot de passe */
     public function resetMdp() {
       if ($this->modele->estInscrit($_POST['mail'])) {
-        // Creation d'un mot de passe provisoire
+        // Creation d'un nouveau mot de passe aléatoire
         $mot_de_passe = "";
         $chaine = "abcdefghjkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ023456789+@!$%?&";
         $longeur_chaine = strlen($chaine);
@@ -55,6 +63,7 @@
             $place_aleatoire = mt_rand(0,($longeur_chaine-1));
             $mot_de_passe .= $chaine[$place_aleatoire];
         }
+       
         // Modification du mot de passe de l'utilisateur dans la bd
         $this->modele->modifierMdp($mot_de_passe);
 

@@ -4,7 +4,7 @@
 class vueCompte {
 
 	// Affichage du compte utilisateur
-	public function afficherProfil($user, $listeRDV, $listeProches){
+	public function afficherProfil($user, $listeRDV, $listeProches, $listePlageHoraire){
 		?>
 		<!DOCTYPE html>
 		<html lang="fr">
@@ -23,6 +23,7 @@ class vueCompte {
 					<div class="container">
 						<!--  BLOC ONGLET -->
 						<ul class="tabs">
+							<?php if($_SESSION['categorie']!=1) { echo ("<li><a href=\"#MesPlagesHoraires\">Mes plages horaires</a></li><li class=\"dot\"></li>"); } ?>
 							<li><a href="#MesRDV">Mes rendez-vous</a></li>
 							<li class="dot"></li>
 							<li><a href="#MonCompte">Mon compte</a></li>
@@ -30,6 +31,21 @@ class vueCompte {
 							<li><a href="#MesProches">Mes proches</a></li>
 						</ul>
 						<hr>
+						<section id="MesPlagesHoraires" >
+							<div class="element">
+								<?php
+								foreach ($listePlageHoraire as $row) {
+									?>
+									<div>
+										<h3>Date : <?php echo ucwords(mb_strtolower($row['date'],'UTF-8')); ?></h3>
+										<p>De : <?php echo $row['heureDebut'] ;?> à <?php echo $row['heureFin'] ;?></p>
+										<?php if($row['estRemplace']!=0){ echo ("<p>Vous êtes remplacé par ".$row['civiliteRemplacant']." ".$row['nomRemplacant']."</p>"); }?>
+									</div>
+									<?php
+								}
+								?>
+							</div>
+						</section>
 						<section id="MesRDV" >
 							<div class="element">
 								<?php
