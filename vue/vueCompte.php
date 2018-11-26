@@ -33,15 +33,19 @@ class vueCompte {
 						<hr>
 						<section id="MesPlagesHoraires" >
 							<div class="element">
-								<?php
-								foreach ($listePlageHoraire as $row) {
-									?>
-									<div>
-										<h3>Date : <?php echo ucwords(mb_strtolower($row['date'],'UTF-8')); ?></h3>
-										<p>De : <?php echo $row['heureDebut'] ;?> à <?php echo $row['heureFin'] ;?></p>
-										<?php if($row['estRemplace']!=0){ echo ("<p>Vous êtes remplacé par ".$row['civiliteRemplacant']." ".$row['nomRemplacant']."</p>"); }?>
-									</div>
-									<?php
+								<?php 
+								if($_SESSION['categorie'] != 1)
+								{
+									foreach ($listePlageHoraire as $row) 
+									{
+										?>
+										<div>
+											<h3>Date : <?php echo ucwords(mb_strtolower($row['date'],'UTF-8')); ?></h3>
+											<p>De : <?php echo $row['heureDebut'] ;?> à <?php echo $row['heureFin'] ;?></p>
+											<?php if($row['estRemplace']!=0){ echo ("<p>Vous êtes remplacé par ".$row['civiliteRemplacant']." ".$row['nomRemplacant']."</p>"); }?>
+										</div>
+										<?php
+									}
 								}
 								?>
 							</div>
