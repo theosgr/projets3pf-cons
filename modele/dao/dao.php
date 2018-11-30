@@ -42,44 +42,6 @@
       }
     }
 
-    /* Méthode permettant de modifier le mot de passe */
-
-	public function modifierMdp($mdp){
-  	try {
-
-  		$mdp = password_hash($mdp, PASSWORD_DEFAULT);
-  		$stmt = $this->connexion->prepare('update Utilisateurs SET mdp = ? where mail = ?');
-        $stmt->bindParam(1,$_POST['mdp']);
-        $stmt->bindParam(2,$_SESSION['id']);
-        $stmt->execute();
-
-
-  		// Test 
-    	/*if($this->estInscrit($mail) && $this->checkMdp($mail, $mdp)) {
-	      	//Création du mot de passe aléatoire
-	      	$alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
-	      	$password = array(); // Mot de passe est un tableau
-	      	$alphaLength = strlen($alphabet) - 1; //Longueur à 1
-	      	// on random les caractères de la variable alphabet
-	      	for ($i = 0; $i < 10; $i++) {
-	        	$n = rand(0, $alphaLength);
-	        	$password[] = $alphabet[$n];
-	      	}
-	    $mdp = password_hash(implode($password), PASSWORD_DEFAULT);
-	    }
-	    $stmt = $this->connexion->prepare("update Utilisateurs set mdp = ? where mail = ?;");
-	    $stmt->bindParam(1,$mdp);
-        $stmt->bindParam(2,$mail);
-        $stmt->execute();
-*/
-  	}
-  	catch(PDOException $e) {
-    	$this->destroy();
-    	throw new PDOException("Erreur d'accès à la table Utilisateurs");
-  	}
-	}
-
-
     /* Méthode permettant de vérifier le mot de passe */
     public function checkMdp($mail, $mdp) {
       try {
@@ -775,6 +737,64 @@
       }
     }
 
+    /* Méthode permettant d'ajouter plusieurs plages horaires à la fois pour le professionnel */
+    public function addPlageHoraire($mail, $dureeRdv, $debutServ, $finServ, $debutPause, $finPause, $dateDebut, $dateFin)
+    {
+      try
+      {
+        $idPro = $this->getIdUser($mail)[0]; 
+        $dateD = new DateTime($dateDebut); //Date où commence la mise en place des plages horaires
+        $dateF = new DateTime($dateFin); //Date où termine la mise en place des plages horaires
+        $heureD = new DateTime($debutServ); //Heure où commence le service du prestataire
+        $heureF = new DateTime($finServ); //Heure où termine le service du prestataire
+        $heureDPause = new DateTime($debutPause); //Heure de début de pause déjeuner du prestataire
+        $heureFPause = new DateTime($finPause); //Heure de fin de pause déjeuner du prestataire
+        $duree = new DateTime($dureeRdv); //Durée d'un rendez-vous
+        $plageInseree = FALSE; //Indique si la plage horaire a été insérée (si on était dans une heure de pause ou pas au niveau de la boucle)
+
+        foreach(new DatePeriod($dateD, new DateInterval('P1D'), $dateF) as $date) 
+        {
+          if($date->format('l') != "Sunday" && $date->format('l') != "Saturday")
+          {
+            while($heureD->format('H:i:s') < $heureF->format('H:i:s'))
+            {
+              //Si l'heure actuelle de la boucle n'est pas une heure de pause, alors on insère dans la base de données la plage horaire correspondante
+              if($heureD->format('H:i:s')<$heureDPause->format('H:i:s') || $heureD->format('H:i')>=$heureFPause->format('H:i'))
+              {
+                $heureDebutRdvCourant=$heureD->format('H:i:s');
+                $heureD->add(new DateInterval("PT".$duree->format('i')."M"));
+                $heureFinRdvCourant=$heureD->format('H:i:s');
+                $dateRdvCourant = $date->format('Y-m-d');
+
+                $stmt = $this->connexion->prepare("INSERT INTO plage_horaire VALUES(id,?,?,?,0,?,0,NULL,NULL)"); //On insert les valeurs dans la table
+                $stmt->bindParam(1,$heureDebutRdvCourant);
+                $stmt->bindParam(2,$heureFinRdvCourant);
+                $stmt->bindParam(3,$dateRdvCourant);
+                $stmt->bindParam(4,$idPro);
+                $stmt->execute();
+
+                $plageInseree = TRUE;
+                
+              }
+
+              //Si l'heure était une heure de pause (alors heureD n'a pas été augmentée), on l'augmente ici
+              if($plageInseree == FALSE)
+              {
+                $heureD->add(new DateInterval("PT".$duree->format('i')."M"));
+              }
+              $plageInseree = FALSE;
+            }
+          }
+          $heureD = new DateTime($debutServ); //On remet l'heureD
+        }
+      }
+      catch(PEDOException $e)
+      {
+        $this->destroy();
+        throw new PDOException("Erreur d'accès à la table plage_horaire");
+      }
+    }
+
 
 /////////
 ///////// GESTION DOMAINE // SPECIALITE // SOUS SPECIALITE
@@ -814,7 +834,6 @@
         {
           $idDomaine=$row['0'];
         }
-        // var_dump($idDomaine);
 
         $stmt = $this->connexion->prepare('SELECT * from Specialite  WHERE domaine=? order by nom');
         $stmt->bindParam(1,$idDomaine);

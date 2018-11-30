@@ -36,6 +36,9 @@ class vueCompte {
 								<?php 
 								if($_SESSION['categorie'] != 1)
 								{
+									?>
+									<a href="index.php?ajouterPlageHoraire=1&idPro3=<?php echo($_SESSION['id']); ?>"><input type="submit" value="Ajouter des plages horaires"/></a>
+									<?php
 									foreach ($listePlageHoraire as $row) 
 									{
 										?>

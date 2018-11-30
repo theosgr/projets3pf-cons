@@ -7,7 +7,7 @@
   require_once 'ctrl/ctrlDomaine.php';
   require_once 'ctrl/ctrlAdmin.php';
   require_once 'ctrl/ctrlPlageHoraire.php';
-
+  
 /* ROUTEUR : redirection des requêtes vers les contrôleurs */
   class Routeur {
     private $ctrlAuthentification;
@@ -132,7 +132,7 @@
         $this->ctrlCompte->afficherReset();
         return;
       }
-
+      
 //ACCES A L'INTERFACE DE GESTION DU SITE
       if(isset($_GET['admin'])){
         $this->ctrlAuthentification->gestionAdmin();
@@ -164,22 +164,25 @@
         return;
       }
 
-      if (isset($_GET['horaire'])) { // vérification de l'horaire
-      // DISPONIBILITES
+      if(isset($_GET['idPro3']) && isset($_GET['ajouterPlageHoraire']))
+      {
+        $this->ctrlPlageHoraire->affichageModifPlageHoraire($_GET['idPro3']);
+        return;
+      }
+
+      if(isset($_POST['dureeRdv']) && isset($_POST['debutServ']) && isset($_POST['finServ']) && isset($_POST['debutPause']) && isset($_POST['finPause']) && isset($_POST['debutPlanning']) && isset($_POST['finPlanning']))
+      {
+        $this->ctrlPlageHoraire->ajouterPlageHoraire($_SESSION['id'], $_POST['dureeRdv'], $_POST['debutServ'], $_POST['finServ'], $_POST['debutPause'], $_POST['finPause'], $_POST['debutPlanning'], $_POST['finPlanning']);
+        return;
+      }
+
+      if (isset($_GET['horaire'])) { // vérifiction de l'horaire
+      // DISPONIBILITES        
           $this->ctrlPlageHoraire->plageHoraire();
           // 12 = le nombre de disponibilités dans une journée (à modifier plus tard)
           //$this->ctrlPlageHoraire->plageHoraire(12);
           return;
         }
-
-      if(isset($_POST['daterdv']))
-      {
-        $this->ctrlPlageHoraire->listeHeure($_POST['daterdv']);
-        return;
-      }
-
-
-
 
 // DEFAULT
       $this->ctrlAuthentification->accueil();

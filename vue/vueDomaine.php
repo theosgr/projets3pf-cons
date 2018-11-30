@@ -1,7 +1,5 @@
 <?php
 
-
-
 // Gestion de la recherche
 class vueDomaine {
 
@@ -15,7 +13,6 @@ class vueDomaine {
 			<?php include 'includes/headHTML.php' ?>
 		</head>
 		<body>
-
 			<!--  HEADER-->
 			<?php  include 'includes/header.php' ?>
 
@@ -49,7 +46,6 @@ class vueDomaine {
 				</div>
 			</div>
 
-
 			<!--  FOOTER -->
 			<?php  include 'includes/footer.php' ?>
 
@@ -64,52 +60,15 @@ class vueDomaine {
 		<!DOCTYPE html>
 		<html lang="fr">
 		<head>
-			<title id="titre">Recherche</title>
+			<title>Recherche</title>
 			<?php include 'includes/headHTML.php' ?>
 		</head>
-		<body>
-
-
-
-
-
-
-
-       	<p id="locationphp" value="<?php
-
-					require_once "./config/config.php";
-
-				//	header("Access-Control-Allow-Origin: *");
-
-					try {
-							$chaine = "mysql:host=".HOST.";dbname=".BD.";charset=UTF8";
-							$db = new PDO($chaine,LOGIN,PASSWORD);
-							$db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-					} catch (PDOException $e) {
-							throw new PDOException("Erreur de connexion");
-					}
-					if (!isset($_SESSION['id'])) {
-						$Paris = "48.866667, 2.333333";
-						echo $Paris;
-					} else {
-						$ID = $_SESSION['id'];
-						$sql_get_location = "SELECT location FROM Utilisateurs WHERE mail=:id";
-						$sth = $db->prepare($sql_get_location);
-						$sth->bindParam(":id", $ID);
-						$sth->execute();
-						$reponse = $sth->fetch(PDO::FETCH_ASSOC);
-
-						foreach($reponse as $result) {
-								echo $result;
-						}
-					}
-				?>"></p>
-
+		<body onload="initMap();">
 			<!--  HEADER-->
 			<?php  include 'includes/header.php' ?>
 
 			<!--  CONTENT -->
- 				<div class="content">
+			<div class="content">
 				<?php if ($domaine == 1) {
 					$class = "searchbar_med";
 					$type = 1;
@@ -140,7 +99,7 @@ class vueDomaine {
 						<?php
 						foreach ($listeSpecialistes as $row) {
 							?>
-							<div class="pro" onclick="afficherDetailsPro(this);">
+							<div class="pro">
 								<div class="coordonnes">
 									<div class="entete">
 										<h4><?php echo ucwords(mb_strtolower($row['prenom'])) . " " . $row['nom']; ?> :</h4>
@@ -157,18 +116,20 @@ class vueDomaine {
 									</div>
 									<p class="tel"><i class="material-icons">&#xE0CD;</i><?php echo $row['tel'] ;?></p>
 								</div>
-								<div class="calendrier">
-										<input type="date" id="ddn" name="ddn" placeholder="DD/MM/YYYY"  maxlength="10" value="<?php if(isset($_POST['ddn'])) { echo htmlspecialchars($_POST['ddn']);}?>" />
-									</div>
+								<div class="boutons">
+									<form action="index.php?idPro=<?php echo $row['id'];?>" method="post">
+										<input class="boutonRdv" type="submit" value="Prendre rendez-vous"/>
+										<input class="boutonQuestion" type="submit" value="Poser une question"/>
+									</form>
+								</div>
+								<!-- <button class="boutonDetails" type="button" onclick="alert('Hello')">Masquer les détails</button> --> <!-- Pour le javascript plus tard -->
 							</div>
 							<?php
 						}
 						?>
 					</div>
-
 					<div id="map">
-
-
+						<!-- Carte Google maps gérée par le script maps.js -->
 						<script>// On initialise la latitude et la longitude (centre de la carte)
 							// Fonction d'initialisation de la carte
 							function initMap() {
@@ -201,7 +162,6 @@ class vueDomaine {
 							};
 						</script>
 					</div>
-
 				</div>
 			</div>
 
