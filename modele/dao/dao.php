@@ -697,7 +697,7 @@
     /* Méthode permettant de récupérer les rendez-vous dun utilisateur */
     public function getRdv($idUser){
       try {
-        $stmt = $this->connexion->prepare('select u.nom, u.prenom, horaire, jour, nomPa, prenomPa from Rdv as r, Utilisateurs as u where idpracticien = u.id and idpatient = ?');
+        $stmt = $this->connexion->prepare('select r.id, u.nom, u.prenom, horaire, jour, nomPa, prenomPa from Rdv as r, Utilisateurs as u where idpracticien = u.id and idpatient = ?');
         $stmt->bindParam(1,$idUser);
         $stmt->execute();
         return $stmt->fetchAll();
