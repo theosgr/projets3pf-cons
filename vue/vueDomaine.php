@@ -157,45 +157,82 @@ class vueDomaine {
 						}
 						?>
 					</div>
-					<div id="map">
-						<!-- Carte Google maps gérée par le script maps.js -->
-						<script>// On initialise la latitude et la longitude (centre de la carte)
-							// Fonction d'initialisation de la carte
-							function initMap() {
-								var lat = 48;
-								var lon = 3;
-								var map = null;
-								var location = document.getElementById("locationphp").getAttribute("value");
-								var locationSplit = location.split(", ");
 
-								// Créer l'objet "map" et l'insèrer dans l'élément HTML qui a l'ID "map"
-								map = new google.maps.Map(document.getElementById("map"), {
-										center: new google.maps.LatLng(locationSplit[0], locationSplit[1]),
-										zoom: 11,
-										mapTypeId: google.maps.MapTypeId.ROADMAP,
-										mapTypeControl: true,
-										scrollwheel: false,
-										mapTypeControlOptions: {
-										style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR
-									},
-									navigationControl: true,
-									navigationControlOptions: {
-									// Comment ces options doivent-elles s'afficher
-										style: google.maps.NavigationControlStyle.ZOOM_PAN
+
+					<div id="fixed" style="position:fixed; width: 100%; height: 500px;">
+						<p id="map">
+							<!-- Carte Google maps gérée par le script maps.js -->
+							<script>// On initialise la latitude et la longitude (centre de la carte)
+								// Fonction d'initialisation de la carte
+								function initMap() {
+									var lat = 48;
+									var lon = 3;
+									var map = null;
+									var location = document.getElementById("locationphp").getAttribute("value");
+									var locationSplit = location.split(", ");
+
+
+									var villes = {
+										"Paris":{"lat": 48.852969,"lon": 2.349903},
+										"Brest":{"lat": 48.383,"lon": -4.500},
+										"Quimper":{"lat": 48.000,"lon": -4.100},
+										"Bayonne":{"lat": 43.500,"lon": -1.467}
+									};
+
+
+									// Créer l'objet "map" et l'insèrer dans l'élément HTML qui a l'ID "map"
+									map = new google.maps.Map(document.getElementById("map"), {
+											center: new google.maps.LatLng(locationSplit[0], locationSplit[1]),
+											zoom: 11,
+											mapTypeId: google.maps.MapTypeId.ROADMAP,
+											mapTypeControl: true,
+											scrollwheel: false,
+											mapTypeControlOptions: {
+											style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR
+										},
+										navigationControl: true,
+										navigationControlOptions: {
+										// Comment ces options doivent-elles s'afficher
+											style: google.maps.NavigationControlStyle.ZOOM_PAN
+										}
+									});
+									// Nous parcourons la liste des villes
+									for(ville in villes){
+										var marker = new google.maps.Marker({
+											// A chaque boucle, la latitude et la longitude sont lues dans le tableau
+											position: {lat: villes[ville].lat, lng: villes[ville].lon},
+											// On en profite pour ajouter une info-bulle contenant le nom de la ville
+											title: ville,
+											map: map
+										});
 									}
-								});
-							}
-							window.onload = function(){
-								// Fonction d'initialisation qui s'exécute lorsque le DOM est chargé
-								initMap();
-							};
-						</script>
+								}
+								window.onload = function(){
+									// Fonction d'initialisation qui s'exécute lorsque le DOM est chargé
+									initMap();
+								};
+							</script>
+						</p>
 					</div>
 				</div>
 			</div>
 
 			<!--  FOOTER -->
 			<?php  include 'includes/footer.php' ?>
+
+			<?php
+		//	function getCoordonnees($adresse){
+		//			$apiKey = "AIzaSyApkFZZ0VQzKD2vC8w0-WjU8UdFIofbMac";//Indiquez ici votre clé Google maps !
+		//			$url = "http://maps.google.com/maps/geo?q=".urlencode($adresse)."&output=csv&key=".$apiKey;
+		//			$csv = file($url);
+		//			$donnees = explode(",",$csv[0]);
+		//			return $csv;
+		//			return $donnees[0].",".$donnees[0];
+		//	}
+		//
+		//	echo "Les coordonnées du Louvre sont : ".getCoordonnees("Louvre Paris")."<br />".
+		//	"Les coordonnées de '5 rue du bac, Paris' sont : ".getCoordonnees("5 rue du bac, Paris");
+		//	?>
 
 		</body>
 		</html>
