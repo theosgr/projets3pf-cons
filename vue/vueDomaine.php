@@ -126,6 +126,7 @@ class vueDomaine {
 				<div class="recherche">
 					<div class="listeSpecialistes">
 						<?php
+						$allLocations = array();
 						foreach ($listeSpecialistes as $row) {
 							?>
 							<div class="pro">
@@ -144,6 +145,7 @@ class vueDomaine {
 										</div>
 									</div>
 									<p class="tel"><i class="material-icons">&#xE0CD;</i><?php echo $row['tel'] ;?></p>
+									<?php array_push($allLocations,ucwords(mb_strtolower($row['location'])));?>
 								</div>
 								<div class="boutons">
 									<form action="index.php?idPro=<?php echo $row['id'];?>" method="post">
@@ -158,6 +160,7 @@ class vueDomaine {
 						?>
 					</div>
 
+					<p value="<?php $allLocations ?>"></p>
 
 					<div id="fixed" style="position:fixed; width: 100%; height: 500px;">
 						<p id="map">
@@ -170,15 +173,6 @@ class vueDomaine {
 									var map = null;
 									var location = document.getElementById("locationphp").getAttribute("value");
 									var locationSplit = location.split(", ");
-
-
-									var villes = {
-										"Paris":{"lat": 48.852969,"lon": 2.349903},
-										"Brest":{"lat": 48.383,"lon": -4.500},
-										"Quimper":{"lat": 48.000,"lon": -4.100},
-										"Bayonne":{"lat": 43.500,"lon": -1.467}
-									};
-
 
 									// Créer l'objet "map" et l'insèrer dans l'élément HTML qui a l'ID "map"
 									map = new google.maps.Map(document.getElementById("map"), {
@@ -196,16 +190,15 @@ class vueDomaine {
 											style: google.maps.NavigationControlStyle.ZOOM_PAN
 										}
 									});
-									// Nous parcourons la liste des villes
-									for(ville in villes){
+									<?php foreach ($allLocations as $row): ?>
+										var locationPro = "<?php echo $row ?>";
+										var locationProSplit = locationPro.split(", ");
 										var marker = new google.maps.Marker({
 											// A chaque boucle, la latitude et la longitude sont lues dans le tableau
-											position: {lat: villes[ville].lat, lng: villes[ville].lon},
-											// On en profite pour ajouter une info-bulle contenant le nom de la ville
-											title: ville,
+											position: {lat: parseFloat(locationProSplit[0]), lng: parseFloat(locationProSplit[1])},
 											map: map
 										});
-									}
+									<?php endforeach; ?>
 								}
 								window.onload = function(){
 									// Fonction d'initialisation qui s'exécute lorsque le DOM est chargé
@@ -219,20 +212,6 @@ class vueDomaine {
 
 			<!--  FOOTER -->
 			<?php  include 'includes/footer.php' ?>
-
-			<?php
-		//	function getCoordonnees($adresse){
-		//			$apiKey = "AIzaSyApkFZZ0VQzKD2vC8w0-WjU8UdFIofbMac";//Indiquez ici votre clé Google maps !
-		//			$url = "http://maps.google.com/maps/geo?q=".urlencode($adresse)."&output=csv&key=".$apiKey;
-		//			$csv = file($url);
-		//			$donnees = explode(",",$csv[0]);
-		//			return $csv;
-		//			return $donnees[0].",".$donnees[0];
-		//	}
-		//
-		//	echo "Les coordonnées du Louvre sont : ".getCoordonnees("Louvre Paris")."<br />".
-		//	"Les coordonnées de '5 rue du bac, Paris' sont : ".getCoordonnees("5 rue du bac, Paris");
-		//	?>
 
 		</body>
 		</html>
