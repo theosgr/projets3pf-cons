@@ -126,6 +126,7 @@ class vueDomaine {
 				<div class="recherche">
 					<div class="listeSpecialistes">
 						<?php
+						$allLocations = array();
 						foreach ($listeSpecialistes as $row) {
 							?>
 							<div class="pro">
@@ -144,6 +145,7 @@ class vueDomaine {
 										</div>
 									</div>
 									<p class="tel"><i class="material-icons">&#xE0CD;</i><?php echo $row['tel'] ;?></p>
+									<?php array_push($allLocations,ucwords(mb_strtolower($row['location'])));?>
 								</div>
 								<div class="boutons">
 									<form action="index.php?idPro=<?php echo $row['id'];?>" method="post">
@@ -157,39 +159,53 @@ class vueDomaine {
 						}
 						?>
 					</div>
-					<div id="map">
-						<!-- Carte Google maps gérée par le script maps.js -->
-						<script>// On initialise la latitude et la longitude (centre de la carte)
-							// Fonction d'initialisation de la carte
-							function initMap() {
-								var lat = 48;
-								var lon = 3;
-								var map = null;
-								var location = document.getElementById("locationphp").getAttribute("value");
-								var locationSplit = location.split(", ");
 
-								// Créer l'objet "map" et l'insèrer dans l'élément HTML qui a l'ID "map"
-								map = new google.maps.Map(document.getElementById("map"), {
-										center: new google.maps.LatLng(locationSplit[0], locationSplit[1]),
-										zoom: 11,
-										mapTypeId: google.maps.MapTypeId.ROADMAP,
-										mapTypeControl: true,
-										scrollwheel: false,
-										mapTypeControlOptions: {
-										style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR
-									},
-									navigationControl: true,
-									navigationControlOptions: {
-									// Comment ces options doivent-elles s'afficher
-										style: google.maps.NavigationControlStyle.ZOOM_PAN
-									}
-								});
-							}
-							window.onload = function(){
-								// Fonction d'initialisation qui s'exécute lorsque le DOM est chargé
-								initMap();
-							};
-						</script>
+					<p value="<?php $allLocations ?>"></p>
+
+					<div id="fixed" style="position:fixed; width: 100%; height: 500px;">
+						<p id="map">
+							<!-- Carte Google maps gérée par le script maps.js -->
+							<script>// On initialise la latitude et la longitude (centre de la carte)
+								// Fonction d'initialisation de la carte
+								function initMap() {
+									var lat = 48;
+									var lon = 3;
+									var map = null;
+									var location = document.getElementById("locationphp").getAttribute("value");
+									var locationSplit = location.split(", ");
+
+									// Créer l'objet "map" et l'insèrer dans l'élément HTML qui a l'ID "map"
+									map = new google.maps.Map(document.getElementById("map"), {
+											center: new google.maps.LatLng(locationSplit[0], locationSplit[1]),
+											zoom: 11,
+											mapTypeId: google.maps.MapTypeId.ROADMAP,
+											mapTypeControl: true,
+											scrollwheel: false,
+											mapTypeControlOptions: {
+											style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR
+										},
+										navigationControl: true,
+										navigationControlOptions: {
+										// Comment ces options doivent-elles s'afficher
+											style: google.maps.NavigationControlStyle.ZOOM_PAN
+										}
+									});
+									<?php foreach ($allLocations as $row): ?>
+										var locationPro = "<?php echo $row ?>";
+										var locationProSplit = locationPro.split(", ");
+										var marker = new google.maps.Marker({
+											// A chaque boucle, la latitude et la longitude sont lues dans le tableau
+											position: {lat: parseFloat(locationProSplit[0]), lng: parseFloat(locationProSplit[1])},
+											map: map
+										});
+									<?php endforeach; ?>
+								}
+								window.onload = function(){
+									// Fonction d'initialisation qui s'exécute lorsque le DOM est chargé
+									initMap();
+								};
+							</script>
+						</p>
 					</div>
 				</div>
 			</div>
