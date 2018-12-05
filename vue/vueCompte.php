@@ -37,7 +37,8 @@ class vueCompte {
 								if($_SESSION['categorie'] != 1)
 								{
 									?>
-									<a href="index.php?ajouterPlageHoraire=1&idPro3=<?php echo($_SESSION['id']); ?>"><input type="submit" value="Ajouter des plages horaires"/></a>
+									<a href="index.php?ajouterPlageHoraire=1&idPro3=<?php echo($_SESSION['id']); ?>"><input type="submit" value="Ajouter des plages horaires "/></a>
+									<a href="index.php?ajouterPlageHoraireJour=1&idPro3=<?php echo($_SESSION['id']); ?>"><input type="submit" value="Ajouter avec des horaires différentes par jour"/></a>
 									<?php
 									foreach ($listePlageHoraire as $row) 
 									{
@@ -62,7 +63,8 @@ class vueCompte {
 										<h3>Vous avez rendez-vous avec <?php echo ucwords(mb_strtolower($row['prenom'],'UTF-8') . " " . $row['nom']); ?></h3>
 										<p>Le <?php echo $row['jour'] ;?> à <?php echo $row['horaire'] ;?></p>
 										<p>Ce rendez-vous concerne <?php echo ucwords(mb_strtolower($row['prenomPa'],'UTF-8') . " " . $row['nomPa']); ?></p>
-										<a href="index.php?monCompte=3&suppr=<?php echo $row['id']?>"><button class="suppression" type="button">Supprimer</button></a>
+										<a href="index.php?monCompte=3&suppr=
+										<?php echo($row['id'])?>"><button class="suppression" type="button">Supprimer</button></a>
 									</div>
 									<?php
 								}

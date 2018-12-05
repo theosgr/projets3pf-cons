@@ -13,6 +13,6 @@
 
   define("BD","projet");
   define("LOGIN","root");
-  define("PASSWORD","root");
+  define("PASSWORD","");
 
 ?>

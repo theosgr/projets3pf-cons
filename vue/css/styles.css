@@ -130,7 +130,7 @@ DOMAINE
 /* ==========================================================================
 AFFICHAGE DES SPECIALISTES
 ========================================================================== */
-.recherche { width: 100%; margin: auto; display: -webkit-box; justify-content: space-around; margin: 10px 0px 10px 0px;}
+.recherche { width: 100%; margin: auto; display: flex; justify-content: space-around; margin: 10px 0px 10px 0px;}
 .recherche .listeSpecialistes .pro { margin: 10px; background: #EEEEEE; padding: 20px; display: flex; flex-direction: column; justify-content: space-around; border-radius: 5px; border: solid #EEEEEE 2px;}
 .pro .coordonnes { display: flex; flex-direction: column; width: 100%; }
 .pro .coordonnes .adresse {display: flex; align-items: center; margin-top: 10px;}
@@ -151,7 +151,7 @@ AFFICHAGE DES SPECIALISTES
   .pro .calendrier { width: 50%; }
   .pro .coordonnes { width: 50%;}
   .recherche .listeSpecialistes .pro { flex-direction: row;}
-  .recherche .listeSpecialistes { width: 50%; margin-left: 5%; margin-right: 10%;}
+  .recherche .listeSpecialistes { width: 50%;}
   .recherche .listeSpecialistes .pro:hover { border: solid orange 2px;}
   .recherche #map { width: 30%; height: 500px; position: fixed;}
 }
@@ -170,3 +170,4 @@ div.container ul li a:hover {color: #a9a9a9;}
 .suppression { width: 100%; background: red; border: solid 1px black; padding: 2px; color: white; margin-top: 5px;}
 .suppression:hover {background: white; color : red;
 }
+
