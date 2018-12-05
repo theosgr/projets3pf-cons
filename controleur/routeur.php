@@ -170,9 +170,21 @@
         return;
       }
 
-      if(isset($_POST['dureeRdv']) && isset($_POST['debutServ']) && isset($_POST['finServ']) && isset($_POST['debutPause']) && isset($_POST['finPause']) && isset($_POST['debutPlanning']) && isset($_POST['finPlanning']))
+      if(isset($_GET['idPro3']) && isset($_GET['ajouterPlageHoraireJour']))
       {
-        $this->ctrlPlageHoraire->ajouterPlageHoraire($_SESSION['id'], $_POST['dureeRdv'], $_POST['debutServ'], $_POST['finServ'], $_POST['debutPause'], $_POST['finPause'], $_POST['debutPlanning'], $_POST['finPlanning']);
+        $this->ctrlPlageHoraire->affichageModifPlageHoraireJourParJour($_GET['idPro3']);
+        return;
+      }
+
+      if(isset($_POST['dureeRdv']) && isset($_POST['debutServ']) && isset($_POST['finServ']) && isset($_POST['debutPause']) && isset($_POST['finPause']) && isset($_POST['debutPlanning']) && isset($_POST['finPlanning']) && isset($_GET['jour']))
+      {
+        $this->ctrlPlageHoraire->ajouterPlageHoraire($_SESSION['id'], $_POST['dureeRdv'], $_POST['debutServ'], $_POST['finServ'], $_POST['debutPause'], $_POST['finPause'], $_POST['debutPlanning'], $_POST['finPlanning'], $_POST['jour']);
+        return;
+      }
+
+       if(isset($_POST['dureeRdv']) && isset($_POST['debutServ']) && isset($_POST['finServ']) && isset($_POST['debutPause']) && isset($_POST['finPause']) && isset($_POST['debutPlanning']) && isset($_POST['finPlanning']))
+      {
+        $this->ctrlPlageHoraire->ajouterPlageHoraire($_SESSION['id'], $_POST['dureeRdv'], $_POST['debutServ'], $_POST['finServ'], $_POST['debutPause'], $_POST['finPause'], $_POST['debutPlanning'], $_POST['finPlanning'], null);
         return;
       }
 

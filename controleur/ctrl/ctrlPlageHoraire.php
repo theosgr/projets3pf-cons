@@ -33,12 +33,18 @@
         $this->vuePlageHoraire->genereVueModifPlageHoraire($idProfessionnel);
       }
 
-      public function ajouterPlageHoraire($mailPro, $dureeRdv, $debutServ, $finServ, $debutPause, $finPause, $dateDebut, $dateFin)
+      //Affichage de la vue pour permettre au professionnel d'ajouter des plages horaires par jour
+      public function affichageModifPlageHoraireJourParJour($idProfessionnel)
       {
-        $this->modele->addPlageHoraire($mailPro, $dureeRdv, $debutServ, $finServ, $debutPause, $finPause, $dateDebut, $dateFin);
+        $this->vuePlageHoraire->genereVueModifPlageHoraireJourParJour($idProfessionnel);
+      }
+
+      public function ajouterPlageHoraire($mailPro, $dureeRdv, $debutServ, $finServ, $debutPause, $finPause, $dateDebut, $dateFin, $jour)
+      {
+        $this->modele->addPlageHoraire($mailPro, $dureeRdv, $debutServ, $finServ, $debutPause, $finPause, $dateDebut, $dateFin, $jour);
         $_SESSION['validite'] = "ok";
         $_SESSION['message'] = "Les plages horaires ont été ajoutées";
-        $this->vueAuthentification->genereVueAccueil();
+        $this->vuePlageHoraire->genereVueModifPlageHoraire($mailPro);
       }
 }
 
