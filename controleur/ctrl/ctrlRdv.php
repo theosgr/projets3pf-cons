@@ -43,7 +43,6 @@
       {
         $rdv = $this->modele->getRdvById($idRdv);
         $idPlageHoraire = $rdv['idPlageHoraire'];
-        var_dump($idPlageHoraire);
         $this->modele->annulerRdv($idRdv);
         $this->modele->setPlageHoraireLibre($idPlageHoraire);
         $_SESSION['validite'] = "ok";
