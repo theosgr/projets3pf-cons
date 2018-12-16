@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  Dim 16 déc. 2018 à 00:27
+-- Généré le :  Dim 16 déc. 2018 à 00:49
 -- Version du serveur :  5.7.21
 -- Version de PHP :  7.2.4
 
@@ -52772,9 +52772,9 @@ CREATE TABLE IF NOT EXISTS `plage_horaire` (
 --
 
 INSERT INTO `plage_horaire` (`id`, `heureDebut`, `heureFin`, `date`, `estPrise`, `idPro`, `estRemplace`, `nomRemplacant`, `civiliteRemplacant`) VALUES
-(339441, '11:00:00', '11:15:00', '2018-12-10', 1, 70, 1, 'HAMELIN', 'M.'),
+(339441, '11:00:00', '11:15:00', '2018-12-10', 0, 70, 1, 'HAMELIN', 'M.'),
 (339442, '11:15:00', '11:30:00', '2018-12-10', 0, 70, 0, NULL, NULL),
-(339443, '12:30:00', '12:45:00', '2018-12-10', 1, 70, 0, NULL, NULL),
+(339443, '12:30:00', '12:45:00', '2018-12-10', 0, 70, 0, NULL, NULL),
 (339444, '12:45:00', '13:00:00', '2018-12-10', 0, 70, 0, NULL, NULL);
 
 -- --------------------------------------------------------
@@ -52826,11 +52826,13 @@ CREATE TABLE IF NOT EXISTS `rdv` (
   `nomPa` varchar(50) DEFAULT NULL,
   `prenomPa` varchar(50) DEFAULT NULL,
   `motif` text CHARACTER SET utf8 NOT NULL,
+  `idPlageHoraire` int(10) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `ID` (`id`),
   KEY `ix_idpracticien` (`idpracticien`),
-  KEY `ix_patient_id` (`idpatient`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+  KEY `ix_patient_id` (`idpatient`),
+  KEY `idPH` (`idPlageHoraire`)
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -53036,7 +53038,8 @@ ALTER TABLE `proche`
 --
 ALTER TABLE `rdv`
   ADD CONSTRAINT `fk_idpatient` FOREIGN KEY (`idpatient`) REFERENCES `utilisateurs` (`id`),
-  ADD CONSTRAINT `fk_idpracticien` FOREIGN KEY (`idpracticien`) REFERENCES `utilisateurs` (`id`);
+  ADD CONSTRAINT `fk_idpracticien` FOREIGN KEY (`idpracticien`) REFERENCES `utilisateurs` (`id`),
+  ADD CONSTRAINT `idPH` FOREIGN KEY (`idPlageHoraire`) REFERENCES `plage_horaire` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
