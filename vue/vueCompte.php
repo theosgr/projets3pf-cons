@@ -44,9 +44,32 @@ class vueCompte {
 									{
 										?>
 										<div>
-											<h3>Date : <?php echo ucwords(mb_strtolower($row['date'],'UTF-8')); ?></h3>
-											<p>De : <?php echo $row['heureDebut'] ;?> à <?php echo $row['heureFin'] ;?></p>
+											<h3>Date : <?php echo ucwords(mb_strtolower($row[1],'UTF-8')); ?></h3>
+											<p>De : <?php echo $row[2] ;?> à <?php echo $row[3] ;?></p>
 											<?php if($row['estRemplace']!=0){ echo ("<p>Vous êtes remplacé par ".$row['civiliteRemplacant']." ".$row['nomRemplacant']."</p>"); }?>
+											<?php if($row['estRemplace'] == 0) 
+											{ ?>
+												<a href="index.php?idPlageHoraire=<?php echo $row['id'];?>"><input type="submit" value="Ajouter un remplaçant"/></a> <?php
+											}
+											else
+											{
+												?>
+												<a href="index.php?idPlageHoraire=<?php echo $row['id'];?>&remplacant=1"><input type="submit" value="Supprimer le remplaçant"/></a>
+												<?php
+											}
+											if(isset($_SESSION['modifRemplacant']) && !empty($_SESSION['modifRemplacant']) && $_SESSION['modifRemplacant'] == $row['id'])
+												{
+													?><form method="POST" action="index.php">
+														<label>Civilité : </label><select name="civilite">
+															<option value="M.">M.</option>
+															<option value="Mme">Mme</option>
+															<option value="Autre">Autre</option>
+														</select>
+														<label>Nom :</label><input type="text" name="nom"/>
+														<input type="submit" value="Confirmer"/>
+													</form>
+													<?php
+												} ?>
 										</div>
 										<?php
 									}
@@ -57,14 +80,11 @@ class vueCompte {
 						<section id="MesRDV" >
 							<div class="element">
 								<?php
-								foreach ($listeRDV as $row) {
-									?>
+								foreach ($listeRDV as $row) {									?>
 									<div>
 										<h3>Vous avez rendez-vous avec <?php echo ucwords(mb_strtolower($row['prenom'],'UTF-8') . " " . $row['nom']); ?></h3>
-										<p>Le <?php echo $row['jour'] ;?> à <?php echo $row['horaire'] ;?></p>
-										<p>Ce rendez-vous concerne <?php echo ucwords(mb_strtolower($row['prenomPa'],'UTF-8') . " " . $row['nomPa']); ?></p>
-										<a href="index.php?monCompte=3&suppr=
-										<?php echo($row['id'])?>"><button class="suppression" type="button">Supprimer</button></a>
+										<p>Le <?php echo $row[5] ;?>, de <?php echo $row[3] ;?> à <?php echo $row[4] ;?></p>
+										<a href="index.php?annulerRdv=<?php echo($row['id'])?>"><button class="suppression" type="button">Annuler</button></a>
 									</div>
 									<?php
 								}

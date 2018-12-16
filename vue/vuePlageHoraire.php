@@ -3,7 +3,7 @@
 // Gestion des Plages Horaires des professionnels
 class vuePlageHoraire {
 
-	public function genereVuePlageHoraire ($plageHoraire){
+	public function genereVuePlageHoraire ($idPro){
 		?>
 		<!DOCTYPE html>
 		<html lang="fr">
@@ -18,7 +18,7 @@ class vuePlageHoraire {
 
 			<!--CONTENT-->
 			<div>
-				<form action="index.php" method="post">
+				<form action="index.php?idPro2=<?php echo $idPro;?>" method="post">
 					<label>Rentrer la date de votre rendez-vous</label>
 					<input type="date" name="daterdv" placeholder="jj/mm/aaaa"/>
 					<input type="submit" value="Suivant"/>
@@ -48,14 +48,46 @@ class vuePlageHoraire {
 			<!--CONTENT-->
 			<div>
 				<form action="index.php" method="post">
+					<?php if(!empty($plageHoraire))
+					{
+						?>
 					<label>Sélectionner votre plage horaire</label>
-					<input type="date" placeholder="jj/mm/aaaa"/>
+					<select name="listeHoraires">
+						<?php
+							foreach($plageHoraire as $row)
+							{
+								?>
+								<option value="<?php echo($row['id']);?>">
+									<?php 
+										if($row['estRemplace']==0)
+										{
+											echo($row['1']." - ".$row['2']);
+										}
+										else
+										{
+											echo($row['1']."  -  ".$row['2']);
+											echo("   (");
+											echo("Le médecin sera remplacé par ".$row['civiliteRemplacant']." ".$row['nomRemplacant'].")");
+										}
+									?>
+								</option>
+								<?php
+							}
+						?>
+					</select>
 					Motif du rendez-vous:
 					</br>
-					<textarea name="motif" rows="8" placeholder="Décrivez brièvement la raison de votre prise de rendez-vous"resize="none" cols="50"></textarea>
+					<textarea name="motif" rows="8" placeholder="Décrivez brièvement la raison de votre prise de rendez-vous" resize="none" cols="50"></textarea>
 					</br>
-					
+					<input type="hidden" name="idPro" value="<?php echo($_GET['idPro2']);?>"/>
+
 					<input type="submit" value="Valider le rendez-vous"/>
+					<?php
+				}
+				else
+				{
+					echo("Le médecin ne propose pas de rendez-vous pour cette date");
+				} ?>
 				</form>
 			</div>
 			<!--  FOOTER -->

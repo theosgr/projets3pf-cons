@@ -7,6 +7,7 @@
   require_once 'ctrl/ctrlDomaine.php';
   require_once 'ctrl/ctrlAdmin.php';
   require_once 'ctrl/ctrlPlageHoraire.php';
+  require_once 'ctrl/ctrlRdv.php';
   
 /* ROUTEUR : redirection des requêtes vers les contrôleurs */
   class Routeur {
@@ -15,6 +16,7 @@
     private $ctrlCompte;
     private $ctrlDomaine;
     private $ctrlAdmin;
+    private $ctrRdv;
     private $ctrlPlageHoraire;
 
 /** CONSTRUCTEUR DU ROUTEUR **/
@@ -25,6 +27,7 @@
       $this->ctrlDomaine = new ControleurDomaine();
       $this->ctrlAdmin = new ControleurAdmin();
       $this->ctrlPlageHoraire = new ControleurPlageHoraire();
+      $this->ctrlRdv = new ControleurRdv();
     }
 
     public function routerRequete() {
@@ -188,13 +191,43 @@
         return;
       }
 
-      if (isset($_GET['horaire'])) { // vérifiction de l'horaire
-      // DISPONIBILITES        
-          $this->ctrlPlageHoraire->plageHoraire();
-          // 12 = le nombre de disponibilités dans une journée (à modifier plus tard)
-          //$this->ctrlPlageHoraire->plageHoraire(12);
-          return;
-        }
+      if(isset($_GET['idPlageHoraire']) && !empty($_GET['idPlageHoraire']) && isset($_GET['remplacant']))
+      {
+        $this->ctrlPlageHoraire->modifierRemplacant($_GET['idPlageHoraire'], NULL, NULL);
+        return;
+      }
+
+      if(isset($_POST['daterdv']))
+      {
+        $this->ctrlPlageHoraire->listeHeure($_GET['idPro2'],$_POST['daterdv']);
+        return;
+      }
+
+
+      if(isset($_GET['idPlageHoraire']) && !empty($_GET['idPlageHoraire']))
+      {
+        $_SESSION['modifRemplacant'] = $_GET['idPlageHoraire'];
+        $this->ctrlCompte->pageMonCompte();
+        return;
+      }
+
+      if(isset($_POST['civilite']) && isset($_POST['nom']))
+      {
+        $this->ctrlPlageHoraire->modifierRemplacant($_SESSION['modifRemplacant'], $_POST['nom'], $_POST['civilite']);
+        return;
+      }
+
+      if(isset($_POST['listeHoraires']) && isset($_POST['motif']) && !empty($_POST['motif']))
+      {
+        $this->ctrlRdv->ajouterRdv($_POST['listeHoraires'], $_POST['idPro'], $_SESSION['id'], $_POST['motif']);
+        return;
+      }
+
+      if(isset($_GET['annulerRdv']))
+      {
+        $this->ctrlRdv->annulerRdv($_GET['annulerRdv']);
+        return;
+      }
 
 // DEFAULT
       $this->ctrlAuthentification->accueil();

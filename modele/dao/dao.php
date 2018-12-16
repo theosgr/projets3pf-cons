@@ -697,13 +697,35 @@
     /* Méthode permettant de récupérer les rendez-vous dun utilisateur */
     public function getRdv($idUser){
       try {
-        $stmt = $this->connexion->prepare('select r.id, u.nom, u.prenom, horaire, jour, nomPa, prenomPa from Rdv as r, Utilisateurs as u where idpracticien = u.id and idpatient = ?');
+        $stmt = $this->connexion->prepare('SELECT r.id, u.nom, u.prenom, DATE_FORMAT(heureDebut,"%H:%i"), DATE_FORMAT(heureFin,"%H:%i"), DATE_FORMAT(jour,"%d/%m/%Y"), nomPa, prenomPa, motif FROM Rdv AS r, Utilisateurs AS u WHERE idpracticien = u.id AND idpatient = ?');
         $stmt->bindParam(1,$idUser);
         $stmt->execute();
         return $stmt->fetchAll();
       } catch (PDOException $e) {
         $this->destroy();
         throw new PDOException("Erreur d'accès à la table Rdv");
+      }
+    }
+
+    public function addRdv($idPro, $heureDebut, $heureFin, $date, $idPatient, $prenomPatient, $nomPatient, $motif)
+    {
+      try{
+        $stmt = $this->connexion->prepare('INSERT INTO rdv VALUES (id,?,?,?,?,?,?,?,?)');
+      $stmt->bindParam(1,$idPro);
+      $stmt->bindParam(2,$heureDebut);
+      $stmt->bindParam(3,$heureFin);
+      $stmt->bindParam(4,$date);
+      $stmt->bindParam(5,$idPatient);
+      $stmt->bindParam(6,$prenomPatient);
+      $stmt->bindParam(7,$nomPatient);
+      $stmt->bindParam(8,$motif);
+
+      $stmt->execute();
+      }
+      catch(PDOException $e)
+      {
+        // throw new PDOException("Problème d'accès à la table");
+        echo($e->getMessage());
       }
     }
 
@@ -721,13 +743,27 @@
       }
     }
 
-    /* Méthode retournant les plags horaires du professionnel concerné */
+    public function annulerRdv($idRdv)
+    {
+      try{
+        $stmt = $this->connexion->prepare("DELETE from rdv WHERE id=?");
+        $stmt->bindParam(1,$idRdv);
+        $stmt->execute();
+      }
+      catch(PDOException $e)
+      {
+        throw new PDOException("problème d'accès à la table");
+      }
+    }
+
+    /* Méthode retournant les plages horaires du professionnel concerné */
     public function getPlageHoraire($id)
     {
       try{
-        $stmt = $this->connexion->prepare('SELECT date, heureDebut, heureFin, estRemplace, civiliteRemplacant, nomRemplacant FROM plage_horaire WHERE idPro=? ;');
+        $stmt = $this->connexion->prepare('SELECT id, DATE_FORMAT(date,"%d/%m/%Y"), DATE_FORMAT(heureDebut, "%H:%i"), DATE_FORMAT(heureFin, "%H:%i"), estRemplace, civiliteRemplacant, nomRemplacant FROM plage_horaire WHERE idPro=? ;');
         $stmt->bindParam(1,$id);
         $stmt->execute();
+        // var_dump($stmt->fetchAll());
         return $stmt->fetchAll();
       }
       catch(PEDOException $e)
@@ -834,6 +870,99 @@
       }
     }
 
+    public function getPlageHoraireById($idPlageHoraire)
+    {
+      $stmt = $this->connexion->prepare("SELECT * from plage_horaire WHERE id=?");
+      $stmt->bindParam(1,$idPlageHoraire);
+      $stmt->execute();
+      return $stmt->fetch();
+    }
+
+    public function updateRemplacant($id,$nomR,$civR){
+      try{
+        if(empty($nomR) && empty($civR))
+        {
+          $stmt = $this->connexion->prepare('update plage_horaire set estRemplace = 0, nomRemplacant = ? ,civiliteRemplacant = ? where id = ? ;');
+        }
+        else
+        {
+          $stmt = $this->connexion->prepare('update plage_horaire set estRemplace = 1, nomRemplacant = ? ,civiliteRemplacant = ? where id = ? ;');
+        }
+        $stmt->bindParam(1, $nomR);
+        $stmt->bindParam(2, $civR);
+        $stmt->bindParam(3, $id);
+        $stmt->execute();
+      }
+      catch (PDOException $e) {
+        $this->destroy();
+        throw new PDOException("Erreur d'accès à la table plage_horaire");
+      }
+    }
+
+    //Méthode qui met 1 à estPrise pour dire que le plage horaire est prise
+    public function setPlageHorairePrise($idPlageHoraire)
+    {
+      $stmt=$this->connexion->prepare("UPDATE plage_horaire SET estprise=1 WHERE id=?");
+      $stmt->bindParam(1,$idPlageHoraire);
+      $stmt->execute();
+    }
+
+    //Inverse de la précédente
+    public function setPlageHoraireLibre($idPlageHoraire)
+    {
+      $stmt=$this->connexion->prepare("UPDATE plage_horaire SET estprise=0 WHERE id=?");
+      $stmt->bindParam(1,$idPlageHoraire);
+      $stmt->execute();
+    }
+
+    /* Méthode retournant les plages horaires disponibles du professionnel concerné pour le patient*/
+    public function getPlageHoraireProDate($id,$date)
+    {
+      try{
+        $stmt = $this->connexion->prepare('SELECT id, DATE_FORMAT(heureDebut,"%H:%i"), DATE_FORMAT(heureFin,"%H:%i"), estRemplace, civiliteRemplacant, nomRemplacant FROM plage_horaire WHERE idPro=? and date=? and estPrise=0;');
+        $stmt->bindParam(1,$id);
+        $stmt->bindParam(2,$date);
+        $stmt->execute();
+        return $stmt->fetchAll();
+      }
+      catch(PDOException $e)
+      {
+        $this->destroy();
+        throw new PDOException("Erreur d'accès à la table plage_horaire");
+      }
+    }
+
+    /*public function getHoraires($date,$nompro,$prenompro){
+    try {
+      $requete="select horaire from rdv where jour=$date and idpraticien=$idprofessionnel;";
+      $statement=$this->connexion->query( $requete);
+      $tabResult=$statement->fetchAll();
+      $data= array();
+      foreach ($tabResult as $row){
+        $data[] = $row['horaire'];
+      }
+      return $data;
+    } catch (PDOException $e) {
+      $exception = new TableAccesException("problème d'accès à une table");
+      throw $exception;
+    }
+}*/
+
+public function getId($nompro,$prenompro){
+  try {
+    $requete="select id from utilisateurs where nompro=$nompro and prenompro=$prenompro;";
+    $statement=$this->connexion->query( $requete);
+    $tabResult=$statement->fetchAll();
+    $data= array();
+    foreach ($tabResult as $row){
+      $data[] = $row['id'];
+    }
+    return $data;
+  } catch (PDOException $e) {
+    $exception = new TableAccesException("problème d'accès à une table");
+    throw $exception;
+  }
+}
 
 /////////
 ///////// GESTION DOMAINE // SPECIALITE // SOUS SPECIALITE
