@@ -31,7 +31,8 @@
         $heureD = $plageH['heureDebut'];
         $heureF = $plageH['heureFin'];
 
-        $this->modele->addRdv($idProfessionnel,$heureD, $heureF, $date, $idP, $prenomPa, $nomPa, $motif);
+        $this->modele->addRdv($idProfessionnel,$heureD, $heureF, $date, $idP, $prenomPa, $nomPa, $motif, $idPlageHoraire);
+        var_dump($idPlageHoraire);
         $this->modele->setPlageHorairePrise($idPlageHoraire);
         $_SESSION['validite'] = "ok";
         $_SESSION['message'] = "Le rendez-vous a été ajouté";
@@ -40,7 +41,11 @@
 
       public function annulerRdv($idRdv)
       {
+        $rdv = $this->modele->getRdvById($idRdv);
+        $idPlageHoraire = $rdv['idPlageHoraire'];
+        var_dump($idPlageHoraire);
         $this->modele->annulerRdv($idRdv);
+        $this->modele->setPlageHoraireLibre($idPlageHoraire);
         $_SESSION['validite'] = "ok";
         $_SESSION['message'] = "Le rendez-vous a été annulé";
         $this->ctrlCompte->pageMonCompte();

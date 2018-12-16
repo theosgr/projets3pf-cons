@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  Dim 16 déc. 2018 à 00:29
+-- Généré le :  Dim 16 déc. 2018 à 00:27
 -- Version du serveur :  5.7.21
 -- Version de PHP :  7.2.4
 
@@ -52772,9 +52772,9 @@ CREATE TABLE IF NOT EXISTS `plage_horaire` (
 --
 
 INSERT INTO `plage_horaire` (`id`, `heureDebut`, `heureFin`, `date`, `estPrise`, `idPro`, `estRemplace`, `nomRemplacant`, `civiliteRemplacant`) VALUES
-(339441, '11:00:00', '11:15:00', '2018-12-10', 0, 70, 1, 'HAMELIN', 'M.'),
+(339441, '11:00:00', '11:15:00', '2018-12-10', 1, 70, 1, 'HAMELIN', 'M.'),
 (339442, '11:15:00', '11:30:00', '2018-12-10', 0, 70, 0, NULL, NULL),
-(339443, '12:30:00', '12:45:00', '2018-12-10', 0, 70, 0, NULL, NULL),
+(339443, '12:30:00', '12:45:00', '2018-12-10', 1, 70, 0, NULL, NULL),
 (339444, '12:45:00', '13:00:00', '2018-12-10', 0, 70, 0, NULL, NULL);
 
 -- --------------------------------------------------------

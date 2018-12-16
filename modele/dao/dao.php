@@ -707,10 +707,19 @@
       }
     }
 
-    public function addRdv($idPro, $heureDebut, $heureFin, $date, $idPatient, $prenomPatient, $nomPatient, $motif)
+    public function getRdvById($idRdv)
+    {
+      $stmt= $this->connexion->prepare("SELECT * FROM rdv WHERE id=?");
+      $stmt->bindParam(1,$idRdv);
+      $stmt->execute();
+
+      return $stmt->fetch();
+    }
+
+    public function addRdv($idPro, $heureDebut, $heureFin, $date, $idPatient, $prenomPatient, $nomPatient, $motif, $idPlageHoraire)
     {
       try{
-        $stmt = $this->connexion->prepare('INSERT INTO rdv VALUES (id,?,?,?,?,?,?,?,?)');
+        $stmt = $this->connexion->prepare('INSERT INTO rdv VALUES (id,?,?,?,?,?,?,?,?,?)');
       $stmt->bindParam(1,$idPro);
       $stmt->bindParam(2,$heureDebut);
       $stmt->bindParam(3,$heureFin);
@@ -719,6 +728,7 @@
       $stmt->bindParam(6,$prenomPatient);
       $stmt->bindParam(7,$nomPatient);
       $stmt->bindParam(8,$motif);
+      $stmt->bindParam(9,$idPlageHoraire);
 
       $stmt->execute();
       }
