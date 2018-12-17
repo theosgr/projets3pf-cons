@@ -33,21 +33,21 @@ class vueCompte {
 						<hr>
 						<section id="MesPlagesHoraires" >
 							<div class="element">
-								<?php 
+								<?php
 								if($_SESSION['categorie'] != 1)
 								{
 									?>
 									<a href="index.php?ajouterPlageHoraire=1&idPro3=<?php echo($_SESSION['id']); ?>"><input type="submit" value="Ajouter des plages horaires "/></a>
 									<a href="index.php?ajouterPlageHoraireJour=1&idPro3=<?php echo($_SESSION['id']); ?>"><input type="submit" value="Ajouter avec des horaires différentes par jour"/></a>
 									<?php
-									foreach ($listePlageHoraire as $row) 
+									foreach ($listePlageHoraire as $row)
 									{
 										?>
 										<div>
 											<h3>Date : <?php echo ucwords(mb_strtolower($row[1],'UTF-8')); ?></h3>
 											<p>De : <?php echo $row[2] ;?> à <?php echo $row[3] ;?></p>
 											<?php if($row['estRemplace']!=0){ echo ("<p>Vous êtes remplacé par ".$row['civiliteRemplacant']." ".$row['nomRemplacant']."</p>"); }?>
-											<?php if($row['estRemplace'] == 0) 
+											<?php if($row['estRemplace'] == 0)
 											{ ?>
 												<a href="index.php?idPlageHoraire=<?php echo $row['id'];?>"><input type="submit" value="Ajouter un remplaçant"/></a> <?php
 											}
@@ -78,6 +78,14 @@ class vueCompte {
 							</div>
 						</section>
 						<section id="MesRDV" >
+							<a href="javascript:ouvre_popup('vue/vueRdvImpr.php')"><input type="submit" value="Afficher les rendez-vous du jour pour impression"/></a>
+							<script type="text/javascript">
+
+							function ouvre_popup(page) {
+							 window.open(page,"nom_popup","menubar=no, status=no, width=600, height=500");
+							}
+							</script>
+
 							<div class="element">
 								<?php
 								foreach ($listeRDV as $row) {									?>
