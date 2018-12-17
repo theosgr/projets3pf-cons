@@ -128,9 +128,14 @@
         if ($_GET['reset'] == 1) {
           if ($this->ctrlCompte->resetMdp()) {
             $this->ctrlMail->envoiMailReset($_SESSION['mdpProv']);
+            $this->ctrlAuthentification->accueil();
+            return;
+          } else {
+          	$this->ctrlCompte->afficherReset();
+          	return;
           }
-          $this->ctrlAuthentification->accueil();
-          return;
+          
+          
         }
         $this->ctrlCompte->afficherReset();
         return;
