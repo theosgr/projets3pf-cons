@@ -36,12 +36,15 @@
         if ($_SESSION['inscription'] == "ko") {
           $_SESSION['validite'] = "ko";
           $_SESSION['message'] = "Mail existant";
-          if ($categorie == 1) {
+          if ($categorie == 1) 
+          {
             $_GET['inscription'] = "user";
-          } else {
+          } 
+          else 
+          {
             $_GET['inscription'] = "pro";
           }
-          $this->inscription();
+          // $this->inscription();
         } else {
           $_SESSION['validite'] = "ok";
           $_SESSION['message'] = "Vous êtes bien inscrit";
