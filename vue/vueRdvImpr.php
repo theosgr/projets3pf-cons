@@ -14,7 +14,8 @@ session_start();
     </br>
       <table border="1" id="tableRDV">
         <tr>
-          <td>Heure de rdv</td>
+          <td>Heure de début</td>
+          <td>Heure de fin</td>
           <td>Nom</td>
           <td>Prénom</td>
         </tr>
