@@ -22,8 +22,25 @@
     public function destroy(){
       $this->connexion = NULL;
     }
-/////////
-///////// CHECK
+
+
+    /* Méthode permettant de modifier le mot de passe */
+
+	public function modifierMdp($mdp){
+  	try {
+
+  		$mdp = password_hash($mdp, PASSWORD_DEFAULT);
+  		$stmt = $this->connexion->prepare('update Utilisateurs SET mdp = ? where mail = ?');
+        $stmt->bindParam(1,$_POST['mdp']);
+        $stmt->bindParam(2,$_SESSION['id']);
+        $stmt->execute();
+  	}
+  	catch(PDOException $e) {
+    	$this->destroy();
+    	throw new PDOException("Erreur d'accès à la table Utilisateurs");
+  	}
+	}
+
     /* Méthode permettant de voir si un utilisateur est deja inscrit */
     public function estInscrit($mail){
       try {
