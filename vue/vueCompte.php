@@ -93,9 +93,23 @@ class vueCompte {
 							<div class="element">
 								<?php
 								foreach ($listeRDV as $row) {									?>
-									<div>
-										<h3>Vous avez rendez-vous avec <?php echo ucwords(mb_strtolower($row['prenom'],'UTF-8') . " " . $row['nom']); ?></h3>
-										<p>Le <?php echo $row[5] ;?>, de <?php echo $row[3] ;?> à <?php echo $row[4] ;?></p>
+									<div> 
+										<?php
+										if($_SESSION['categorie']==2)
+										{
+											?>
+											<h3>Vous avez rendez-vous avec <?php echo ucwords(mb_strtolower($row['prenomPa'],'UTF-8') . " " . $row['nomPa']); ?></h3>
+											<p>Le <?php echo $row[3] ;?>, de <?php echo $row[1] ;?> à <?php echo $row[2] ;?></p>
+											<?php
+										}
+										else
+										{
+											?>
+											<h3>Vous avez rendez-vous avec <?php echo ucwords(mb_strtolower($row['prenom'],'UTF-8') . " " . $row['nom']); ?></h3>
+											<p>Le <?php echo $row[5] ;?>, de <?php echo $row[3] ;?> à <?php echo $row[4] ;?></p>
+											<?php	
+										}
+										?>
 										<a href="index.php?annulerRdv=<?php echo($row['id'])?>"><button class="suppression" type="button">Annuler</button></a>
 									</div>
 									<?php

@@ -223,7 +223,8 @@ h2.logo-header {
 INSCRIPTION // CONNEXION
 ========================================================================== */
 input, select, label {
-  margin: 10px;
+  margin-top : 10px;
+  margin-bottom : 10px;
   width: 100%;
   display: flex;
   justify-content: center;

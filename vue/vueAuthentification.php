@@ -89,6 +89,58 @@ class vueAuthentification {
 		</html>
 		<?php
 	}
+
+	/* Vue connexion lorsque que l'on est pas connecté en prenant un rdv*/
+		public function genereVueConnexionRdv(){
+		?>
+		<!DOCTYPE html>
+		<html lang="fr">
+		<head>
+			<title>Connexion</title>
+			<?php include 'includes/headHTML.php' ?>
+		</head>
+		<body>
+			<!--  HEADER-->
+			<?php  include 'includes/header.php' ?>
+
+			<!--  CONTENT -->
+			<div id="content">
+				<div class="container_form connexion_form">
+					<form action="index.php?connexionRdv=1" method="post" onsubmit="return verifFormModifInfos(this)">
+						<!--  BLOC IDENTIFIANT -->
+						<div>
+							<input type="text" name="login" placeholder="Identifiant" required size="25" />
+						</div>
+						<div>
+							<input type="password" name="mdp" placeholder="Mot de passe" required size="25" />
+						</div>
+						<hr>
+
+						<!--  BLOC VALIDATION -->
+						<div>
+							<input name="send" class="submit-btn" type="submit" value="Se connecter" />
+						</div>
+					</form>
+					<div class="formline">
+						<p>Pas encore membre ? <a class="lien_visible" href="index.php?inscription=user">Inscrivez-vous</a> gratuitement. </p>
+					</div>
+					<div class="formline">
+						<p><a class="lien_visible" href="index.php?reset">Mot de passe oublié ?</a></p>
+					</div>
+				</div>
+			</div>
+
+			<!--  SLIDESHOW-->
+			<?php  include 'includes/slideshow.php' ?>
+
+			<!--  FOOTER -->
+			<?php  include 'includes/footer.php' ?>
+
+		</body>
+		</html>
+		<?php
+	}
+
 	/* Vue d'inscription du site */
 	public function genereVueInscription($listeSousSpecialite){
 		?>

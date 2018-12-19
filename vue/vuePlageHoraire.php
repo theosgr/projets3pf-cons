@@ -75,13 +75,12 @@ class vuePlageHoraire {
 							}
 						?>
 					</select>
-					Motif du rendez-vous:
-					</br>
+					<label>Motif du rendez-vous:</label>
 					<textarea name="motif" rows="8" placeholder="Décrivez brièvement la raison de votre prise de rendez-vous" resize="none" cols="50"></textarea>
 					</br>
 					<input type="hidden" name="idPro" value="<?php echo($_GET['idPro2']);?>"/>
 
-					<input type="submit" value="Valider le rendez-vous"/>
+					<input type="submit" value="Suivant"/>
 					<?php
 				}
 				else
@@ -96,6 +95,43 @@ class vuePlageHoraire {
 		</body>
 		</html>
 	<?php
+	}
+
+	public function genereVueSelectionProche($listeProche)
+	{
+		?>
+		<!DOCTYPE html>
+		<html>
+			<!--HEAD-->
+			<?php include 'includes/headHTML.php' ?>
+			<body>
+				<!--HEADER-->
+				<?php  include 'includes/header.php' ?>
+				<form action="index.php" method="POST">
+				<label>Sélectionner la personne concernée</label>
+					<select name="listeProche">
+						<option value="<?php echo $_SESSION['id']?>">Vous</option>
+						<?php
+							foreach($listeProche as $row)
+							{
+								?>
+								<option value="<?php echo($row['id']);?>">
+									<?php 
+											echo($row['prenom']." ".$row['nom']);
+									?>
+								</option>
+								<?php
+							}
+						?>
+					</select>
+
+					<input type="submit" value="Valider le rendez-vous"/>
+				</form>
+				<!--  FOOTER -->
+				<?php  include 'includes/footer.php' ?>
+			</body>
+		</html>
+		<?php
 	}
 
 	public function genereVueModifPlageHoraire($idPro) 
@@ -207,13 +243,31 @@ class vuePlageHoraire {
 				<input type="submit" value="Valider"/>
 			</form>
 
-				<!-- <h4>Samedi</h4>
-				<label>Cochez si vous ne consultez pas le lundi</label><input type="checkbox" name="consulteLundi"/>
-				<label>Durée d'un rendez-vous</label><input type="time" name="dureeRdv" placeholder="hh:mm"/>
+			<form method="POST" action="index.php?jour=1">
+				<h4>Samedi</h4>
+				<label>Durée d'un rendez-vous (Maximum 59 minutes)</label><input type="time" name="dureeRdv" placeholder="hh:mm"/>
 				<label>Heure de début de service</label><input type="time" name="debutServ" placeholder="hh:mm"/>
 				<label>Heure de fin de service</label><input type="time" name="finServ" placeholder="hh:mm"/>
 				<label>Heure de début de pause</label><input type="time" name="debutPause" placeholder="hh:mm"/>
-				<label>Heure de fin de pause</label><input type="time" name="finPause" placeholder="hh:mm"/> -->
+				<label>Heure de fin de pause</label><input type="time" name="finPause" placeholder="hh:mm"/><br>
+				<label>Date à partir de laquelle ce planning est valable</label><input type="date" placeholder="jj/mm/aaaa" name="debutPlanning"/>
+				<label>Date à partir de laquelle ce planning n'est plus valable</label><input type="date" placeholder="jj/mm/aaaa" name="finPlanning"/>
+				<input type="hidden" value="Saturday" name="jour"/>
+				<input type="submit" value="Valider"/>
+			</form>
+
+			<form method="POST" action="index.php?jour=1">
+				<h4>Dimanche</h4>
+				<label>Durée d'un rendez-vous (Maximum 59 minutes)</label><input type="time" name="dureeRdv" placeholder="hh:mm"/>
+				<label>Heure de début de service</label><input type="time" name="debutServ" placeholder="hh:mm"/>
+				<label>Heure de fin de service</label><input type="time" name="finServ" placeholder="hh:mm"/>
+				<label>Heure de début de pause</label><input type="time" name="debutPause" placeholder="hh:mm"/>
+				<label>Heure de fin de pause</label><input type="time" name="finPause" placeholder="hh:mm"/><br>
+				<label>Date à partir de laquelle ce planning est valable</label><input type="date" placeholder="jj/mm/aaaa" name="debutPlanning"/>
+				<label>Date à partir de laquelle ce planning n'est plus valable</label><input type="date" placeholder="jj/mm/aaaa" name="finPlanning"/>
+				<input type="hidden" value="Sunday" name="jour"/>
+				<input type="submit" value="Valider"/>
+			</form>
 
 			<!--  FOOTER -->
 			<?php  include 'includes/footer.php' ?>

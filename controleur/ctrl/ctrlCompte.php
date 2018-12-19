@@ -23,7 +23,7 @@
       else
       {
         $user = $this->modele->getInfosUser();
-        $this->vue->afficherProfil($user[0], $this->modele->getRdv($user[0]->getId()), $this->modele->getProches($user[0]->getId()), $this->modele->getPlageHoraire($user[0]->getId()));
+        $this->vue->afficherProfil($user[0], $this->modele->getRdvPro($user[0]->getId()), $this->modele->getProches($user[0]->getId()), $this->modele->getPlageHoraire($user[0]->getId()));
       }
     }
 

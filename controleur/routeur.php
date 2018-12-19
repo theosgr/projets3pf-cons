@@ -224,13 +224,37 @@
 
       if(isset($_POST['listeHoraires']) && isset($_POST['motif']) && !empty($_POST['motif']))
       {
-        $this->ctrlRdv->ajouterRdv($_POST['listeHoraires'], $_POST['idPro'], $_SESSION['id'], $_POST['motif']);
+        if(isset($_SESSION['id']) && !empty($_SESSION['id']))
+        {
+          $this->ctrlPlageHoraire->afficheListeProcheConnecte();
+          return;
+        }
+        else
+        {
+          $this->ctrlPlageHoraire->afficheListeProcheDeconnecte();
+          return;
+        }
+        
+      }
+
+      if(isset($_POST['listeProche']))
+      {
+        if(isset($_SESSION['idPlageHoraire']))
+          $this->ctrlRdv->ajouterRdv($_SESSION['idPlageHoraire'], $_SESSION['idProfessionnel'], $_SESSION['id'], $_SESSION['motif'], $_POST['listeProche']);
+        else
+          $this->ctrlCompte->pageMonCompte();
         return;
       }
 
       if(isset($_GET['annulerRdv']))
       {
         $this->ctrlRdv->annulerRdv($_GET['annulerRdv']);
+        return;
+      }
+
+      if(isset($_GET['connexionRdv']))
+      {
+        $this->ctrlAuthentification->connexionrdv();
         return;
       }
 

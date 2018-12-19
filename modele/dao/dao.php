@@ -724,6 +724,19 @@
       }
     }
 
+     /* Méthode permettant de récupérer les rendez-vous d'un professionnel */
+    public function getRdvPro($idUser){
+      try {
+        $stmt = $this->connexion->prepare('SELECT r.id, DATE_FORMAT(heureDebut,"%H:%i"), DATE_FORMAT(heureFin,"%H:%i"), DATE_FORMAT(jour,"%d/%m/%Y"), nomPa, prenomPa, motif FROM Rdv AS r WHERE idpracticien = ?');
+        $stmt->bindParam(1,$idUser);
+        $stmt->execute();
+        return $stmt->fetchAll();
+      } catch (PDOException $e) {
+        $this->destroy();
+        throw new PDOException("Erreur d'accès à la table Rdv");
+      }
+    }
+
     public function getRdvById($idRdv)
     {
       $stmt= $this->connexion->prepare("SELECT * FROM rdv WHERE id=?");
@@ -742,8 +755,8 @@
       $stmt->bindParam(3,$heureFin);
       $stmt->bindParam(4,$date);
       $stmt->bindParam(5,$idPatient);
-      $stmt->bindParam(6,$prenomPatient);
-      $stmt->bindParam(7,$nomPatient);
+      $stmt->bindParam(7,$prenomPatient);
+      $stmt->bindParam(6,$nomPatient);
       $stmt->bindParam(8,$motif);
       $stmt->bindParam(9,$idPlageHoraire);
 

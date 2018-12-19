@@ -62,6 +62,7 @@
         $dateAjd = $dateAjd->format("Y-m-d");*/
         /*if($dateAjd < $daterdv)
         {*/
+          $_SESSION['dateRdv'] = $daterdv;
           $listeHoraire = $this->modele->getPlageHoraireProDate($idProfessionnel,$daterdv);
           $this->vuePlageHoraire->genereVueSelectionHoraire($listeHoraire);
         /*}*/
@@ -72,6 +73,26 @@
           $this->vuePlageHoraire->genereVuePlageHoraire($idProfessionnel);
         }*/
         
+      }
+
+      public function AfficheListeProcheConnecte()
+      {
+        $_SESSION['idPlageHoraire'] = $_POST['listeHoraires'];
+        $_SESSION['motif'] = $_POST['motif'];
+        $_SESSION['idProfessionnel'] = $_POST['idPro'];
+        
+        $idUser = $this->modele->getIdUser($_SESSION['id'])[0];
+        $listeProche = $this->modele->getProches($idUser);
+        $this->vuePlageHoraire->genereVueSelectionProche($listeProche);
+      }
+
+      public function AfficheListeProcheDeconnecte()
+      {
+        $_SESSION['idPlageHoraire'] = $_POST['listeHoraires'];
+        $_SESSION['motif'] = $_POST['motif'];
+        $_SESSION['idProfessionnel'] = $_POST['idPro'];
+
+        $this->vueAuthentification->genereVueConnexionRdv();
       }
 }
 
