@@ -787,7 +787,7 @@
     public function getPlageHoraire($id)
     {
       try{
-        $stmt = $this->connexion->prepare('SELECT id, DATE_FORMAT(date,"%d/%m/%Y"), DATE_FORMAT(heureDebut, "%H:%i"), DATE_FORMAT(heureFin, "%H:%i"), estRemplace, civiliteRemplacant, nomRemplacant FROM plage_horaire WHERE idPro=? ;');
+        $stmt = $this->connexion->prepare('SELECT id, DATE_FORMAT(date,"%d/%m/%Y"), DATE_FORMAT(heureDebut, "%H:%i"), estPrise, DATE_FORMAT(heureFin, "%H:%i"), estRemplace, civiliteRemplacant, nomRemplacant FROM plage_horaire WHERE idPro=? ;');
         $stmt->bindParam(1,$id);
         $stmt->execute();
         // var_dump($stmt->fetchAll());
