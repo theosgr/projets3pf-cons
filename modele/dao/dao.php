@@ -805,7 +805,7 @@
     {
       try
       {
-        $idPro = $this->getIdUser($mail)[0]; 
+        $idPro = $this->getIdUser($mail)[0];
         $dateD = new DateTime($dateDebut); //Date où commence la mise en place des plages horaires
         $dateF = new DateTime($dateFin); //Date -1 jour où termine la mise en place des plages horaires
         $dateF->add(new DateInterval("P1D")); //On rajoute un jour à ma date de fin pour qu'elle soit comprise dans l'intervalle
@@ -816,7 +816,7 @@
         $duree = new DateTime($dureeRdv); //Durée d'un rendez-vous
         $plageInseree = FALSE; //Indique si la plage horaire a été insérée (si on était dans une heure de pause ou pas au niveau de la boucle)
 
-        foreach(new DatePeriod($dateD, new DateInterval('P1D'), $dateF) as $date) 
+        foreach(new DatePeriod($dateD, new DateInterval('P1D'), $dateF) as $date)
         {
           if($jour != NULL)
           {
@@ -840,7 +840,7 @@
                   $stmt->execute();
 
                   $plageInseree = TRUE;
-                  
+
                 }
 
                 //Si l'heure était une heure de pause (alors heureD n'a pas été augmentée), on l'augmente ici
@@ -874,7 +874,7 @@
                   $stmt->execute();
 
                   $plageInseree = TRUE;
-                  
+
                 }
 
                 //Si l'heure était une heure de pause (alors heureD n'a pas été augmentée), on l'augmente ici
@@ -886,7 +886,7 @@
               }
             }
           }
-          
+
           $heureD = new DateTime($debutServ); //On remet l'heureD
         }
       }
@@ -1024,8 +1024,8 @@ public function getId($nompro,$prenompro){
         $stmt->bindParam(1,$domaine);
         $stmt->execute();
         $idDomaine = $stmt->fetch();
-        
-        foreach($idDomaine as $row) 
+
+        foreach($idDomaine as $row)
         {
           $idDomaine=$row['0'];
         }
@@ -1131,15 +1131,15 @@ public function getId($nompro,$prenompro){
             throw new PDOException("Problème de connexion à la table specialite");
           }
         }
-        
+
 /////////
 ///////// RECHERCHE
     /* Méthode permettant la recherche d'un spécialiste, d'une spécialité ou d'une sous-spécialité */
     public function rechercheSpe($domaine) {
-      try { 
-        $specialisteRecherche=mb_strtolower($_POST['specialiste']); 
+      try {
+        $specialisteRecherche=mb_strtolower($_POST['specialiste']);
         //On met tout en minuscule pour que le casse ne soit pas prise en compte (le prénom est stocké en majuscule dass la bdd mais visiblement cela n'a pas d'importance alors qu'elle a de l'importance pour la sous spécialité etc (donc si on tapait "Chirurgie", cela ne correspondra pas à "chirurgie" (stocké comme ceci dans la bdd))
-        $villeRecherche = mb_strtolower($_POST['ville']); 
+        $villeRecherche = mb_strtolower($_POST['ville']);
       //Si la recherche n'est pas vide, on affiche les prestataires qui se rapprochent de ce que la personne recherche
         if(!empty($specialisteRecherche) || !empty($villeRecherche))
         {
@@ -1158,16 +1158,16 @@ public function getId($nompro,$prenompro){
           $stmt->bindParam(1,$domaine); //Le domaine dépend de la page de recherche
         }
         //Si la recherche est vide, on affiche tous les prestataires du domaine de la recherche
-        else if(empty($villeRecherche)){ 
+        else if(empty($villeRecherche)){
           $chaine = "SELECT u.id, civilite, prenom, u.nom, mail, tel, adresse, ville, cp, location, s1.nom specialite, s2.nom sous_specialite from Utilisateurs u, Specialite s1, Sous_Specialite s2, Domaine d WHERE type=2 AND d.id=? AND u.specialite = s2.id AND s2.sousDomaine = s1.id AND s1.domaine = d.id";
           $stmt=$this->connexion->prepare($chaine);
           $stmt->bindParam(1,$domaine); //Le domaine dépend de la page de recherche
         }
 
-        
-      
+
+
         $stmt->execute();
-        
+
         return $stmt->fetchAll();
       } catch (PDOException $e) {
         $this->destroy();
