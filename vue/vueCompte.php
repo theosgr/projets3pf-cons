@@ -40,14 +40,18 @@ class vueCompte {
 									<a href="index.php?ajouterPlageHoraire=1&idPro3=<?php echo($_SESSION['id']); ?>"><input type="submit" value="Ajouter des plages horaires "/></a>
 									<a href="index.php?ajouterPlageHoraireJour=1&idPro3=<?php echo($_SESSION['id']); ?>"><input type="submit" value="Ajouter avec des horaires différentes par jour"/></a>
 									<?php
-									foreach ($listePlageHoraire as $row)
+									foreach ($listePlageHoraire as $row) 
 									{
 										?>
-										<div>
+										<?php if($row['estPrise']==1){ echo("<div style=\" background-color:orange\">");
+										}
+										else
+										{
+											echo("<div>");}?> 
 											<h3>Date : <?php echo ucwords(mb_strtolower($row[1],'UTF-8')); ?></h3>
-											<p>De : <?php echo $row[2] ;?> à <?php echo $row[3] ;?></p>
-											<?php if($row['estRemplace']!=0){ echo ("<p>Vous êtes remplacé par ".$row['civiliteRemplacant']." ".$row['nomRemplacant']."</p>"); }?>
-											<?php if($row['estRemplace'] == 0)
+											<p>De : <?php echo $row[2] ;?> à <?php echo $row[4] ;?></p>
+											<?php if($row['estRemplace']!=0){ echo ("<p style=\"font-weight:bold\">Vous êtes remplacé par ".$row['civiliteRemplacant']." ".$row['nomRemplacant']."<p>"); }?>
+											<?php if($row['estRemplace'] == 0) 
 											{ ?>
 												<a href="index.php?idPlageHoraire=<?php echo $row['id'];?>"><input type="submit" value="Ajouter un remplaçant"/></a> <?php
 											}
