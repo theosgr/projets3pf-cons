@@ -30,12 +30,22 @@
         $date = $plageH['date'];
         $heureD = $plageH['heureDebut'];
         $heureF = $plageH['heureFin'];
-
-        $this->modele->addRdv($idProfessionnel,$heureD, $heureF, $date, $idP, $prenomPa, $nomPa, $motif, $idPlageHoraire);
-        $this->modele->setPlageHorairePrise($idPlageHoraire);
-        $_SESSION['validite'] = "ok";
-        $_SESSION['message'] = "Le rendez-vous a été ajouté";
-        $this->ctrlCompte->pageMonCompte();
+        
+        /*if($idProfessionnel != $idP)
+        {*/
+            $this->modele->addRdv($idProfessionnel,$heureD, $heureF, $date, $idP, $prenomPa, $nomPa, $motif, $idPlageHoraire);
+            $this->modele->setPlageHorairePrise($idPlageHoraire);
+            $_SESSION['validite'] = "ok";
+            $_SESSION['message'] = "Le rendez-vous a été ajouté";
+            $this->ctrlCompte->pageMonCompte();
+       /* }
+        else
+        {*/
+          /*  $_SESSION['validite'] = "ko";
+            $_SESSION['message'] = "Vous ne pouvez pas prender rendez-vous avec vous-même";
+            $this->ctrlCompte->pageMonCompte();
+        }  */
+            
       }
 
       public function annulerRdv($idRdv)
