@@ -38,8 +38,8 @@
         $date = $plageH['date'];
         $heureD = $plageH['heureDebut'];
         $heureF = $plageH['heureFin'];
-        
-       /* if($idProfessionnel != $idP)
+
+        /*if($idProfessionnel != $idP || $idProche != $idPatient)
         {*/
             $this->modele->addRdv($idProfessionnel,$heureD, $heureF, $date, $idP, $prenomPa, $nomPa, $motif, $idPlageHoraire);
             $this->modele->setPlageHorairePrise($idPlageHoraire);
@@ -49,8 +49,8 @@
             unset($_SESSION['motif']);
             unset($_SESSION['idPlageHoraire']);
             $this->ctrlCompte->pageMonCompte();    
-        /*}*/
-        /*else
+        /*}
+        else
         {
             $_SESSION['validite'] = "ko";
             $_SESSION['message'] = "Vous ne pouvez pas prendre rendez-vous avec vous-même";
