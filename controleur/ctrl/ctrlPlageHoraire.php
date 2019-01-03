@@ -58,20 +58,20 @@
 
       /* Affichage des disponibiltés - les rdv déjà pris */
       public function listeHeure ($idProfessionnel,$daterdv) {
-        /*$dateAjd = new DateTime();
-        $dateAjd = $dateAjd->format("Y-m-d");*/
-        /*if($dateAjd < $daterdv)
-        {*/
+        $dateAjd = new DateTime();
+        $dateAjd = $dateAjd->format("Y-m-d");
+        if($dateAjd < $daterdv)
+        {
           $_SESSION['dateRdv'] = $daterdv;
           $listeHoraire = $this->modele->getPlageHoraireProDate($idProfessionnel,$daterdv);
           $this->vuePlageHoraire->genereVueSelectionHoraire($listeHoraire);
-        /*}*/
-        /*else
+        }
+        else
         {
           $_SESSION['message'] = "La date choisie est passée";
           $_SESSION['validite'] = "ko";
           $this->vuePlageHoraire->genereVuePlageHoraire($idProfessionnel);
-        }*/
+        }
         
       }
 

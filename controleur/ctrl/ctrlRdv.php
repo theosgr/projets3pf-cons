@@ -39,8 +39,8 @@
         $heureD = $plageH['heureDebut'];
         $heureF = $plageH['heureFin'];
 
-        /*if($idProfessionnel != $idP || $idProche != $idPatient)
-        {*/
+        if($idProfessionnel != $idP || $idProche != $idPatient)
+        {
             $this->modele->addRdv($idProfessionnel,$heureD, $heureF, $date, $idP, $prenomPa, $nomPa, $motif, $idPlageHoraire);
             $this->modele->setPlageHorairePrise($idPlageHoraire);
             $_SESSION['validite'] = "ok";
@@ -49,7 +49,7 @@
             unset($_SESSION['motif']);
             unset($_SESSION['idPlageHoraire']);
             $this->ctrlCompte->pageMonCompte();    
-        /*}
+        }
         else
         {
             $_SESSION['validite'] = "ko";
@@ -58,7 +58,7 @@
             unset($_SESSION['motif']);
             unset($_SESSION['idPlageHoraire']);
             $this->ctrlCompte->pageMonCompte();
-        }  */
+        }  
             
       }
 
