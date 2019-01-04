@@ -40,18 +40,18 @@ class vueCompte {
 									<a href="index.php?ajouterPlageHoraire=1&idPro3=<?php echo($_SESSION['id']); ?>"><input type="submit" value="Ajouter des plages horaires "/></a>
 									<a href="index.php?ajouterPlageHoraireJour=1&idPro3=<?php echo($_SESSION['id']); ?>"><input type="submit" value="Ajouter avec des horaires différentes par jour"/></a>
 									<?php
-									foreach ($listePlageHoraire as $row) 
+									foreach ($listePlageHoraire as $row)
 									{
 										?>
 										<?php if($row['estPrise']==1){ echo("<div style=\" background-color:orange\">");
 										}
 										else
 										{
-											echo("<div>");}?> 
+											echo("<div>");}?>
 											<h3>Date : <?php echo ucwords(mb_strtolower($row[1],'UTF-8')); ?></h3>
 											<p>De : <?php echo $row[2] ;?> à <?php echo $row[4] ;?></p>
 											<?php if($row['estRemplace']!=0){ echo ("<p style=\"font-weight:bold\">Vous êtes remplacé par ".$row['civiliteRemplacant']." ".$row['nomRemplacant']."<p>"); }?>
-											<?php if($row['estRemplace'] == 0) 
+											<?php if($row['estRemplace'] == 0)
 											{ ?>
 												<a href="index.php?idPlageHoraire=<?php echo $row['id'];?>"><input type="submit" value="Ajouter un remplaçant"/></a> <?php
 											}
@@ -61,6 +61,9 @@ class vueCompte {
 												<a href="index.php?idPlageHoraire=<?php echo $row['id'];?>&remplacant=1"><input type="submit" value="Supprimer le remplaçant"/></a>
 												<?php
 											}
+											?>
+											<a href="index.php?supprPlageHoraire=<?php echo $row['id']?>"><input type="submit" value="Supprimer cette plage horaire"/></a>
+											<?php
 											if(isset($_SESSION['modifRemplacant']) && !empty($_SESSION['modifRemplacant']) && $_SESSION['modifRemplacant'] == $row['id'])
 												{
 													?><form method="POST" action="index.php">
@@ -93,7 +96,7 @@ class vueCompte {
 							<div class="element">
 								<?php
 								foreach ($listeRDV as $row) {									?>
-									<div> 
+									<div>
 										<?php
 										if($_SESSION['categorie']==2)
 										{
@@ -107,7 +110,7 @@ class vueCompte {
 											?>
 											<h3>Vous avez rendez-vous avec <?php echo ucwords(mb_strtolower($row['prenom'],'UTF-8') . " " . $row['nom']); ?></h3>
 											<p>Le <?php echo $row[5] ;?>, de <?php echo $row[3] ;?> à <?php echo $row[4] ;?></p>
-											<?php	
+											<?php
 										}
 										?>
 										<a href="index.php?annulerRdv=<?php echo($row['id'])?>"><button class="suppression" type="button">Annuler</button></a>

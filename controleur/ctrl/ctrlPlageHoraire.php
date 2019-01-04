@@ -45,6 +45,16 @@
         $this->vuePlageHoraire->genereVueModifPlageHoraire($mailPro);
       }
 
+      //Permet au professionnel de supprimer une plage horaires
+      public function supprimerPlageHoraire($idPlageHoraire)
+      {
+        $this->modele->delPlageHoraire($idPlageHoraire);
+        $_SESSION['validite'] = "ok";
+        $_SESSION['message'] = "La plage horaire a été supprimée";
+        $this->ctrlCompte->pageMonCompte();
+
+      }
+
       //Permet au professionnel de signaler qu'il sera remplacé sur une plage horaire
       public function modifierRemplacant($id,$nomRpl,$civiliteRpl)
       {
@@ -72,7 +82,7 @@
           $_SESSION['validite'] = "ko";
           $this->vuePlageHoraire->genereVuePlageHoraire($idProfessionnel);
         }
-        
+
       }
 
       public function AfficheListeProcheConnecte()
@@ -80,7 +90,7 @@
         $_SESSION['idPlageHoraire'] = $_POST['listeHoraires'];
         $_SESSION['motif'] = $_POST['motif'];
         $_SESSION['idProfessionnel'] = $_POST['idPro'];
-        
+
         $idUser = $this->modele->getIdUser($_SESSION['id'])[0];
         $listeProche = $this->modele->getProches($idUser);
         $this->vuePlageHoraire->genereVueSelectionProche($listeProche);

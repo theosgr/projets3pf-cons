@@ -910,6 +910,13 @@
       }
     }
 
+    public function delPlageHoraire($idPlageHoraire)
+    {
+      $stmt = $this->connexion->prepare("DELETE from plage_horaire WHERE id=?");
+      $stmt->bindParam(1,$idPlageHoraire);
+      $stmt->execute();
+    }
+
     public function getPlageHoraireById($idPlageHoraire)
     {
       $stmt = $this->connexion->prepare("SELECT * from plage_horaire WHERE id=?");

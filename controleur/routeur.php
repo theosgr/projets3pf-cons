@@ -8,7 +8,7 @@
   require_once 'ctrl/ctrlAdmin.php';
   require_once 'ctrl/ctrlPlageHoraire.php';
   require_once 'ctrl/ctrlRdv.php';
-  
+
 /* ROUTEUR : redirection des requêtes vers les contrôleurs */
   class Routeur {
     private $ctrlAuthentification;
@@ -134,13 +134,13 @@
           	$this->ctrlCompte->afficherReset();
           	return;
           }
-          
-          
+
+
         }
         $this->ctrlCompte->afficherReset();
         return;
       }
-      
+
 //ACCES A L'INTERFACE DE GESTION DU SITE
       if(isset($_GET['admin'])){
         $this->ctrlAuthentification->gestionAdmin();
@@ -234,7 +234,12 @@
           $this->ctrlPlageHoraire->afficheListeProcheDeconnecte();
           return;
         }
-        
+
+      }
+
+      if (isset($_GET['supprPlageHoraire'])) {
+        $this->ctrlPlageHoraire->supprimerPlageHoraire($_GET['supprPlageHoraire']);
+        return;
       }
 
       if(isset($_POST['listeProche']))
