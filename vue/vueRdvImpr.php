@@ -9,9 +9,19 @@ session_start();
     </head>
 
     <body>
-      <a href="#" style="text-decoration:none" OnClick="parent.tableRDV.focus();window.print()"><input type="submit" value="Imprimer"/></a>
+
+      <script>
+        function printDiv() {
+               window.frames["print_frame"].document.body.innerHTML = document.getElementById("printableTable").innerHTML;
+               window.frames["print_frame"].window.focus();
+               window.frames["print_frame"].window.print();
+             }
+      </script>
+
+      <a href="#" style="text-decoration:none" onClick="printDiv()"><input type="submit" value="Imprimer"/></a>
     </br>
     </br>
+    <div id="printableTable" style="display:block">
       <table border="1" id="tableRDV">
         <tr>
           <td>Heure de début</td>
@@ -42,5 +52,8 @@ session_start();
               }
   				?>
       </table>
+    </div>
+    <iframe name="print_frame" width="0" height="0" frameborder="0" src="about:blank"></iframe>
     </body>
+
 </html>
