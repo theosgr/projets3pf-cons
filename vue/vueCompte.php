@@ -61,9 +61,11 @@ class vueCompte {
 												<a href="index.php?idPlageHoraire=<?php echo $row['id'];?>&remplacant=1"><input type="submit" value="Supprimer le remplaçant"/></a>
 												<?php
 											}
+											if($row['estPrise']!=1){
 											?>
-											<a href="index.php?supprPlageHoraire=<?php echo $row['id']?>"><input type="submit" value="Supprimer cette plage horaire"/></a>
+												<a href="index.php?supprPlageHoraire=<?php echo $row['id']?>"><input type="submit" value="Supprimer cette plage horaire"/></a>
 											<?php
+											}
 											if(isset($_SESSION['modifRemplacant']) && !empty($_SESSION['modifRemplacant']) && $_SESSION['modifRemplacant'] == $row['id'])
 												{
 													?><form method="POST" action="index.php">
