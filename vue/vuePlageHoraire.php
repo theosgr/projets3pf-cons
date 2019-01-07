@@ -67,7 +67,7 @@ class vuePlageHoraire {
 										{
 											echo($row['1']."  -  ".$row['2']);
 											echo("   (");
-											echo("Le médecin sera remplacé par ".$row['civiliteRemplacant']." ".$row['nomRemplacant'].")");
+											echo("Le professionnel sera remplacé par ".$row['civiliteRemplacant']." ".$row['nomRemplacant'].")");
 										}
 									?>
 								</option>
@@ -85,7 +85,7 @@ class vuePlageHoraire {
 				}
 				else
 				{
-					echo("Le médecin ne propose pas de rendez-vous pour cette date");
+					echo("Le professionnel ne propose pas de rendez-vous pour cette date");
 				} ?>
 				</form>
 			</div>
