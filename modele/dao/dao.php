@@ -727,8 +727,9 @@
      /* Méthode permettant de récupérer les rendez-vous d'un professionnel */
     public function getRdvPro($idUser){
       try {
-        $stmt = $this->connexion->prepare('SELECT r.id, DATE_FORMAT(heureDebut,"%H:%i"), DATE_FORMAT(heureFin,"%H:%i"), DATE_FORMAT(jour,"%d/%m/%Y"), nomPa, prenomPa, motif FROM Rdv AS r WHERE idpracticien = ?');
+        $stmt = $this->connexion->prepare('SELECT r.id, DATE_FORMAT(heureDebut,"%H:%i"), DATE_FORMAT(heureFin,"%H:%i"), DATE_FORMAT(jour,"%d/%m/%Y"), nomPa, prenomPa, motif FROM Rdv AS r WHERE idpracticien = ? OR idpatient = ?');
         $stmt->bindParam(1,$idUser);
+		$stmt->bindParam(2,$idUser);
         $stmt->execute();
         return $stmt->fetchAll();
       } catch (PDOException $e) {
