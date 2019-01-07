@@ -70,7 +70,7 @@
       public function listeHeure ($idProfessionnel,$daterdv) {
         $dateAjd = new DateTime();
         $dateAjd = $dateAjd->format("Y-m-d");
-        if($dateAjd < $daterdv)
+        if($dateAjd <= $daterdv)
         {
           $_SESSION['dateRdv'] = $daterdv;
           $listeHoraire = $this->modele->getPlageHoraireProDate($idProfessionnel,$daterdv);
