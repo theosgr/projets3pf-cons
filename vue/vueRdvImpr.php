@@ -40,7 +40,7 @@ session_start();
   					} catch (PDOException $e) {
   							throw new PDOException("Erreur de connexion");
   					}
-  						$sql_get_location = "SELECT heureDebut,heureFin,nomPa,prenomPa FROM rdv where jour = ? AND idpracticien = (select id from utilisateurs where mail = ?);";
+  						$sql_get_location = "SELECT heureDebut,heureFin,nomPa,prenomPa FROM rdv where jour = ? AND idpracticien = (select id from utilisateurs where mail = ?) ORDER BY heureDebut;";
   						$sth = $db->prepare($sql_get_location);
               $sth->bindParam(1, $jour);
               $sth->bindParam(2, $ID);
