@@ -27,18 +27,19 @@
     /* Méthode permettant de modifier le mot de passe */
 
 	public function modifierMdp($mdp){
-  	try {
+        try {
 
-  		$mdp = password_hash($mdp, PASSWORD_DEFAULT);
-  		$stmt = $this->connexion->prepare('update Utilisateurs SET mdp = ? where mail = ?');
-        $stmt->bindParam(1,$_POST['mdp']);
-        $stmt->bindParam(2,$_SESSION['id']);
-        $stmt->execute();
-  	}
-  	catch(PDOException $e) {
-    	$this->destroy();
-    	throw new PDOException("Erreur d'accès à la table Utilisateurs");
-  	}
+            $mdp = password_hash($mdp, PASSWORD_DEFAULT);
+            $stmt = $this->connexion->prepare('update Utilisateurs SET mdp = ? where mail = ?');
+            $stmt->bindParam(1,$_POST['mdp']);
+            $stmt->bindParam(2,$_SESSION['id']);
+            $stmt->execute();
+        }
+        catch(PDOException $e) 
+        {
+            $this->destroy();
+            throw new PDOException("Erreur d'accès à la table Utilisateurs");
+        }
 	}
 
     /* Méthode permettant de voir si un utilisateur est deja inscrit */
@@ -146,15 +147,16 @@
 
       // Verification mot de passe
       if (isset($_POST['mdp']) && isset($_POST['MdpConfirm'])) {
+        sleep(1); //pause de 1 sec afin d'ajouter de la sécurité (décourager un hackeur)
         if ($_POST['mdp'] == $_POST['MdpConfirm']) {
-          if (strlen($_POST['mdp']) > 5 && strlen($_POST['mdp']) < 25) {
+          if (strlen($_POST['mdp']) > 5 && strlen($_POST['mdp']) < 26) {
             // mot de passe correct
           } else {
-            $_SESSION['message'] = "Le mot de passe doit comporter entre 5 et 25 caractères";
+            $_SESSION['message'] = "Le mot de passe doit comporter entre 6 et 25 caractères";
             return false;
           }
         } else {
-          $_SESSION['message'] = "Les mots de passe doivent être égaux";
+          $_SESSION['message'] = "Les mots de passe doivent être identiques";
           return false;
         }
       } else {
@@ -168,11 +170,11 @@
         if (preg_match("/^[0-9]{4}-[01-12]-[01-31]$/",$_POST['ddn'])) {
           list($year, $month, $day) = split('[/.-]', $_POST['ddn']);
           if ($year < date(Y)-100) {
-            $_SESSION['message'] = "Veuillez entre une date valide";
+            $_SESSION['message'] = "Veuillez entrer une date valide";
             return false;
           }
           if ($year >= date(Y) && $month >= date(m) && $day >= date(d)) {
-            $_SESSION['message'] = "Veuillez entre une date valide";
+            $_SESSION['message'] = "Veuillez entrer une date valide";
             return false;
           }
         } else
@@ -180,11 +182,11 @@
         if (preg_match("/^[0-31][/|.|-][01-12][/|.|-][0-9]{4}$/",$_POST['ddn'])) {
           list($day, $month, $year) = split('[/.-]', $_POST['ddn']);
           if ($year < date(Y)-100) {
-            $_SESSION['message'] = "Veuillez entre une date valide";
+            $_SESSION['message'] = "Veuillez entrer une date valide";
             return false;
           }
           if ($year >= date(Y) && $month >= date(m) && $day >= date(d)) {
-            $_SESSION['message'] = "Veuillez entre une date valide";
+            $_SESSION['message'] = "Veuillez entrer une date valide";
             return false;
           }
         }
@@ -229,7 +231,7 @@
     public function checkFormModifications() {
       // Verification civilite
       if (!isset($_POST['civilite']) || ($_POST['civilite'] != "M." && $_POST['civilite'] != "Mme" && $_POST['civilite'] != "Autre")) {
-        $_SESSION['message'] = "Champ civilite incorrect";
+        $_SESSION['message'] = "Champ civilité incorrect";
         return false;
       }
 
@@ -271,15 +273,16 @@
 
       // Verification mot de passe
       if (!isset($_POST['mdp']) && !isset($_POST['MdpConfirm'])) {
+        sleep(1); //pause de 1 sec afin d'ajouter de la sécurité (décourager un hackeur)
         if ($_POST['mdp'] == $_POST['MdpConfirm']) {
           if (strlen($_POST['mdp']) > 5 && strlen($_POST['mdp']) < 25) {
             // mot de passe correct
           } else {
-            $_SESSION['message'] = "Le mot de passe doit comporter entre 5 et 25 caractères";
+            $_SESSION['message'] = "Le mot de passe doit comporter entre 6 et 25 caractères";
             return false;
           }
         } else {
-          $_SESSION['message'] = "Les mots de passe doivent être égaux";
+          $_SESSION['message'] = "Les mots de passe doivent être identiques";
           return false;
         }
       }
@@ -290,11 +293,11 @@
         if (preg_match("/^[0-9]{4}-[01-12]-[01-31]$/",$_POST['ddn'])) {
           list($year, $month, $day) = split('[/.-]', $_POST['ddn']);
           if ($year < date(Y)-100) {
-            $_SESSION['message'] = "Veuillez entre une date valide";
+            $_SESSION['message'] = "Veuillez entrer une date valide";
             return false;
           }
           if ($year >= date(Y) && $month >= date(m) && $day >= date(d)) {
-            $_SESSION['message'] = "Veuillez entre une date valide";
+            $_SESSION['message'] = "Veuillez entrer une date valide";
             return false;
           }
         } else
@@ -302,15 +305,15 @@
         if (preg_match("/^[0-31][/|.|-][01-12][/|.|-][0-9]{4}$/",$_POST['ddn'])) {
           list($day, $month, $year) = split('[/.-]', $_POST['ddn']);
           if ($year < date(Y)-100) {
-            $_SESSION['message'] = "Veuillez entre une date valide";
+            $_SESSION['message'] = "Veuillez entrer une date valide";
             return false;
           }
           if ($year >= date(Y) && $month >= date(m) && $day >= date(d)) {
-            $_SESSION['message'] = "Veuillez entre une date valide";
+            $_SESSION['message'] = "Veuillez entrer une date valide";
             return false;
           }
         }
-        $_SESSION['message'] = "Veuillez completer votre date de naissance";
+        $_SESSION['message'] = "Veuillez compléter votre date de naissance";
         return false;
       }
       $_POST['ddn'] = htmlspecialchars($_POST['ddn']);
@@ -343,7 +346,7 @@
     public function checkFormProche() {
       // Verification civilite
       if (!isset($_POST['civiliteP']) || ($_POST['civiliteP'] != "M." && $_POST['civiliteP'] != "Mme" && $_POST['civiliteP'] != "Autre")) {
-        $_SESSION['message'] = "Champ civilite incorrect";
+        $_SESSION['message'] = "Champ civilité incorrect";
         return false;
       }
 
@@ -382,11 +385,11 @@
         if (preg_match("/^[0-9]{4}-[01-12]-[01-31]$/",$_POST['ddn'])) {
           list($year, $month, $day) = split('[/.-]', $_POST['ddnP']);
           if ($year < date(Y)-100) {
-            $_SESSION['message'] = "Veuillez entre une date valide";
+            $_SESSION['message'] = "Veuillez entrer une date valide";
             return false;
           }
           if ($year >= date(Y) && $month >= date(m) && $day >= date(d)) {
-            $_SESSION['message'] = "Veuillez entre une date valide";
+            $_SESSION['message'] = "Veuillez entrer une date valide";
             return false;
           }
         } else
@@ -394,15 +397,15 @@
         if (preg_match("/^[0-31][/|.|-][01-12][/|.|-][0-9]{4}$/",$_POST['ddn'])) {
           list($day, $month, $year) = split('[/.-]', $_POST['ddnP']);
           if ($year < date(Y)-100) {
-            $_SESSION['message'] = "Veuillez entre une date valide";
+            $_SESSION['message'] = "Veuillez entrer une date valide";
             return false;
           }
           if ($year >= date(Y) && $month >= date(m) && $day >= date(d)) {
-            $_SESSION['message'] = "Veuillez entre une date valide";
+            $_SESSION['message'] = "Veuillez entrer une date valide";
             return false;
           }
         }
-        $_SESSION['message'] = "Veuillez completer votre date de naissance";
+        $_SESSION['message'] = "Veuillez compléter votre date de naissance";
         return false;
       }
       $_POST['ddnP'] = htmlspecialchars($_POST['ddnP']);
@@ -498,7 +501,7 @@
           // Recupération de l'id de l'utilisateur
           $user = $this->getIdUser($_SESSION['id']);
           // Inscription du proche
-          $stmt = $this->connexion->prepare('insert into Proche values(NULL,?,?,?,?,?,?,?,?,?,?);');
+          $stmt = $this->connexion->prepare('Insert into Proche values(NULL,?,?,?,?,?,?,?,?,?,?);');
           $stmt->bindParam(1, $user['id']);
           $stmt->bindParam(2,$_POST['civiliteP']);
 
@@ -611,7 +614,7 @@
         return $stmt->fetchAll();
       } catch (PDOException $e) {
         $this->destroy();
-        throw new PDOException("Erreur d'accès à la table Rdv");
+        throw new PDOException("Erreur d'accès à la table Proche");
       }
     }
 
@@ -711,7 +714,7 @@
       }
     }
 
-    /* Méthode permettant de récupérer les rendez-vous dun utilisateur */
+    /* Méthode permettant de récupérer les rendez-vous d'un utilisateur */
     public function getRdv($idUser){
       try {
         $stmt = $this->connexion->prepare('SELECT r.id, u.nom, u.prenom, DATE_FORMAT(heureDebut,"%H:%i"), DATE_FORMAT(heureFin,"%H:%i"), DATE_FORMAT(jour,"%d/%m/%Y"), nomPa, prenomPa, motif FROM Rdv AS r, Utilisateurs AS u WHERE idpracticien = u.id AND idpatient = ?');
@@ -720,7 +723,7 @@
         return $stmt->fetchAll();
       } catch (PDOException $e) {
         $this->destroy();
-        throw new PDOException("Erreur d'accès à la table Rdv");
+        throw new PDOException("Erreur d'accès à la table Rdv/Utilisateur");
       }
     }
 
@@ -793,7 +796,7 @@
       }
       catch(PDOException $e)
       {
-        throw new PDOException("problème d'accès à la table");
+        throw new PDOException("Erreur d'accès à la table rdv");
       }
     }
 
@@ -810,7 +813,7 @@
       catch(PEDOException $e)
       {
         $this->destroy();
-        throw new PDOException("Erreur d'accès à la table plage_horaire");
+        throw new PDOException("Erreur d'accès à la table plage horaire");
       }
     }
 
@@ -834,8 +837,11 @@
         {
           if($jour != NULL)
           {
+/*
             if($date->format('l') == $jour)
-            {
+*/
+          if($date->format('l') != "Sunday" && $date->format('l') != "Saturday")
+          {          
               while($heureD->format('H:i:s') < $heureF->format('H:i:s'))
               {
                 //Si l'heure actuelle de la boucle n'est pas une heure de pause, alors on insère dans la base de données la plage horaire correspondante
@@ -907,23 +913,38 @@
       catch(PEDOException $e)
       {
         $this->destroy();
-        throw new PDOException("Erreur d'accès à la table plage_horaire");
+        throw new PDOException("Erreur d'accès à la table plage horaire");
       }
     }
 
     public function delPlageHoraire($idPlageHoraire)
     {
-      $stmt = $this->connexion->prepare("DELETE from plage_horaire WHERE id=?");
-      $stmt->bindParam(1,$idPlageHoraire);
-      $stmt->execute();
+        try{
+          $stmt = $this->connexion->prepare("DELETE from plage_horaire WHERE id=?");
+          $stmt->bindParam(1,$idPlageHoraire);
+          $stmt->execute();
+        } 
+        catch (PEDOException $e)
+        {
+            $this->destroy();
+            throw new PDOException("Erreur d'accès à la table plage horaire");
+        }
     }
 
     public function getPlageHoraireById($idPlageHoraire)
     {
-      $stmt = $this->connexion->prepare("SELECT * from plage_horaire WHERE id=?");
-      $stmt->bindParam(1,$idPlageHoraire);
-      $stmt->execute();
-      return $stmt->fetch();
+        try {
+            $stmt = $this->connexion->prepare("SELECT * from plage_horaire WHERE id=?");
+            $stmt->bindParam(1,$idPlageHoraire);
+            $stmt->execute();
+            return $stmt->fetch();
+        }
+        catch (PEDOException $e)
+        {
+            $this->destroy();
+            throw new PDOException("Erreur d'accès à la table plage horaire");
+        }
+      
     }
 
     public function updateRemplacant($id,$nomR,$civR){
@@ -1069,7 +1090,7 @@ public function getId($nompro,$prenompro){
         return $stmt->fetchAll();
       } catch (PDOException $e) {
         $this->destroy();
-        throw new PDOException("Erreur d'accès à la table Sous_Specialite");
+        throw new PDOException("Erreur d'accès à la table Sous Specialite");
       }
     }
 
@@ -1120,7 +1141,7 @@ public function getId($nompro,$prenompro){
           $stmt->execute();
         } catch (PDOException $e) {
           $this->destroy();
-          throw new PDOException("Erreur d'accès à la table Sous_Specialite");
+          throw new PDOException("Erreur d'accès à la table Sous Specialite");
         }
       }
 
@@ -1184,16 +1205,72 @@ public function getId($nompro,$prenompro){
           $stmt=$this->connexion->prepare($chaine);
           $stmt->bindParam(1,$domaine); //Le domaine dépend de la page de recherche
         }
-
-
-
         $stmt->execute();
 
         return $stmt->fetchAll();
       } catch (PDOException $e) {
         $this->destroy();
-        throw new PDOException("Erreur d'accès à la table");
+        throw new PDOException("Erreur d'accès aux tables (Recherche)");
       }
     }
-  }
+       
+/////////
+///////// Sécurité
+       /* Méthode permettant de rajouter une couche de sécurité */
+       public function securiteIp() {
+           try{ 
+                $pwd = "zero";
+                // On récupère l'IP du visiteur
+                $ip = $_SERVER['REMOTE_ADDR'];
+                // On regarde s'il est autorisé à se connecter
+                $stmt = $this->connexion->prepare('SELECT * FROM connexion WHERE ip = ?');
+                $stmt->bindParam(1,$ip);
+                $stmt->execute(array($ip));
+                $result = $stmt->rowCount();
+               
+                // Si l'ip a essayé de se connecter moins de 10 fois ce jour là
+                if ($result < 10) {
+                        // Vérification classique du mot de passe
+                        if ($_POST['mdp'] == $pwd) 
+                        {
+                          //echo "Bravo, vous êtes connecté !";
+                        }
+                        else 
+                        {
+                            // On enregistre la tentative échouée pour cette ip
+                            $req = $this->connexion->prepare('INSERT INTO connexion VALUES(NULL,?);');
+                            $req->bindParam(1,$ip);
+                            $req->execute();
+                            //echo "Mot de passe incorrect";
+                        }
+                // Si la personne a déja essayé de se connecter 10 fois ce jour là
+                }
+                else 
+                {
+                    //echo "Désolé, vous êtes banni jusqu'à demain";
+                }
+        } 
+        catch (PDOException $e)
+        {
+            $this->destroy();
+            throw new PDOException("Erreur d'accès a la table connexion (Sécurité)");
+        }
+       }
+       
+       // remet à zero la table connexion afin de pouvoir se connecter à nouveau
+       // utilisation de la commande : at 15:35 /Every:l,ma,me,j,v,s,d "C:
+       public function delIp (){
+           try
+           {
+               $nettoyage = $this->connexion->exec('DELETE FROM connexion;');
+               $nettoyage->closeCursor();
+           } 
+           catch (PDOException $e)
+           {
+            $this->destroy();
+            throw new PDOException("Erreur d'accès a la table connexion (Sécurité)");
+            }
+       }
+       
+}
 ?>

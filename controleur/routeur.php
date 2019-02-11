@@ -79,6 +79,7 @@
       if (isset($_GET['connexion'])) {
     // CONNEXION UTILISATEUR
         if ($_GET['connexion'] == 1) {
+            
           $this->ctrlAuthentification->connexionUser();
           return;
         }

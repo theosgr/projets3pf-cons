@@ -18,7 +18,7 @@
       if($_SESSION['categorie'] == 1)
       {
         $user = $this->modele->getInfosUser();
-        $this->vue->afficherProfil($user[0], $this->modele->getRdv($user[0]->getId()), $this->modele->getProches($user[0]->getId()), 0); //0 car pas besoin de listePlageHoraire
+        $this->vue->afficherProfil($user[0], $this->modele->getRdv($user[0]->getId()), $this->modele->getProches($user[0]->getId()), 0); // 0 car pas besoin de listePlageHoraire
       }
       else
       {

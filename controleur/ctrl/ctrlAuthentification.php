@@ -67,7 +67,8 @@
     /* Connexion d'un utilisateur. */
     public function connexionUser() {
       $_SESSION['user'] = $this->modele->connexion();
-      if ($_SESSION['user'] != "ko") 
+      $_SESSION['securIp'] = $this->modele->securiteIp();
+      if ($_SESSION['user'] != "ko" && $_SESSION['securIp'] < 10)
       { // connexion réussi
         $_SESSION['id'] = $_POST['login'];
         $_SESSION['validite'] = "ok";
@@ -75,6 +76,10 @@
         $_SESSION['categorie'] = $donneesUser[0]->getType();
         $_SESSION['message'] = "Bienvenue " . $_SESSION['user'];
         $this->vue->genereVueAccueil();
+      } elseif ($_SESSION['securIp'] > 10){
+        $_SESSION['validite'] = "ko";
+        $_SESSION['message'] = "Nombre de tentatives trop important, revenez plus tard !";
+        $this->connexion();
       } else { // echec connexion
         $_SESSION['validite'] = "ko";
         $_SESSION['message'] = "Combinaison utilisateur/mot de passe incorrect";
@@ -129,6 +134,7 @@
     /* Deconnexion d'un utilisateur. */
     public function deconnexionUser() {
       unset($_SESSION['user']);
+      unset($_SESSION['securIp']);
       session_destroy();
       $this->vue->genereVueAccueil();
     }
