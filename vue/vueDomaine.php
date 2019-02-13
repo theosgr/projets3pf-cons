@@ -219,6 +219,7 @@ class vueDomaine {
 							<!-- Carte Google maps gérée par le script maps.js -->
 							<script>// On initialise la latitude et la longitude (centre de la carte)
 								// Fonction d'initialisation de la carte
+
 								function initMap() {
 									var lat = 48;
 									var lon = 3;
@@ -229,7 +230,7 @@ class vueDomaine {
 										var location = document.getElementById("loca").getAttribute("value");
 									}
 									var locationSplit = location.split(", ");
-
+									let tabMarker = new Array;
 									// Créer l'objet "map" et l'insèrer dans l'élément HTML qui a l'ID "map"
 									map = new google.maps.Map(document.getElementById("map"), {
 											center: new google.maps.LatLng(locationSplit[0], locationSplit[1]),
@@ -246,32 +247,55 @@ class vueDomaine {
 											style: google.maps.NavigationControlStyle.ZOOM_PAN
 										}
 									});
-									let tabMarker = new Array;
 
 									<?php foreach ($allLocations as $row): ?>
 										var locationPro = "<?php echo $row ?>";
 										var locationProSplit = locationPro.split(", ");
+										var iconOrange = {
+									    url: './vue/img/markerOrange.png', // url
+									    scaledSize: new google.maps.Size(25, 40), // scaled size
+										};
+										var iconRed = {
+											url: './vue/img/markerRed.png', // url
+											scaledSize: new google.maps.Size(25, 40), // scaled size
+										};
 										var marker = new google.maps.Marker({
 											// A chaque boucle, la latitude et la longitude sont lues dans le tableau
 											position: {lat: parseFloat(locationProSplit[0]), lng: parseFloat(locationProSplit[1])},
 											map: map,
+											icon: iconOrange
 										});
 										marker.set("id",locationPro);
 										tabMarker.push(marker);
 									<?php endforeach; ?>
 
+									function newLocation(newCenter){
+										var newCenterSplit = newCenter.split(", ");
+										var center = new google.maps.LatLng(parseFloat(newCenterSplit[0]), parseFloat(newCenterSplit[1]));
+										console.log(parseFloat(newCenterSplit[0]))
+										map.setCenter(center);
+									};
+
 									for (var i = 0; i < tabMarker.length; i++) {
 										(function(){
 											var j =i;
 
-											$('.pro').each(function(itembis){
+											$('.pro').each(function(){
 												var id = $(this).attr('id');
 												tabMarker[i].addListener('click', function() {
 													if (id == tabMarker[j].id) {
 														var pro = document.getElementById(id);
 														// on modifie son style
-														pro.scrollIntoView();
+														$("html, body").animate({ scrollTop: $(pro).position().top }, 800);
 														pro.style.border = "solid orange 2px";
+													}
+												})
+
+												tabMarker[i].addListener('mouseover', function() {
+													if (id == tabMarker[j].id) {
+														var pro = document.getElementById(id);
+														// on modifie son style
+														tabMarker[j].setIcon(iconRed);
 													}
 												})
 
@@ -280,16 +304,50 @@ class vueDomaine {
 														var pro = document.getElementById(id);
 														// on modifie son style
 														pro.style.border = "";
+														tabMarker[j].setIcon(iconOrange);
 													}
 												})
 											})
 										}())
 									}
-									console.log(tabMarker);
-								}
+
+									$('.pro').each(function(index, item){
+										var id = item.id;
+										item.addEventListener('click', function() {
+											for (var marker in tabMarker) {
+												if (id == tabMarker[marker].id) {
+													var pro = document.getElementById(id);
+													// on modifie son style
+													newLocation(tabMarker[marker].id);
+												}
+											}
+										})
+
+										item.addEventListener('mouseover', function() {
+											for (var marker in tabMarker) {
+												if (id == tabMarker[marker].id) {
+													var pro = document.getElementById(id);
+													// on modifie son style
+													tabMarker[marker].setIcon(iconRed);
+												}
+											}
+										})
+
+										item.addEventListener('mouseout', function() {
+											for (var marker in tabMarker) {
+												if (id == tabMarker[marker].id) {
+													var pro = document.getElementById(id);
+													// on modifie son style
+													tabMarker[marker].setIcon(iconOrange);
+												}
+											}
+										});
+									});
+								};
+
 								window.onload = function(){
 									// Fonction d'initialisation qui s'exécute lorsque le DOM est chargé
-									// initMap();
+									initMap();
 								};
 							</script>
 						</p>
