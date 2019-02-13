@@ -103,14 +103,42 @@ class vueCompte {
 										if($_SESSION['categorie']==2)
 										{
 											?>
-											<h3>Vous avez rendez-vous avec <?php echo ucwords(mb_strtolower($row['prenomPa'],'UTF-8') . " " . $row['nomPa']); ?></h3>
-											<p>Le <?php echo $row[3] ;?>, de <?php echo $row[1] ;?> à <?php echo $row[2] ;?></p>
+											<h3><?php
+											//Si le professionnel est un patient
+											if($row['nomPa'] == $user->getNom() && $row['prenomPa'] == $user->getPrenom())
+											{
+												echo("Vous avez rendez-vous avec le professionnel ".ucwords(mb_strtolower($row['prenom'],'UTF-8'))." ".$row['nom']);
+											}
+											else{
+												$patientProche = false;
+												foreach($listeProches as $proche)
+												{
+													if($row['nomPa'] == $proche['nom'] && $row['prenomPa'] == $proche['prenom'])
+													{
+														if($row['nom'] == $user->getNom() && $row['prenom'] == $user->getPrenom())
+														{
+															echo("Vous avez rendez-vous avec votre proche ".$row['prenomPa']." ".$row['nomPa']);
+														}
+														else {
+															echo("Votre proche ".ucwords(mb_strtolower($proche['prenom'],'UTF-8'))." ".$proche['nom']." a rendez-vous avec ".ucwords(mb_strtolower($row['prenom'],'UTF-8'))." ".$row['nom']);
+														}
+														$patientProche = true;
+													}
+												}
+
+												if(!$patientProche)
+												{
+													echo("Vous avez rendez-vous avec ".ucwords(mb_strtolower($row['prenomPa'],'UTF-8'))." ".$row['nomPa']);
+												}
+											}
+											?>
+											<p>Le <?php echo $row[7] ;?>, de <?php echo $row[5] ;?> à <?php echo $row[6] ;?></p>
 											<?php
 										}
 										else
 										{
 											?>
-											<h3>Vous avez rendez-vous avec <?php echo ucwords(mb_strtolower($row['prenom'],'UTF-8') . " " . $row['nom']); ?></h3>
+											<h3><?php if(mb_strtolower($row['prenomPa'],'UTF-8') == mb_strtolower($user->getPrenom(),'UTF-8') && mb_strtolower($row['nomPa'],'UTF-8') == mb_strtolower($user->getNom(),'UTF-8')){ echo "Vous avez";}else{ echo($row['prenomPa']." ".$row['nomPa'])." a";}?> rendez-vous avec <?php echo ucwords(mb_strtolower($row['prenom'],'UTF-8') . " " . $row['nom']); ?></h3>
 											<p>Le <?php echo $row[5] ;?>, de <?php echo $row[3] ;?> à <?php echo $row[4] ;?></p>
 											<?php
 										}

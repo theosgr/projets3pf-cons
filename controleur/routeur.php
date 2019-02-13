@@ -79,7 +79,6 @@
       if (isset($_GET['connexion'])) {
     // CONNEXION UTILISATEUR
         if ($_GET['connexion'] == 1) {
-            
           $this->ctrlAuthentification->connexionUser();
           return;
         }
@@ -262,6 +261,27 @@
       {
         $this->ctrlAuthentification->connexionrdv();
         return;
+      }
+
+      if(isset($_GET['idProC']) && isset($_GET['idPlageHoraireC']))
+      {
+        $this->ctrlPlageHoraire->affichageChoixMotifCalendrier();
+        return;
+      }
+
+      if(isset($_POST['motif']) && !empty($_POST['motif']))
+      {
+        if(isset($_SESSION['id']) && !empty($_SESSION['id']))
+        {
+          $this->ctrlPlageHoraire->afficheListeProcheConnecte();
+          return;
+        }
+        else
+        {
+          $this->ctrlPlageHoraire->afficheListeProcheDeconnecte();
+          return;
+        }
+
       }
 
 // DEFAULT

@@ -5,7 +5,7 @@
 	session_start();
 	header('Content-type: application/json');
 	header("Access-Control-Allow-Origin: *");
-	
+
 	try {
 	    $chaine = "mysql:host=".HOST.";dbname=".BD.";charset=UTF8";
 	    $db = new PDO($chaine,LOGIN,PASSWORD);
@@ -16,7 +16,7 @@
 	$request= "SELECT location FROM Utilisateurs WHERE mail=";
 	$reponse = $bdd->query($request);
 	echo $reponse;
-	
+
 	$reponse->closeCursor();
-	
+
 ?>

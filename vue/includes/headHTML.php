@@ -15,3 +15,7 @@
 <script type="text/javascript" src="vue/scripts/onglet.js" ></script>
 <script type="text/javascript" src="vue/scripts/maps.js"></script>
 <script type="text/javascript" src="vue/scripts/detailsPro.js"></script>
+<script type="text/javascript" src="vue/scripts/Calendar.js"></script>
+<script type="text/javascript" src="vue/scripts/instantiateCalendar.js"></script>
+<script type="text/javascript" src="vue/scripts/question.js"></script>
+<script type="text/javascript" src="https://www.google.com/recaptcha/api.js"></script>

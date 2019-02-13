@@ -104,6 +104,11 @@
 
         $this->vueAuthentification->genereVueConnexionRdv();
       }
+
+      public function affichageChoixMotifCalendrier()
+      {
+        $this->vuePlageHoraire->genereVueChoixMotifCalendrier();
+      }
 }
 
 ?>

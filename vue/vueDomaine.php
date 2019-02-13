@@ -146,13 +146,18 @@ class vueDomaine {
 									</div>
 									<p class="tel"><i class="material-icons">&#xE0CD;</i><?php echo $row['tel'] ;?></p>
 									<?php array_push($allLocations,ucwords(mb_strtolower($row['location'])));?>
+									<div class="boutons">
+										<form action="index.php?idPro=<?php echo $row['id'];?>" method="post">
+											<input class="boutonRdv" type="submit" value="Prendre rendez-vous"/>
+											<input class="boutonQuestion" type="button" value="Poser une question"/>
+											<input class="quest" type="text" name="question" style="visibility:hidden;"/>
+											<input class="questionB" type="submit" name="envoiQuestion" value="Envoyer" style="visibility:hidden;"/>
+										</form>
+									</div>
 								</div>
-								<div class="boutons">
-									<form action="index.php?idPro=<?php echo $row['id'];?>" method="post">
-										<input class="boutonRdv" type="submit" value="Prendre rendez-vous"/>
-										<input class="boutonQuestion" type="submit" value="Poser une question"/>
-									</form>
-								</div>
+								<div class="calendar" style="text-align:center;">Chargement en cours...</div>
+								<input type="hidden" value="<?php echo($row['id']); ?>"/>
+
 								<!-- <button class="boutonDetails" type="button" onclick="alert('Hello')">Masquer les détails</button> --> <!-- Pour le javascript plus tard -->
 							</div>
 							<?php

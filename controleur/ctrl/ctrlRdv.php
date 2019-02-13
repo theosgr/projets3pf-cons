@@ -48,7 +48,7 @@
             unset($_SESSION['idProfessionnel']); //au cas où l'utilisateur venait de se connecter, on supprime les variables de session
             unset($_SESSION['motif']);
             unset($_SESSION['idPlageHoraire']);
-            $this->ctrlCompte->pageMonCompte();    
+            $this->ctrlCompte->pageMonCompte();
         }
         else
         {
@@ -58,8 +58,8 @@
             unset($_SESSION['motif']);
             unset($_SESSION['idPlageHoraire']);
             $this->ctrlCompte->pageMonCompte();
-        }  
-            
+        }
+
       }
 
       public function annulerRdv($idRdv)

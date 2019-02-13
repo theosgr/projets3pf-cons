@@ -46,7 +46,6 @@ class vueAuthentification {
 		<html lang="fr">
 		<head>
 			<title>Connexion</title>
-            <script src="https://www.google.com/recaptcha/api.js"></script>
 			<?php include 'includes/headHTML.php' ?>
 		</head>
 		<body>
@@ -66,10 +65,9 @@ class vueAuthentification {
 						</div>
 						<hr>
 
-                        <!-- Notre boite de vérification : Captcha -->
-                        <div class="g-recaptcha" data-sitekey="6LdzkJAUAAAAAOuhLyoggGS6_qaPIbnWT6Ov6AuS">
-                        </div>
-                        
+						<!-- Notre boite de vérification : Captcha -->
+						<div class="g-recaptcha" data-sitekey="6LdzkJAUAAAAAOuhLyoggGS6_qaPIbnWT6Ov6AuS"></div>
+
 						<!--  BLOC VALIDATION -->
 						<div>
 							<input name="send" class="submit-btn" type="submit" value="Se connecter" />
@@ -164,7 +162,6 @@ class vueAuthentification {
 				<div class="container_form">
 					<!--  BLOC ONGLET -->
 					<div class="block">
-                        <!-- Choix du type d'utilisateur -->
 						<p>Je suis :</p>
 						<?php
 						if (isset($_GET['inscription'])) {
