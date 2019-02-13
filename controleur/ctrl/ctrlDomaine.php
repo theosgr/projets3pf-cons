@@ -21,9 +21,10 @@
     /* Affichage des specialistes de la recherche */
     public function rechercheSpe($domaine) {
       $listeSpecialistes = $this->modele->rechercheSpe($domaine);
-      $this->vue->genereVueRecherche($domaine, $listeSpecialistes);
+      $ville = $this->modele->rechercheVille($domaine);
+      $this->vue->genereVueRecherche($domaine, $listeSpecialistes, $ville);
     }
 
-    
+
   }
 ?>

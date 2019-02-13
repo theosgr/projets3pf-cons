@@ -55,7 +55,7 @@ class vueDomaine {
 	}
 
 	// Affichage des spécialistes recherchés
-	public function genereVueRecherche($domaine, $listeSpecialistes){
+	public function genereVueRecherche($domaine, $listeSpecialistes,$ville){
 		?>
 		<!DOCTYPE html>
 		<html lang="fr">
@@ -63,8 +63,56 @@ class vueDomaine {
 			<title>Recherche</title>
 			<?php include 'includes/headHTML.php' ?>
 		</head>
-		<body onload="initMap();">
-		<p id="locationphp" value="<?php
+		<body onload="">
+
+			<input id="ville" type="hidden" value="<?php echo $ville ?>">
+			<input id="loca" type="hidden" value="">
+
+			<script>
+				  var apikey = '3f3b618fe28844949b1341a5341bd5e0';
+					var adresse = document.getElementById("ville").getAttribute("value");
+				  var api_url = 'https://api.opencagedata.com/geocode/v1/json'
+				  var request_url = api_url
+				    + '?'
+				    + 'key=' +encodeURIComponent(apikey)
+				    + '&q=' + encodeURIComponent(adresse)
+						+ '&countrycode=' + "fr"
+				    + '&pretty=1'
+				    + '&no_annotations=1';
+
+				  // see full list of required and optional parameters:
+				  // https://opencagedata.com/api#forward
+
+				  var request = new XMLHttpRequest();
+				  request.open('GET', request_url, true);
+
+				  request.onload = function() {
+				  // see full list of possible response codes:
+				  // https://opencagedata.com/api#codes
+
+				    if (request.status == 200){
+				      // Success!
+				      var data = JSON.parse(request.responseText);
+							document.getElementById("loca").setAttribute('value',data.results[0].geometry["lat"]+", "+data.results[0].geometry["lng"]);
+				    } else if (request.status <= 500){
+				    // We reached our target server, but it returned an error
+				      console.log("unable to geocode! Response code: " + request.status);
+				      var data = JSON.parse(request.responseText);
+				      console.log(data.status.message);
+				    } else {
+				      console.log("server error");
+				    }
+				  };
+
+				  request.onerror = function() {
+				    // There was a connection error of some sort
+				    console.log("unable to connect to server");
+				  };
+
+				  request.send();  // make the request
+			</script>
+
+		<input id="locationphp" type="hidden" value="<?php
 
 					require_once "./config/config.php";
 
@@ -78,21 +126,22 @@ class vueDomaine {
 							throw new PDOException("Erreur de connexion");
 					}
 					if (!isset($_SESSION['id'])) {
-						$Paris = "48.866667, 2.333333";
-						echo $Paris;
+							$Paris = "48.866667, 2.333333";
+							echo $Paris;
 					} else {
-						$ID = $_SESSION['id'];
-						$sql_get_location = "SELECT location FROM Utilisateurs WHERE mail=:id";
-						$sth = $db->prepare($sql_get_location);
-						$sth->bindParam(":id", $ID);
-						$sth->execute();
-						$reponse = $sth->fetch(PDO::FETCH_ASSOC);
+							$ID = $_SESSION['id'];
+							$sql_get_location = "SELECT location FROM Utilisateurs WHERE mail=:id";
+							$sth = $db->prepare($sql_get_location);
+							$sth->bindParam(":id", $ID);
+							$sth->execute();
+							$reponse = $sth->fetch(PDO::FETCH_ASSOC);
 
-						foreach($reponse as $result) {
-								echo $result;
-						}
+							foreach($reponse as $result) {
+									echo $result;
+							}
 					}
-				?>"></p>
+				?>"></input>
+
 			<!--  HEADER-->
 			<?php  include 'includes/header.php' ?>
 
@@ -129,7 +178,7 @@ class vueDomaine {
 						$allLocations = array();
 						foreach ($listeSpecialistes as $row) {
 							?>
-							<div class="pro">
+							<div class="pro" id="<?php echo ucwords(mb_strtolower($row['location'])); ?>">
 								<div class="coordonnes">
 									<div class="entete">
 										<h4><?php echo ucwords(mb_strtolower($row['prenom'])) . " " . $row['nom']; ?> :</h4>
@@ -165,8 +214,6 @@ class vueDomaine {
 						?>
 					</div>
 
-					<p value="<?php $allLocations ?>"></p>
-
 					<div id="fixed" style="position:fixed; width: 100%; height: 500px;">
 						<p id="map">
 							<!-- Carte Google maps gérée par le script maps.js -->
@@ -176,7 +223,11 @@ class vueDomaine {
 									var lat = 48;
 									var lon = 3;
 									var map = null;
-									var location = document.getElementById("locationphp").getAttribute("value");
+									if ((document.getElementById("loca").getAttribute("value")) == false) {
+										var location = document.getElementById("locationphp").getAttribute("value");
+									} else {
+										var location = document.getElementById("loca").getAttribute("value");
+									}
 									var locationSplit = location.split(", ");
 
 									// Créer l'objet "map" et l'insèrer dans l'élément HTML qui a l'ID "map"
@@ -195,15 +246,46 @@ class vueDomaine {
 											style: google.maps.NavigationControlStyle.ZOOM_PAN
 										}
 									});
+									let tabMarker = new Array;
+
 									<?php foreach ($allLocations as $row): ?>
 										var locationPro = "<?php echo $row ?>";
 										var locationProSplit = locationPro.split(", ");
 										var marker = new google.maps.Marker({
 											// A chaque boucle, la latitude et la longitude sont lues dans le tableau
 											position: {lat: parseFloat(locationProSplit[0]), lng: parseFloat(locationProSplit[1])},
-											map: map
+											map: map,
 										});
+										marker.set("id",locationPro);
+										tabMarker.push(marker);
 									<?php endforeach; ?>
+
+									for (var i = 0; i < tabMarker.length; i++) {
+										(function(){
+											var j =i;
+
+											$('.pro').each(function(itembis){
+												var id = $(this).attr('id');
+												tabMarker[i].addListener('click', function() {
+													if (id == tabMarker[j].id) {
+														var pro = document.getElementById(id);
+														// on modifie son style
+														pro.scrollIntoView();
+														pro.style.border = "solid orange 2px";
+													}
+												})
+
+												tabMarker[i].addListener('mouseout', function() {
+													if (id == tabMarker[j].id) {
+														var pro = document.getElementById(id);
+														// on modifie son style
+														pro.style.border = "";
+													}
+												})
+											})
+										}())
+									}
+									console.log(tabMarker);
 								}
 								window.onload = function(){
 									// Fonction d'initialisation qui s'exécute lorsque le DOM est chargé

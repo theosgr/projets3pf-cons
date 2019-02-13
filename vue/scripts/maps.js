@@ -1,48 +1,36 @@
-function initMap() {
-  $(document).ready(function () {
-    // Initialisation de la carte
-    var center = {
-       lat: 48.85341,
-       lng: 2.3488
-    };
-    var mapOptions = {
-        center: center,
-        zoom: 10
-    };
-    var map = new google.maps.Map(document.getElementById('map'), mapOptions);
-
-    // Initialisation des limites de la carte
-    var bounds = new google.maps.LatLngBounds();
-
-    // Récuperation des données
-    var objData = {};
-    objData = { specialiste : $("#specialiste").val(), ville : $("#ville").val(), };
-    $.ajax({
-      url: "./modele/dao/jsonRecherche.php",
-      dataType: "json",
-      data: objData,
-      type: 'GET'
-    })
-    .done(function (data) {
-      $(data).each(function(ind, item) {
-        var location = {};
-        $.ajax({
-          url: "./modele/dao/recupLocationUser.php",
-          dataType: "NUMBER",
-          data: location,
-          type: 'GET'
-        });
-        location = item.location.split(", ");
-        var latLng = new google.maps.LatLng(location[0], location[1]);
-        // Affichage des marqueurs
-        var marker = new google.maps.Marker({
-          position: latLng,
-          map: map,
-        });
-        bounds.extend(latLng);
-      })
-    })
-    // Modification des limites à la carte pour la centrer sur les pointeurs
-    map.fitBounds(bounds);
-  });
-}
+// On initialise la latitude et la longitude (centre de la carte)
+	// Fonction d'initialisation de la carte
+	// function initMap() {
+	// 	var lat = 48;
+	// 	var lon = 3;
+	// 	var map = null;
+	// 	var location = document.getElementById("locationphp").value;
+	// 	var locationText = location.innerText;
+	// 	console.log(locationText);
+	// 	var locationString = locationText.toString();
+	// 	console.log(locationString);
+	// 	var locationSplit = locationString.split(", ");
+	// 	console.log(locationSplit[1]);
+	//
+	//
+	// 	// Créer l'objet "map" et l'insèrer dans l'élément HTML qui a l'ID "map"
+	// 	map = new google.maps.Map(document.getElementById("map"), {
+	// 			center: new google.maps.LatLng(locationSplit[0], locationSplit[1]),
+	// 			zoom: 11,
+	// 			mapTypeId: google.maps.MapTypeId.ROADMAP,
+	// 			mapTypeControl: true,
+	// 			scrollwheel: false,
+	// 			mapTypeControlOptions: {
+	// 			style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR
+	// 		},
+	// 		navigationControl: true,
+	// 		navigationControlOptions: {
+	// 		// Comment ces options doivent-elles s'afficher
+	// 			style: google.maps.NavigationControlStyle.ZOOM_PAN
+	// 		}
+	// 	});
+	// }
+	// window.onload = function(){
+	// 	// Fonction d'initialisation qui s'exécute lorsque le DOM est chargé
+	// 	initMap();
+	// };
