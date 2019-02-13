@@ -71,7 +71,7 @@ class vueDomaine {
 			<script>
 				  var apikey = '3f3b618fe28844949b1341a5341bd5e0';
 					var adresse = document.getElementById("ville").getAttribute("value");
-				  var api_url = 'https://api.opencagedata.com/geocode/v1/json'
+				  var api_url = 'https://api.opencagedata.com/geocode/v1/json';
 				  var request_url = api_url
 				    + '?'
 				    + 'key=' +encodeURIComponent(apikey)
@@ -140,7 +140,7 @@ class vueDomaine {
 									echo $result;
 							}
 					}
-				?>"></input>
+				?>"/>
 
 			<!--  HEADER-->
 			<?php  include 'includes/header.php' ?>
@@ -289,7 +289,7 @@ class vueDomaine {
 								}
 								window.onload = function(){
 									// Fonction d'initialisation qui s'exécute lorsque le DOM est chargé
-									initMap();
+									// initMap();
 								};
 							</script>
 						</p>

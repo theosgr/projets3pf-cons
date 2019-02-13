@@ -39,11 +39,11 @@
         if ($_SESSION['inscription'] == "ko") {
           $_SESSION['validite'] = "ko";
           $_SESSION['message'] = "Mail existant";
-          if ($categorie == 1) 
+          if ($categorie == 1)
           {
             $_GET['inscription'] = "user";
-          } 
-          else 
+          }
+          else
           {
             $_GET['inscription'] = "pro";
           }
@@ -67,7 +67,7 @@
     /* Connexion d'un utilisateur. */
     public function connexionUser() {
       $_SESSION['user'] = $this->modele->connexion();
-      if ($_SESSION['user'] != "ko") 
+      if ($_SESSION['user'] != "ko")
       { // connexion réussi
         $_SESSION['id'] = $_POST['login'];
         $_SESSION['validite'] = "ok";
@@ -80,6 +80,12 @@
         $_SESSION['message'] = "Combinaison utilisateur/mot de passe incorrect";
         $this->connexion();
       }
+    }
+
+    /*Cas robot*/
+    public function robot(){
+      $_SESSION['message'] = "Vous avez été détecté comme un robot";
+      $_SESSION['validite'] = "ko";
     }
 
     /*Vérification que la personne voulant accéder à la gestion du site est admin*/
@@ -107,7 +113,7 @@
     public function connexionRdv()
     {
       $_SESSION['user'] = $this->modele->connexion();
-      if ($_SESSION['user'] != "ko") 
+      if ($_SESSION['user'] != "ko")
       { // connexion réussi
         $_SESSION['id'] = $_POST['login'];
         $_SESSION['validite'] = "ok";

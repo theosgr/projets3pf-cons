@@ -83,6 +83,11 @@
           return;
         }
     // CHARGE PAGE CONNEXION
+        if(isset($_GET['connexion']) && isset($_GET['robot']))
+        {
+          $this->ctrlAuthentification->robot();
+        }
+
         if ($_GET['connexion'] == "") {
           $this->ctrlAuthentification->connexion();
           return;
@@ -281,7 +286,6 @@
           $this->ctrlPlageHoraire->afficheListeProcheDeconnecte();
           return;
         }
-
       }
 
 // DEFAULT

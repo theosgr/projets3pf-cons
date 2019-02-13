@@ -52,9 +52,44 @@ class vueAuthentification {
 			<!--  HEADER-->
 			<?php  include 'includes/header.php' ?>
 
+			<!-- reCaptchav3 -->
+			<script type="text/javascript" src="https://www.google.com/recaptcha/api.js?render=6Ld2OJEUAAAAAH-Okg308sOkTm7WkUiWdqaoiJ4C"></script>
+			<script>
+			        grecaptcha.ready(function () {
+			            grecaptcha.execute('6Ld2OJEUAAAAAH-Okg308sOkTm7WkUiWdqaoiJ4C', { action: 'connexion' }).then(function (token) {
+			                var recaptchaResponse = document.getElementById('recaptchaResponse');
+			                recaptchaResponse.value = token;
+			            });
+			        });
+			</script>
+
 			<!--  CONTENT -->
 			<div id="content">
 				<div class="container_form connexion_form">
+
+					<?php // Check if form was submitted:
+				if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['recaptcha_response'])) {
+
+				    // Build POST request:
+				    $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
+				    $recaptcha_secret = '6Ld2OJEUAAAAAJbSfk-ugX-DPE8szoOgK0V5vcxR';
+				    $recaptcha_response = $_POST['recaptcha_response'];
+
+				    // Make and decode POST request:
+				    $recaptcha = file_get_contents($recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $recaptcha_response);
+				    $recaptcha = json_decode($recaptcha);
+
+				    // Take action based on the score returned:
+						if(isset($recaptcha->score))
+						{
+					    if ($recaptcha->score >= 0.5) {
+					       header('Location:index.php?connexion=1');
+					    } else {
+								 header('Location:index.php?connexion&robot=1');
+					    }
+						}
+				}
+				?>
 					<form action="index.php?connexion=1" method="post" onsubmit="return verifFormModifInfos(this)">
 						<!--  BLOC IDENTIFIANT -->
 						<div>
@@ -65,12 +100,10 @@ class vueAuthentification {
 						</div>
 						<hr>
 
-						<!-- Notre boite de vérification : Captcha -->
-						<div class="g-recaptcha" data-sitekey="6LdzkJAUAAAAAOuhLyoggGS6_qaPIbnWT6Ov6AuS"></div>
-
 						<!--  BLOC VALIDATION -->
 						<div>
 							<input name="send" class="submit-btn" type="submit" value="Se connecter" />
+							<input type="hidden" name="recaptcha_response" id="recaptchaResponse"/>
 						</div>
 					</form>
 					<div class="formline">
@@ -101,6 +134,18 @@ class vueAuthentification {
 		<head>
 			<title>Connexion</title>
 			<?php include 'includes/headHTML.php' ?>
+
+			<!-- reCaptchav3 -->
+			<script type="text/javascript" src="https://www.google.com/recaptcha/api.js?render=6Ld2OJEUAAAAAH-Okg308sOkTm7WkUiWdqaoiJ4C"></script>
+			<script>
+			        grecaptcha.ready(function () {
+			            grecaptcha.execute('6Ld2OJEUAAAAAH-Okg308sOkTm7WkUiWdqaoiJ4C', { action: 'connexion' }).then(function (token) {
+			                var recaptchaResponse = document.getElementById('recaptchaResponse');
+			                recaptchaResponse.value = token;
+			            });
+			        });
+			</script>
+
 		</head>
 		<body>
 			<!--  HEADER-->
@@ -109,6 +154,29 @@ class vueAuthentification {
 			<!--  CONTENT -->
 			<div id="content">
 				<div class="container_form connexion_form">
+					<?php // Check if form was submitted:
+				if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['recaptcha_response'])) {
+
+				    // Build POST request:
+				    $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
+				    $recaptcha_secret = '6Ld2OJEUAAAAAJbSfk-ugX-DPE8szoOgK0V5vcxR';
+				    $recaptcha_response = $_POST['recaptcha_response'];
+
+				    // Make and decode POST request:
+				    $recaptcha = file_get_contents($recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $recaptcha_response);
+				    $recaptcha = json_decode($recaptcha);
+
+				    // Take action based on the score returned:
+						if(isset($recaptcha->score))
+						{
+					    if ($recaptcha->score >= 0.5) {
+					       header('Location:index.php?connexion=1');
+					    } else {
+								 header('Location:index.php?connexion&robot=1');
+					    }
+						}
+				}
+				?>
 					<form action="index.php?connexionRdv=1" method="post" onsubmit="return verifFormModifInfos(this)">
 						<!--  BLOC IDENTIFIANT -->
 						<div>
@@ -122,6 +190,7 @@ class vueAuthentification {
 						<!--  BLOC VALIDATION -->
 						<div>
 							<input name="send" class="submit-btn" type="submit" value="Se connecter" />
+							<input type="hidden" name="recaptcha_response" id="recaptchaResponse"/>
 						</div>
 					</form>
 					<div class="formline">
@@ -218,7 +287,7 @@ class vueAuthentification {
 						<div class="block">
 							<label name="Birth">Date de Naissance : </label>
 							<div>
-								<input type="date" id="ddn" name="ddn" placeholder="DD/MM/YYYY"  maxlength="10" value="<?php if(isset($_POST['ddn'])) { echo htmlspecialchars($_POST['ddn']);}?>" />
+								<input type="date" id="ddn" name="ddn" placeholder="DD/MM/YYYY" maxlength="10" value="<?php if(isset($_POST['ddn'])) { echo htmlspecialchars($_POST['ddn']);}?>" />
 							</div>
 							<label>N° de téléphone mobile : </label>
 							<div>
