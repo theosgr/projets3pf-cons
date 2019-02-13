@@ -287,7 +287,6 @@ class vueDomaine {
 														var pro = document.getElementById(id);
 														// on modifie son style
 														$("html, body").animate({ scrollTop: $(pro).position().top }, 800);
-														pro.style.border = "solid orange 2px";
 													}
 												})
 
@@ -296,6 +295,7 @@ class vueDomaine {
 														var pro = document.getElementById(id);
 														// on modifie son style
 														tabMarker[j].setIcon(iconRed);
+														pro.style.border = "solid orange 2px";
 													}
 												})
 
