@@ -566,6 +566,7 @@ AFFICHAGE DES SPECIALISTES
 	justify-content: space-around;
 	border-radius: 5px;
 	border: solid #EEEEEE 2px;
+  /* flex-wrap: wrap; */
 }
 
 .pro .coordonnes
@@ -606,15 +607,6 @@ AFFICHAGE DES SPECIALISTES
 	font-style: italic;
 }
 
-.pro .calendrier
-{
-	border: solid red 2px;
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
 .recherche .listeSpecialistes p
 {
 	text-align: left;
@@ -642,6 +634,7 @@ AFFICHAGE DES SPECIALISTES
 	flex-direction: row;
 	justify-content: space-around;
 	align-items:center;
+  /* border: solid 1px red; */
 }
 
 .pro .boutonQuestion
@@ -656,6 +649,7 @@ AFFICHAGE DES SPECIALISTES
 	padding:5px;
 	text-align:center;
 	height:55px;
+  font-size: 16px;
 }
 
 .pro .boutonRdv
@@ -663,6 +657,7 @@ AFFICHAGE DES SPECIALISTES
 	background : orange;
 	color : white;
 	font-weight: bold;
+  font-size: 16px;
 	text-transform: uppercase;
 	border:none;
 	cursor:pointer;
@@ -694,6 +689,7 @@ AFFICHAGE DES SPECIALISTES
 	.pro .coordonnes
 	{
 		width: 50%;
+    /* margin-right:2%; */
 	}
 
 	.recherche .listeSpecialistes .pro
@@ -798,6 +794,13 @@ div.container ul li a:hover
 /* ==========================================================================
 CALENDRIER
 ========================================================================== */
+#calendrier
+{
+  width:100%;
+  text-align: center;
+  /* height:100%; */
+}
+
 .calendar
 {
     width: 100%;
@@ -808,7 +811,8 @@ CALENDRIER
     border-radius: 20px;
     padding-top:2%;
     padding-bottom: 2%;
-
+    /* border:solid 1px green; */
+    /* height: 320px; */
 }
 
 .calendar .header
@@ -817,12 +821,6 @@ CALENDRIER
     height:40px;
     /* line-height:40px; */
     text-align:center;
-}
-
-.calendar .month
-{
-    display:inline-block;
-    font-weight:bold;
 }
 
 .calendar button
@@ -868,6 +866,7 @@ CALENDRIER
     color: white;
     /* border: solid 1px red; */
     width: 80%;
+    font-size: 120%;
     display:inline-block;
     text-align:center;
     padding-top: 2%;
@@ -897,17 +896,45 @@ CALENDRIER
 .calendar .pHoraires
 {
   /* height: 100%; */
-  /* max-height: 235px; */
+  height:280px;
   /* border: solid 1px red; */
-  /* margin-top: 4%; */
+  margin-top: 2%;
+  /* font-family:"Roboto", Arial, sans-serif; */
   display: inline-block;
   width: 21%;
+  font-weight: bold;
   text-align: center;
   vertical-align: top;
+  border-top : solid 2px orange;
   /* overflow:hidden; */
 }
 
-.calendar .pHoraires:nth-child(2)
+/* .calendar .pHoraires:nth-child(2)
 {
   margin-left:8%;
+} */
+
+.voirPlus
+{
+  /* border:solid 1px pink; */
+  /* width:30%; */
+  color:white;
+  background-color: orange;
+  border-radius:5px;
+  cursor: pointer;
+  border:none;
+  font-size: 16px;
+  margin-top: 2%;
+  padding-left: 3%;
+  padding-right: 3%;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  font-weight: 700;
+}
+
+
+.voirPlus:hover
+{
+  color:orange;
+  background-color: white;
 }
