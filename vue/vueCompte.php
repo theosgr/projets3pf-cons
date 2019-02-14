@@ -147,6 +147,8 @@ class vueCompte {
 										}
 										?>
 										<a href="index.php?annulerRdv=<?php echo($row['id'])?>"><button class="suppression" type="button">Annuler</button></a>
+										<button class="boutonDetails">Afficher les détails</button>
+										<p style="display:none"><?php echo($row['motif']);?></p>
 									</div>
 									<?php
 								}

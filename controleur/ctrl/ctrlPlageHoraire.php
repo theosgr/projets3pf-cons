@@ -88,7 +88,7 @@
       public function AfficheListeProcheConnecte()
       {
         $_SESSION['idPlageHoraire'] = $_POST['listeHoraires'];
-        $_SESSION['motif'] = $_POST['motif'];
+        $_SESSION['motif'] = htmlspecialchars($_POST['motif'], ENT_QUOTES,'UTF-8');
         $_SESSION['idProfessionnel'] = $_POST['idPro'];
 
         $idUser = $this->modele->getIdUser($_SESSION['id'])[0];
@@ -99,7 +99,7 @@
       public function AfficheListeProcheDeconnecte()
       {
         $_SESSION['idPlageHoraire'] = $_POST['listeHoraires'];
-        $_SESSION['motif'] = $_POST['motif'];
+        $_SESSION['motif'] = htmlspecialchars($_POST['motif'], ENT_QUOTES,'UTF-8');
         $_SESSION['idProfessionnel'] = $_POST['idPro'];
 
         $this->vueAuthentification->genereVueConnexionRdv();

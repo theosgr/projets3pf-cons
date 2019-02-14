@@ -18,3 +18,4 @@
 <script type="text/javascript" src="vue/scripts/Calendar.js"></script>
 <script type="text/javascript" src="vue/scripts/instantiateCalendar.js"></script>
 <script type="text/javascript" src="vue/scripts/question.js"></script>
+<script type="text/javascript" src="vue/scripts/detailsRdv.js"></script>
