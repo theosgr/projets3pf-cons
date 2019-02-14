@@ -116,7 +116,7 @@ class Calendar {
         day4.innerHTML = "<b>"+this.dayList[this.d4.getDay()]+"</b> <br>"+this.d4.getDate()+" "+this.monthList[this.d4.getMonth()];
 
         //Si le jour le plus à gauche est égal à la date d'aujourd'hui, on interdit de cliquer sur le bouton "précédent"
-        if(this.d1.getDate() == this.today.getDate())
+        if(this.d1.getDate() == this.today.getDate() && this.d1.getMonth() == this.today.getMonth() && this.d1.getFullYear() == this.today.getFullYear())
         {
           previousButton.disabled = "true";
           previousButton.style.color = "#E5E5E5";
