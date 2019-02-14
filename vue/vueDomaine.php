@@ -204,10 +204,10 @@ class vueDomaine {
 										</form>
 									</div>
 								</div>
-								<div class="calendar" style="text-align:center;">Chargement en cours...</div>
-								<input type="hidden" value="<?php echo($row['id']); ?>"/>
-
-								<!-- <button class="boutonDetails" type="button" onclick="alert('Hello')">Masquer les détails</button> --> <!-- Pour le javascript plus tard -->
+                <div id="calendrier">
+  								<div class="calendar" style="text-align:center;">Chargement en cours...</div>
+  								<input type="hidden" value="<?php echo($row['id']); ?>"/>
+                </div>
 							</div>
 							<?php
 						}
