@@ -113,19 +113,22 @@ class vueCompte {
 												$patientProche = false;
 												foreach($listeProches as $proche)
 												{
+													//Si le proche est un patient
 													if($row['nomPa'] == $proche['nom'] && $row['prenomPa'] == $proche['prenom'])
 													{
+														//Si le pro est le pro connecté actuellement
 														if($row['nom'] == $user->getNom() && $row['prenom'] == $user->getPrenom())
 														{
 															echo("Vous avez rendez-vous avec votre proche ".$row['prenomPa']." ".$row['nomPa']);
 														}
+														//Si le proche a rdv avec un autre professionnel
 														else {
 															echo("Votre proche ".ucwords(mb_strtolower($proche['prenom'],'UTF-8'))." ".$proche['nom']." a rendez-vous avec ".ucwords(mb_strtolower($row['prenom'],'UTF-8'))." ".$row['nom']);
 														}
 														$patientProche = true;
 													}
 												}
-
+												//Si le patient est un patient lambda (pas un proche)
 												if(!$patientProche)
 												{
 													echo("Vous avez rendez-vous avec ".ucwords(mb_strtolower($row['prenomPa'],'UTF-8'))." ".$row['nomPa']);
