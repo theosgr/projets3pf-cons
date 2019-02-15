@@ -87,7 +87,7 @@ class vueCompte {
 							</div>
 						</section>
 						<section id="MesRDV" >
-							<a href="javascript:ouvre_popup('vue/vueRdvImpr.php')"><input type="submit" value="Afficher les rendez-vous du jour pour impression"/></a>
+							<?php if($_SESSION['categorie'] == 2){echo("<a href=\"javascript:ouvre_popup('vue/vueRdvImpr.php')\"><input type=\"submit\" value=\"Afficher les rendez-vous du jour pour impression\"/></a>");}?>
 							<script type="text/javascript">
 
 							function ouvre_popup(page) {
@@ -141,14 +141,14 @@ class vueCompte {
 										else
 										{
 											?>
-											<h3><?php if(mb_strtolower($row['prenomPa'],'UTF-8') == mb_strtolower($user->getPrenom(),'UTF-8') && mb_strtolower($row['nomPa'],'UTF-8') == mb_strtolower($user->getNom(),'UTF-8')){ echo "Vous avez";}else{ echo($row['prenomPa']." ".$row['nomPa'])." a";}?> rendez-vous avec <?php echo ucwords(mb_strtolower($row['prenom'],'UTF-8') . " " . $row['nom']); ?></h3>
+											<h3><?php if(mb_strtolower($row['prenomPa'],'UTF-8') == mb_strtolower($user->getPrenom(),'UTF-8') && mb_strtolower($row['nomPa'],'UTF-8') == mb_strtolower($user->getNom(),'UTF-8')){ echo "Vous avez";}else{ echo("Votre proche ".$row['prenomPa']." ".$row['nomPa'])." a";}?> rendez-vous avec <?php echo ucwords(mb_strtolower($row['prenom'],'UTF-8') . " " . $row['nom']); ?></h3>
 											<p>Le <?php echo $row[5] ;?>, de <?php echo $row[3] ;?> à <?php echo $row[4] ;?></p>
 											<?php
 										}
 										?>
-										<a href="index.php?annulerRdv=<?php echo($row['id'])?>"><button class="suppression" type="button">Annuler</button></a>
 										<button class="boutonDetails">Afficher les détails</button>
 										<p style="display:none"><?php echo($row['motif']);?></p>
+										<a href="index.php?annulerRdv=<?php echo($row['id'])?>"><button class="suppression" type="button">Annuler</button></a>
 									</div>
 									<?php
 								}
