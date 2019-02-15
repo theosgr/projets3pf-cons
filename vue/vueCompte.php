@@ -149,15 +149,16 @@ class vueCompte {
 										<button class="boutonDetails">Afficher les détails</button>
 										<p style="display:none"><?php echo($row['motif']);?></p>
 										<script>
-										function confirmSubmit(){
+										function confirmSubmit(idRDV){
 											var ok=confirm("Etes-vous sûr ?");
 											if (ok){
-											document.getElementById("suppr").href = 'index.php?annulerRdv=<?php echo($row['id'])?>';
+												console.log(idRDV);
+												document.getElementById("suppr"+idRDV).href = 'index.php?annulerRdv='+idRDV;
 											}
-											return ok ;
+											return ok;
 										}
 										</script>
-										<a id="suppr" onclick=confirmSubmit()><button class="suppression" type="button">Annuler</button></a>
+										<a id="suppr<?php echo($row['id'])?>" onclick=confirmSubmit(<?php echo($row['id'])?>)><button class="suppression" type="button">Annuler</button></a>
 									</div>
 									<?php
 								}
