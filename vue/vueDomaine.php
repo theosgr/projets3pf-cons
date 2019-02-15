@@ -318,6 +318,7 @@ class vueDomaine {
 												if (id == tabMarker[marker].id) {
 													var pro = document.getElementById(id);
 													// on modifie son style
+													map.zoom = 13;
 													newLocation(tabMarker[marker].id);
 												}
 											}
