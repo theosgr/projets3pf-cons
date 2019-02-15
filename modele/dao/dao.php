@@ -1158,15 +1158,15 @@ public function getId($nompro,$prenompro){
     /* Méthode permettant la recherche d'un spécialiste, d'une spécialité ou d'une sous-spécialité */
   public function rechercheSpe($domaine) {
       try {
-        $specialisteRecherche=mb_strtolower($_POST['specialiste']);
-        $specialisteRecherche=$_POST['specialiste'];
+        $specialisteRecherche=mb_strtoupper($_POST['specialiste']);
         //On met tout en minuscule pour que le casse ne soit pas prise en compte (le prénom est stocké en majuscule dass la bdd mais visiblement cela n'a pas d'importance alors qu'elle a de l'importance pour la sous spécialité etc (donc si on tapait "Chirurgie", cela ne correspondra pas à "chirurgie" (stocké comme ceci dans la bdd))
-        $villeRecherche = mb_strtolower($_POST['ville']);
+        $villeRecherche = mb_strtoupper($_POST['ville']);
       //Si la recherche n'est pas vide, on affiche les prestataires qui se rapprochent de ce que la personne recherche
         if(!empty($specialisteRecherche) || !empty($villeRecherche)) {
           $elements = explode(" ",htmlspecialchars($specialisteRecherche)); //On découpe la recherche en plusieurs éléments (max2)
           $elements0=htmlspecialchars($elements[0], ENT_QUOTES);
           $ville=htmlspecialchars($_POST['ville'], ENT_QUOTES);
+          $villeRecherche=mb_strtoupper($ville);
 
           if (isset($elements[1])) {
             $elements1=htmlspecialchars($elements[1], ENT_QUOTES);
@@ -1239,8 +1239,8 @@ public function getId($nompro,$prenompro){
             }
             if (isset($_POST['ville'])) {
               while ($ligne=$stmt4->fetch()) {
-        if (levenshtein($ville, $ligne['ville'])<$lv && levenshtein($ville, $ligne['ville'])<3 && levenshtein($ville, $ligne['ville'])!=0) {
-                  $lv=levenshtein($ville, $ligne['ville']);
+        if (levenshtein($villeRecherche, $ligne['ville'])<$lv && levenshtein($villeRecherche, $ligne['ville'])<3 && levenshtein($villeRecherche, $ligne['ville'])!=0) {
+                  $lv=levenshtein($villeRecherche, $ligne['ville']);
                   $resultville=$ligne['ville'];
                 }
               }
