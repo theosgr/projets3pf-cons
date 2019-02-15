@@ -152,7 +152,6 @@ class vueCompte {
 										function confirmSubmit(idRDV){
 											var ok=confirm("Etes-vous sûr ?");
 											if (ok){
-												console.log(idRDV);
 												document.getElementById("suppr"+idRDV).href = 'index.php?annulerRdv='+idRDV;
 											}
 											return ok;
