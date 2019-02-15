@@ -9,9 +9,21 @@ RESET
   font-family: 'Lato', sans-serif;
   list-style: none;
 }
+
+/* CHROME */
+*:focus {
+  outline: none;
+}
+/*CHROME*/
+.ui-helper-hidden-accessible
+{
+  display:none;
+}
+
 html, body {
   height: 100%;
   width: 100%;
+  h
 }
 body {
   display : table;
