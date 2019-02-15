@@ -148,7 +148,16 @@ class vueCompte {
 										?>
 										<button class="boutonDetails">Afficher les détails</button>
 										<p style="display:none"><?php echo($row['motif']);?></p>
-										<a href="index.php?annulerRdv=<?php echo($row['id'])?>"><button class="suppression" type="button">Annuler</button></a>
+										<script>
+										function confirmSubmit(){
+											var ok=confirm("Etes-vous sûr ?");
+											if (ok){
+											document.getElementById("suppr").href = 'index.php?annulerRdv=<?php echo($row['id'])?>';
+											}
+											return ok ;
+										}
+										</script>
+										<a id="suppr" onclick=confirmSubmit()><button class="suppression" type="button">Annuler</button></a>
 									</div>
 									<?php
 								}
