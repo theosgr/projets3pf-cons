@@ -99,6 +99,16 @@
         return;
       }
 
+// GESTION BOUTON QUESTION
+        if(isset($_GET['question']))
+        {
+            if($this->ctrlCompte->resetQuestion()){
+                //$this->ctrlMail->envoiMailQuestion($_SESSION['resQuestion']);
+                $this->ctrlCompte->resetQuestion();
+            }
+            return;
+        }         
+        
 // GESTION COMPTE UTILISATEUR
     // MODIFICATION INFOS PERSONNELLES
       if (isset($_GET['monCompte'])) {

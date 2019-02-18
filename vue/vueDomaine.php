@@ -198,10 +198,12 @@ class vueDomaine {
 									<div class="boutons">
 										<form action="index.php?idPro=<?php echo $row['id'];?>" method="post">
 											<input class="boutonRdv" type="submit" value="Prendre rendez-vous"/>
+                                        </form>
+                                        <form action="index.php?question=1" method="post">
 											<input class="boutonQuestion" type="button" value="Poser une question"/>
-											<input class="quest" type="text" name="question" style="visibility:hidden;"/>
-											<input class="questionB" type="submit" name="envoiQuestion" value="Envoyer" style="visibility:hidden;"/>
-										</form>
+											<input class="question" type="text" name="question" style="visibility:hidden;"/>
+											<input class="boutonSoumettre" type="submit" name="envoiQuestion" value="Envoyer" style="visibility:hidden;"/>
+                                        </form>
 									</div>
 								</div>
                 <div id="calendrier">

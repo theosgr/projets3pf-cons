@@ -108,5 +108,21 @@
       $this->modele->delUser();
       session_destroy();
     }
+      
+    /* Envoi d'une question */
+    public function resetQuestion() {
+        if (isset($_SESSION['id'])) {
+           //print("b");
+            // envoi des messages
+            $_SESSION['validite'] = "ok";
+            $_SESSION['resQuestion'] = $_POST['question'];
+            $_SESSION['message'] = "La question ".$_POST['question']. " a bien été envoyé avec le mail ".$_SESSION['id'];
+            return true;
+        } else {
+            $_SESSION['validite'] = "ko";
+            $_SESSION['message'] = "Veuillez vous connectez.";
+            return false;
+        }
+    }
   }
 ?>
