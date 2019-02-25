@@ -691,6 +691,11 @@ AFFICHAGE DES SPECIALISTES
 	background: white;
 }
 
+.boutonSoumettre
+{
+  width: 100%;
+}
+
 @media screen and (min-width: 700px)
 {
 	.pro .calendrier

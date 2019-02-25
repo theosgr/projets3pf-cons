@@ -102,13 +102,23 @@
 // GESTION BOUTON QUESTION
         if(isset($_GET['question']))
         {
-            if($this->ctrlCompte->resetQuestion()){
-                //$this->ctrlMail->envoiMailQuestion($_SESSION['resQuestion']);
-                $this->ctrlCompte->resetQuestion();
-            }
+          if(isset($_SESSION['id']))
+          {
+            $this->ctrlDomaine->sendQuestionConnecte($_GET['domaine']);
             return;
-        }         
-        
+          }
+          else {
+            $this->ctrlDomaine->sendQuestionDeconnecte($_GET['domaine'], $_GET['question']);
+            return;
+          }
+        }
+
+        if(isset($_GET['connexionQuestion']))
+        {
+          $this->ctrlAuthentification->connexionQuestion($_GET['domaine']);
+          return;
+        }
+
 // GESTION COMPTE UTILISATEUR
     // MODIFICATION INFOS PERSONNELLES
       if (isset($_GET['monCompte'])) {

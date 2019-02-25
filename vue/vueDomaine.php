@@ -198,12 +198,10 @@ class vueDomaine {
 									<div class="boutons">
 										<form action="index.php?idPro=<?php echo $row['id'];?>" method="post">
 											<input class="boutonRdv" type="submit" value="Prendre rendez-vous"/>
-                                        </form>
-                                        <form action="index.php?question=1" method="post">
 											<input class="boutonQuestion" type="button" value="Poser une question"/>
 											<input class="question" type="text" name="question" style="visibility:hidden;"/>
-											<input class="boutonSoumettre" type="submit" name="envoiQuestion" value="Envoyer" style="visibility:hidden;"/>
-                                        </form>
+											<button class="boutonSoumettre" type="submit" name="envoiQuestion" style="visibility:hidden;" formaction="index.php?question=1&domaine=<?php echo $domaine ?>">Envoyer</button>
+                    </form>
 									</div>
 								</div>
                 <div id="calendrier">
@@ -357,6 +355,93 @@ class vueDomaine {
 					</div>
 				</div>
 			</div>
+
+			<!--  FOOTER -->
+			<?php  include 'includes/footer.php' ?>
+
+		</body>
+		</html>
+		<?php
+	}
+
+	public function genereVueConnexionQuestion($domaine)
+	{
+		?>
+		<!DOCTYPE html>
+		<html lang="fr">
+		<head>
+			<title>Connexion</title>
+			<?php include 'includes/headHTML.php' ?>
+
+			<!-- reCaptchav3 -->
+			<script type="text/javascript" src="https://www.google.com/recaptcha/api.js?render=6Ld2OJEUAAAAAH-Okg308sOkTm7WkUiWdqaoiJ4C"></script>
+			<script>
+			        grecaptcha.ready(function () {
+			            grecaptcha.execute('6Ld2OJEUAAAAAH-Okg308sOkTm7WkUiWdqaoiJ4C', { action: 'connexion' }).then(function (token) {
+			                var recaptchaResponse = document.getElementById('recaptchaResponse');
+			                recaptchaResponse.value = token;
+			            });
+			        });
+			</script>
+
+		</head>
+		<body>
+			<!--  HEADER-->
+			<?php  include 'includes/header.php' ?>
+
+			<!--  CONTENT -->
+			<div id="content">
+				<div class="container_form connexion_form">
+					<?php // Check if form was submitted:
+				if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['recaptcha_response'])) {
+
+				    // Build POST request:
+				    $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
+				    $recaptcha_secret = '6Ld2OJEUAAAAAJbSfk-ugX-DPE8szoOgK0V5vcxR';
+				    $recaptcha_response = $_POST['recaptcha_response'];
+
+				    // Make and decode POST request:
+				    $recaptcha = file_get_contents($recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $recaptcha_response);
+				    $recaptcha = json_decode($recaptcha);
+
+				    // Take action based on the score returned:
+						if(isset($recaptcha->score))
+						{
+					    if ($recaptcha->score >= 0.5) {
+					       header('Location:index.php?connexion=1');
+					    } else {
+								 header('Location:index.php?connexion&robot=1');
+					    }
+						}
+				}
+				?>
+					<form action="index.php?connexionQuestion=1&domaine=<?php echo $domaine ?>" method="post" onsubmit="return verifFormModifInfos(this)">
+						<!--  BLOC IDENTIFIANT -->
+						<div>
+							<input type="text" name="login" placeholder="Identifiant" required size="25" />
+						</div>
+						<div>
+							<input type="password" name="mdp" placeholder="Mot de passe" required size="25" />
+						</div>
+						<hr>
+
+						<!--  BLOC VALIDATION -->
+						<div>
+							<input name="send" class="submit-btn" type="submit" value="Se connecter" />
+							<input type="hidden" name="recaptcha_response" id="recaptchaResponse"/>
+						</div>
+					</form>
+					<div class="formline">
+						<p>Pas encore membre ? <a class="lien_visible" href="index.php?inscription=user">Inscrivez-vous</a> gratuitement. </p>
+					</div>
+					<div class="formline">
+						<p><a class="lien_visible" href="index.php?reset">Mot de passe oublié ?</a></p>
+					</div>
+				</div>
+			</div>
+
+			<!--  SLIDESHOW-->
+			<?php  include 'includes/slideshow.php' ?>
 
 			<!--  FOOTER -->
 			<?php  include 'includes/footer.php' ?>

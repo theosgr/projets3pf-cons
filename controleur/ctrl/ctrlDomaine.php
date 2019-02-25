@@ -25,6 +25,32 @@
       $this->vue->genereVueRecherche($domaine, $listeSpecialistes, $ville);
     }
 
+    /* Envoi d'une question quand l'utilisateur est connecté*/
+    public function sendQuestionConnecte($domaine) {
+      // envoi des messages
+      if(isset($_SESSION['questionSvg']))
+      {
+        $question = $_SESSION['questionSvg'];
+        unset($_SESSION['questionSvg']);
+      }
+      else {
+        $question = $_POST['question'];
+      }
+
+      //ICI IL FAUDRA ENVOYER LE MAIL////////////////////
+
+      $_SESSION['validite'] = "ok";
+      $_SESSION['message'] = "La question a bien été envoyée avec le mail ".$_SESSION['id'];
+      $this->vue->genereVueDomaine($domaine);
+    }
+
+    /* Envoi d'une question est déconnecté*/
+    public function sendQuestionDeconnecte($domaine) {
+      $_SESSION['validite'] = "ko";
+      $_SESSION['message'] = "Veuillez vous connecter pour continuer";
+      $_SESSION['questionSvg'] = $_POST['question'];
+      $this->vue->genereVueConnexionQuestion($domaine);
+    }
 
   }
 ?>
