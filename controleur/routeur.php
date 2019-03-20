@@ -104,18 +104,18 @@
         {
           if(isset($_SESSION['id']))
           {
-            $this->ctrlDomaine->sendQuestionConnecte($_GET['domaine']);
+            $this->ctrlDomaine->sendQuestionConnecte($_GET['domaine'], $_GET['mailPro']);
             return;
           }
           else {
-            $this->ctrlDomaine->sendQuestionDeconnecte($_GET['domaine'], $_GET['question']);
+            $this->ctrlDomaine->sendQuestionDeconnecte($_GET['domaine'], $_GET['question'], $_GET['mailPro']);
             return;
           }
         }
 
         if(isset($_GET['connexionQuestion']))
         {
-          $this->ctrlAuthentification->connexionQuestion($_GET['domaine']);
+          $this->ctrlAuthentification->connexionQuestion($_GET['domaine'], $_GET['mailPro']);
           return;
         }
 

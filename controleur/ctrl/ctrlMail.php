@@ -86,6 +86,9 @@
       //==========
 
       //=====Envoi de l'e-mail.
+      ini_set('SMTP','smtp.gmail.com');
+      ini_set('sendmail_from', 'pfconsult.mail@gmail.com');
+
       mail($mail,$sujet,$message,$header);
       //==========
     }
@@ -171,13 +174,16 @@
       //==========
 
       //=====Envoi de l'e-mail.
+      ini_set('SMTP','smtp.gmail.com');
+      ini_set('sendmail_from', 'pfconsult.mail@gmail.com');
+
       mail($mail,$sujet,$message,$header);
       //==========
     }
-   
-    public function envoiMailQuestion($question){
+
+    public function envoiMailQuestion($question, $mailPro){
         //print("utilisation envoiMailQuestion");
-        $mail = $_SESSION['id'];
+        $mail = $mailPro;
 
       if (!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", $mail)) {
         $passage_ligne = "\r\n";
@@ -252,8 +258,11 @@
       //==========
 
       //=====Envoi de l'e-mail.
+      ini_set('SMTP','smtp.gmail.com');
+      ini_set('sendmail_from', 'pfconsult.mail@gmail.com');
+
       mail($mail,$sujet,$message,$header);
       //==========
-    }               
+    }
   }
 ?>

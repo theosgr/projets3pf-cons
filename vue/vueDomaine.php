@@ -69,47 +69,50 @@ class vueDomaine {
 			<input id="loca" type="hidden" value="">
 
 			<script>
-				  var apikey = '3f3b618fe28844949b1341a5341bd5e0';
-					var adresse = document.getElementById("ville").getAttribute("value");
-				  var api_url = 'https://api.opencagedata.com/geocode/v1/json';
-				  var request_url = api_url
-				    + '?'
-				    + 'key=' +encodeURIComponent(apikey)
-				    + '&q=' + encodeURIComponent(adresse)
-						+ '&countrycode=' + "fr"
-				    + '&pretty=1'
-				    + '&no_annotations=1';
+			// function geolocalisation() {
+				var apikey = '3f3b618fe28844949b1341a5341bd5e0';
+				var adresse = document.getElementById("ville").getAttribute("value");
+				var api_url = 'https://api.opencagedata.com/geocode/v1/json';
+				var request_url = api_url
+					+ '?'
+					+ 'key=' +encodeURIComponent(apikey)
+					+ '&q=' + encodeURIComponent(adresse)
+					+ '&countrycode=' + "fr"
+					+ '&pretty=1'
+					+ '&no_annotations=1';
 
-				  // see full list of required and optional parameters:
-				  // https://opencagedata.com/api#forward
+				// see full list of required and optional parameters:
+				// https://opencagedata.com/api#forward
 
-				  var request = new XMLHttpRequest();
-				  request.open('GET', request_url, true);
+				var request = new XMLHttpRequest();
+				request.open('GET', request_url, true);
 
-				  request.onload = function() {
-				  // see full list of possible response codes:
-				  // https://opencagedata.com/api#codes
+				request.onload = function() {
+				// see full list of possible response codes:
+				// https://opencagedata.com/api#codes
 
-				    if (request.status == 200){
-				      // Success!
-				      var data = JSON.parse(request.responseText);
-							document.getElementById("loca").setAttribute('value',data.results[0].geometry["lat"]+", "+data.results[0].geometry["lng"]);
-				    } else if (request.status <= 500){
-				    // We reached our target server, but it returned an error
-				      console.log("unable to geocode! Response code: " + request.status);
-				      var data = JSON.parse(request.responseText);
-				      console.log(data.status.message);
-				    } else {
-				      console.log("server error");
-				    }
-				  };
+					if (request.status == 200){
+						// Success!
+						var data = JSON.parse(request.responseText);
+						document.getElementById("loca").value = data.results[0].geometry["lat"]+", "+data.results[0].geometry["lng"];
+						console.log("Coordonnées entrées");
+					} else if (request.status <= 500){
+					// We reached our target server, but it returned an error
+						console.log("unable to geocode! Response code: " + request.status);
+						var data = JSON.parse(request.responseText);
+						console.log(data.status.message);
+					} else {
+						console.log("server error");
+					}
+				};
 
-				  request.onerror = function() {
-				    // There was a connection error of some sort
-				    console.log("unable to connect to server");
-				  };
+				request.onerror = function() {
+					// There was a connection error of some sort
+					console.log("unable to connect to server");
+				};
 
-				  request.send();  // make the request
+				request.send();  // make the request
+			// }
 			</script>
 
 		<input id="locationphp" type="hidden" value="<?php
@@ -200,7 +203,7 @@ class vueDomaine {
 											<input class="boutonRdv" type="submit" value="Prendre rendez-vous"/>
 											<input class="boutonQuestion" type="button" value="Poser une question"/>
 											<input class="question" type="text" name="question" style="visibility:hidden;"/>
-											<button class="boutonSoumettre" type="submit" name="envoiQuestion" style="visibility:hidden;" formaction="index.php?question=1&domaine=<?php echo $domaine ?>">Envoyer</button>
+											<button class="boutonSoumettre" type="submit" name="envoiQuestion" style="visibility:hidden;" formaction="index.php?question=1&domaine=<?php echo $domaine ?>&mailPro=<?php echo $row['mail']?>">Envoyer</button>
                     </form>
 									</div>
 								</div>
@@ -221,6 +224,7 @@ class vueDomaine {
 								// Fonction d'initialisation de la carte
 
 								function initMap() {
+									console.log("Initilisation de la map");
 									var lat = 48;
 									var lon = 3;
 									var map = null;
@@ -346,10 +350,27 @@ class vueDomaine {
 									});
 								};
 
-								window.onload = function(){
-									// Fonction d'initialisation qui s'exécute lorsque le DOM est chargé
+								window.addEventListener('load', () => {
+									// // Fonction d'initialisation qui s'exécute lorsque le DOM est chargé
+									// let fonction1 = function() {
+									// 	let r = $.Deferred();
+									// 	console.log("1");
+									//
+									// 	return r;
+									// };
+									//
+									// let fonction2 = function() {
+									// 	console.log("2");
+									// };
+									//
+									// fonction1().done( fonction2() );
+									//
+									// geolocalisation().done( initMap() );
+									// $.when($.ajax(geolocalisation())).then(function() {
+
 									initMap();
-								};
+									// });
+								}, false);
 							</script>
 						</p>
 					</div>
@@ -364,7 +385,7 @@ class vueDomaine {
 		<?php
 	}
 
-	public function genereVueConnexionQuestion($domaine)
+	public function genereVueConnexionQuestion($domaine, $mailPro)
 	{
 		?>
 		<!DOCTYPE html>
@@ -415,7 +436,7 @@ class vueDomaine {
 						}
 				}
 				?>
-					<form action="index.php?connexionQuestion=1&domaine=<?php echo $domaine ?>" method="post" onsubmit="return verifFormModifInfos(this)">
+					<form action="index.php?connexionQuestion=1&domaine=<?php echo $domaine ?>&mailPro=<?php echo $mailPro ?>" method="post" onsubmit="return verifFormModifInfos(this)">
 						<!--  BLOC IDENTIFIANT -->
 						<div>
 							<input type="text" name="login" placeholder="Identifiant" required size="25" />

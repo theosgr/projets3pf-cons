@@ -138,18 +138,18 @@
       }
     }
 
-    public function connexionQuestion($domaine)
+    public function connexionQuestion($domaine, $mailPro)
     {
       $_SESSION['user'] = $this->modele->connexion();
       if ($_SESSION['user'] != "ko")
-      { // connexion réussi
+      { // connexion réussie
         $_SESSION['id'] = $_POST['login'];
         $_SESSION['validite'] = "ok";
         $donneesUser = $this->modele->getInfosUser();
         $_SESSION['categorie'] = $donneesUser[0]->getType();
         $_SESSION['message'] = "Bienvenue " . $_SESSION['user'];
 
-        $this->ctrlDomaine->sendQuestionConnecte($domaine);
+        $this->ctrlDomaine->sendQuestionConnecte($domaine, $mailPro);
         // $this->vueDomaine->genereVueConnexionQuestion($domaine);
 
 
