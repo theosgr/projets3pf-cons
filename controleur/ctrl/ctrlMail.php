@@ -182,7 +182,7 @@
     }
 
     public function envoiMailQuestion($question, $mailPro){
-        //print("utilisation envoiMailQuestion");
+        
         $mail = $mailPro;
 
       if (!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", $mail)) {

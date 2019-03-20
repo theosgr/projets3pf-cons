@@ -47,10 +47,11 @@
     }
 
     /* Envoi d'une question est déconnecté*/
-    public function sendQuestionDeconnecte($domaine, $mailPro) {
+    public function sendQuestionDeconnecte($domaine, $question, $mailPro) {
       $_SESSION['validite'] = "ko";
       $_SESSION['message'] = "Veuillez vous connecter pour continuer";
       $_SESSION['questionSvg'] = $_POST['question'];
+
       $this->vue->genereVueConnexionQuestion($domaine, $mailPro);
     }
 
