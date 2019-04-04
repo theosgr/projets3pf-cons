@@ -61,6 +61,12 @@ Version de PhpMyAdmin : 4.7.9
 
 -------------------------------------------------------------------------
 
+NAVIGATEUR A UTILISER
+
+Firefox
+
+-------------------------------------------------------------------------
+
 AVIS AUX POTENTIELS FUTURS ETUDIANTS SUR LE PROJET
 
 Pour toute question, veuillez me contacter à l'adresse suivante : theo.hamelin49@gmail.com
