@@ -29,7 +29,7 @@ INSTALLATION SERVEUR MAIL POUR QUE LES MAILS FONCTIONNENT :
 Le dossier sendmail est à copier à la racine de wamp (remonter de 1 niveau à partir du dossier www)
 
 Pour trouver php.ini -> Cliquer sur wamp dans la barre des tâches, puis aller dans PHP -> php.ini
-Remplacer uniquement les lignes du fichier :
+Remplacer uniquement les lignes suivantes du fichier :
 
 [mail function]
 ; For Win32 only.
@@ -48,8 +48,21 @@ sendmail_path = "D:\Programmes\wamp64\sendmail\sendmail"
 
 COMMENT TESTER ? :
 
-Créer un compte avec votre adresse mail perso, essayer de vous connecter et faire mot de passe oublié, entrer votre mail.
+Créer un compte avec votre adresse mail perso, essayer de vous connecter et faire "mot de passe oublié", entrer votre mail.
 Normalement un mail vous sera envoyé avec un mot de passe provisoire.
 
+-------------------------------------------------------------------------
+
+VERSIONS UTILISEES
+
+Version de Wamp utilisée : 3.1.3
+Version de PHP : 7.2.4
+Version de PhpMyAdmin : 4.7.9
+
+-------------------------------------------------------------------------
+
+AVIS AUX POTENTIELS FUTURS ETUDIANTS SUR LE PROJET
+
+Pour toute question, veuillez me contacter à l'adresse suivante : theo.hamelin49@gmail.com
 
 
