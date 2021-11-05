@@ -68,7 +68,6 @@ Firefox
 -------------------------------------------------------------------------
 
 AVIS AUX POTENTIELS FUTURS ETUDIANTS SUR LE PROJET
-
-Pour toute question, veuillez me contacter à l'adresse suivante : theo.hamelin49@gmail.com
+Bon chance
 
 
